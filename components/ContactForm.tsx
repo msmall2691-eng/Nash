@@ -23,7 +23,7 @@ function SubmitButton() {
       className="group relative w-full overflow-hidden rounded-full bg-granite-900 px-8 py-4 text-sm font-medium text-granite-50 transition-all duration-300 hover:bg-brass-500 hover:shadow-xl hover:shadow-brass-500/25 disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:bg-granite-900 disabled:hover:shadow-none sm:w-auto"
     >
       <span className={`flex items-center justify-center gap-2.5 transition-opacity duration-200 ${pending ? "opacity-0" : "opacity-100"}`}>
-        Request my estimate
+        Request a Consultation
         <svg viewBox="0 0 20 20" className="size-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth={1.75} aria-hidden="true">
           <path d="M4 10h12M11 5l5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
@@ -72,7 +72,7 @@ function SuccessPanel({
         {message}
       </h3>
       <p className="animate-fade-up mt-3 max-w-md text-[15px] leading-relaxed text-granite-600 [animation-delay:200ms]">
-        A project manager reviews every request personally. Expect a call from{" "}
+        A project manager reads every request personally. Expect a call from{" "}
         <span className="whitespace-nowrap font-medium text-granite-800">{site.phoneDisplay}</span> within
         one business day.
       </p>
@@ -88,7 +88,7 @@ function SuccessPanel({
         onClick={onReset}
         className="animate-fade-up mt-8 text-sm font-medium text-granite-500 underline-offset-4 transition-colors hover:text-brass-600 hover:underline [animation-delay:360ms]"
       >
-        Submit another project
+        Send another request
       </button>
     </div>
   );
@@ -126,9 +126,18 @@ function ContactFormInner({ onReset }: { onReset: () => void }) {
           name="name"
           required
           autoComplete="name"
-          placeholder="Jordan Whitcomb"
+          placeholder="Chris Lambert"
           error={state.errors.name}
           defaultValue={state.values?.name}
+        />
+        <TextField
+          label="Company / Organization"
+          name="company"
+          autoComplete="organization"
+          placeholder="Acme Manufacturing"
+          hint="Optional, but it's the first thing a PM asks."
+          error={state.errors.company}
+          defaultValue={state.values?.company}
         />
         <TextField
           label="Email"
@@ -153,11 +162,11 @@ function ContactFormInner({ onReset }: { onReset: () => void }) {
           defaultValue={state.values?.phone}
         />
         <SelectField
-          label="NH City / Town"
+          label="Project Town"
           name="city"
           required
           options={nhCities}
-          placeholder="Where is the project?"
+          placeholder="Where is the building?"
           error={state.errors.city}
           defaultValue={state.values?.city}
         />
@@ -166,7 +175,7 @@ function ContactFormInner({ onReset }: { onReset: () => void }) {
           name="projectType"
           required
           options={PROJECT_TYPES}
-          placeholder="What are we building?"
+          placeholder="What kind of work?"
           error={state.errors.projectType}
           defaultValue={state.values?.projectType}
         />
@@ -187,7 +196,7 @@ function ContactFormInner({ onReset }: { onReset: () => void }) {
           label="Project details"
           name="details"
           rows={4}
-          placeholder="Timeline, square footage, the room you keep redrawing on a napkin…"
+          placeholder="Square footage, target dates, whether the space stays occupied during the work…"
           error={state.errors.details}
           defaultValue={state.values?.details}
         />
@@ -195,8 +204,8 @@ function ContactFormInner({ onReset }: { onReset: () => void }) {
 
       {/* Honeypot — hidden from people and assistive tech, irresistible to bots. */}
       <div aria-hidden="true" className="absolute left-[-9999px] h-0 w-0 overflow-hidden">
-        <label htmlFor="company-website">Company</label>
-        <input id="company-website" name="company" type="text" tabIndex={-1} autoComplete="off" />
+        <label htmlFor="contact-website">Website</label>
+        <input id="contact-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
       </div>
 
       {state.status === "error" && state.message && (

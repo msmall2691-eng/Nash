@@ -1,17 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { Amp } from "@/components/Amp";
 import { projects } from "@/lib/projects";
-import { services } from "@/lib/services";
-import { serviceAreas, site } from "@/lib/site";
+import { serviceGroups } from "@/lib/services";
+import { FOUNDED_YEAR, markets, serviceAreas, site, yearsInBusiness } from "@/lib/site";
 
-const featured = projects.slice(0, 3);
-
-const proofPoints = [
-  { value: "20+", label: "Years building in NH" },
-  { value: "140+", label: "Homes & remodels delivered" },
-  { value: "0.9", label: "ACH50 on our tightest build" },
-  { value: "2 yr", label: "Written workmanship warranty" },
+/** The credibility strip that sits immediately under the hero. */
+const credibility = [
+  { value: `${yearsInBusiness} Years`, label: "In business since " + FOUNDED_YEAR },
+  { value: site.accreditation.rating, label: `${site.accreditation.body} rated` },
+  { value: "Commercial · Industrial", label: "Our entire focus" },
+  { value: "Nashua, NH", label: "Southern New Hampshire" },
 ];
 
 export default function HomePage() {
@@ -20,168 +20,281 @@ export default function HomePage() {
       {/* ------------------------------- Hero ------------------------------- */}
       <section className="relative -mt-20 flex min-h-[92svh] items-end overflow-hidden bg-granite-950 pt-20">
         <Image
-          src={projects[0]?.image ?? "/projects/winnipesaukee-lakehouse.jpg"}
-          alt="A Nash Construction custom lakehouse on Meredith Bay, New Hampshire"
+          src="/projects/hero-commercial.jpg"
+          alt="Commercial construction by Nash Construction in southern New Hampshire"
           fill
           sizes="100vw"
           priority
-          placeholder="blur"
-          blurDataURL={projects[0]?.blurDataURL}
           className="object-cover opacity-70"
         />
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-t from-granite-950 via-granite-950/70 to-granite-950/30"
+          className="absolute inset-0 bg-gradient-to-t from-granite-950 via-granite-950/75 to-granite-950/35"
         />
 
         <div className="container-page relative pb-20 pt-32">
           <p className="animate-fade-up text-xs font-medium uppercase tracking-[0.24em] text-brass-400">
-            {site.address.regionName} · Est. {site.founded}
+            Nashua, New Hampshire · Est. {FOUNDED_YEAR}
           </p>
           <h1 className="animate-fade-up mt-6 max-w-4xl font-display text-[clamp(2.5rem,6.5vw,4.75rem)] font-semibold leading-[1.02] text-granite-50 [animation-delay:100ms]">
-            Custom homes and fine remodeling, built for the Granite State.
+            Built on {yearsInBusiness} Years of Experience.
           </h1>
-          <p className="animate-fade-up mt-7 max-w-xl text-lg leading-relaxed text-granite-300 [animation-delay:200ms]">
-            From lakefront builds on Winnipesaukee to Federal restorations in Portsmouth — one
-            superintendent on your site, a budget you can read, and work that holds up to a NH winter.
+          <p className="animate-fade-up mt-5 max-w-3xl font-display text-xl text-brass-300 [animation-delay:150ms] sm:text-2xl">
+            <Amp>{site.tagline}</Amp>
+          </p>
+          <p className="animate-fade-up mt-7 max-w-2xl text-lg leading-relaxed text-granite-300 [animation-delay:220ms]">
+            Since {FOUNDED_YEAR}, Nash Construction has helped businesses and organizations bring
+            construction projects from concept to completion. From commercial fit-ups and renovations
+            to industrial construction, site work and ongoing facility maintenance, our team delivers
+            practical solutions built around your schedule, budget and operation.
           </p>
           <div className="animate-fade-up mt-10 flex flex-col gap-3 sm:flex-row [animation-delay:300ms]">
             <Link
               href="/contact"
               className="rounded-full bg-brass-500 px-8 py-4 text-center text-sm font-medium text-granite-950 transition-all duration-300 hover:bg-brass-400 hover:shadow-xl hover:shadow-brass-500/30"
             >
-              Get an estimate
+              Request a Consultation
             </Link>
             <Link
-              href="/gallery"
+              href="/projects"
               className="rounded-full border border-granite-600 px-8 py-4 text-center text-sm font-medium text-granite-100 transition-all duration-300 hover:border-granite-300 hover:bg-granite-50/5"
             >
-              See our NH projects
+              See our work
             </Link>
           </div>
         </div>
       </section>
 
-      {/* ---------------------------- Proof points --------------------------- */}
+      {/* --------------------------- Credibility ---------------------------- */}
       <section className="border-b border-granite-200 bg-white">
         <div className="container-page grid grid-cols-2 gap-8 py-12 lg:grid-cols-4">
-          {proofPoints.map((point) => (
-            <div key={point.label}>
-              <p className="font-display text-3xl font-semibold text-granite-900">{point.value}</p>
-              <p className="mt-1.5 text-sm leading-snug text-granite-500">{point.label}</p>
+          {credibility.map((item) => (
+            <div key={item.label}>
+              <p className="font-display text-2xl font-semibold leading-tight text-granite-900">
+                {item.value}
+              </p>
+              <p className="mt-1.5 text-sm leading-snug text-granite-500">{item.label}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* ------------------------------ Services ----------------------------- */}
+      {/* ---------------------- Commercial / Industrial ---------------------- */}
       <section className="container-page py-24">
         <div className="max-w-2xl">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-brass-600">What we build</p>
           <h2 className="mt-4 font-display text-4xl font-semibold text-granite-900">
-            Six things we do, and nothing we don&rsquo;t.
+            Two markets, one contractor.
           </h2>
+          <p className="mt-5 text-[15px] leading-relaxed text-granite-600">
+            We work across {markets.join(", ").toLowerCase()} projects — but almost everything we do
+            falls into one of these two.
+          </p>
         </div>
 
-        <div className="mt-14 grid gap-px overflow-hidden rounded-xl bg-granite-200 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((service) => (
+        <div className="mt-12 grid gap-6 md:grid-cols-2">
+          {[
+            {
+              href: "/commercial",
+              image: "/projects/hero-commercial.jpg",
+              title: "Commercial Construction",
+              body: "Retail, restaurant, office and institutional work — new construction, tenant fit-ups and renovations, phased so the business next door keeps trading.",
+            },
+            {
+              href: "/industrial",
+              image: "/projects/hero-industrial.jpg",
+              title: "Industrial Construction",
+              body: "Manufacturing and warehouse space, mechanical and electrical scopes, fire suppression and the site work that supports them.",
+            },
+          ].map((card, index) => (
             <Link
-              key={service.slug}
-              href={`/services#${service.slug}`}
-              className="group bg-granite-50 p-8 transition-colors duration-300 hover:bg-white"
+              key={card.href}
+              href={card.href}
+              className="group relative overflow-hidden rounded-xl bg-granite-900"
             >
-              <h3 className="font-display text-xl font-semibold text-granite-900">{service.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-granite-600">{service.summary}</p>
-              <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-brass-600">
-                Learn more
-                <svg viewBox="0 0 20 20" className="size-3.5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-                  <path d="M4 10h12M11 5l5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </span>
+              <div className="relative aspect-3/2">
+                <Image
+                  src={card.image}
+                  alt={`${card.title} in southern New Hampshire`}
+                  fill
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  priority={index === 0}
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-granite-950 via-granite-950/50 to-transparent" />
+              </div>
+              <div className="absolute inset-x-0 bottom-0 p-7">
+                <h3 className="font-display text-2xl font-semibold text-granite-50">{card.title}</h3>
+                <p className="mt-3 max-w-sm text-sm leading-relaxed text-granite-300">{card.body}</p>
+                <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-brass-300">
+                  Explore
+                  <svg viewBox="0 0 20 20" className="size-3.5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                    <path d="M4 10h12M11 5l5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </span>
+              </div>
             </Link>
           ))}
         </div>
       </section>
 
-      {/* ------------------------------ Featured ----------------------------- */}
+      {/* ---------------------------- Core services --------------------------- */}
       <section className="bg-white py-24">
         <div className="container-page">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div className="max-w-2xl">
-              <p className="text-xs font-medium uppercase tracking-[0.2em] text-brass-600">Recent work</p>
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-brass-600">Capabilities</p>
               <h2 className="mt-4 font-display text-4xl font-semibold text-granite-900">
-                Built across New Hampshire.
+                Five groups, one contract.
               </h2>
             </div>
             <Link
-              href="/gallery"
+              href="/services"
               className="rounded-full border border-granite-300 px-6 py-3 text-sm font-medium text-granite-700 transition-colors hover:border-granite-900 hover:text-granite-900"
             >
-              View full gallery
+              All services
             </Link>
           </div>
 
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {featured.map((project, index) => (
+          <div className="mt-12 grid gap-px overflow-hidden rounded-xl bg-granite-200 sm:grid-cols-2 lg:grid-cols-3">
+            {serviceGroups.map((group) => (
               <Link
-                key={project.slug}
-                href="/gallery"
-                className="group relative overflow-hidden rounded-xl bg-granite-900"
+                key={group.slug}
+                href={`/services#${group.slug}`}
+                className="group bg-white p-8 transition-colors duration-300 hover:bg-granite-50"
               >
-                <div className="relative aspect-4/5">
-                  <Image
-                    src={project.image}
-                    alt={`${project.title} in ${project.town}, New Hampshire`}
-                    fill
-                    sizes="(min-width: 768px) 33vw, 100vw"
-                    priority={index === 0}
-                    placeholder="blur"
-                    blurDataURL={project.blurDataURL}
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-granite-950 to-transparent opacity-80" />
-                </div>
-                <div className="absolute inset-x-0 bottom-0 p-6">
-                  <h3 className="font-display text-lg font-semibold text-granite-50">{project.title}</h3>
-                  <p className="mt-1 text-xs uppercase tracking-[0.14em] text-brass-300">
-                    {project.town} · {project.region}
-                  </p>
-                </div>
+                <h3 className="font-display text-xl font-semibold text-granite-900">
+                  <Amp>{group.title}</Amp>
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-granite-600">{group.summary}</p>
+                <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-brass-600">
+                  What&rsquo;s included
+                  <svg viewBox="0 0 20 20" className="size-3.5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                    <path d="M4 10h12M11 5l5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </span>
               </Link>
             ))}
+            <div className="flex flex-col justify-center bg-granite-950 p-8">
+              <p className="font-display text-lg font-semibold text-granite-50">
+                Not sure which one your project is?
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-granite-400">
+                Most are more than one. Tell us what the building needs and we&rsquo;ll scope it.
+              </p>
+              <Link
+                href="/contact"
+                className="mt-6 inline-block self-start rounded-full bg-brass-500 px-6 py-3 text-sm font-medium text-granite-950 transition-colors hover:bg-brass-400"
+              >
+                Request a Consultation
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* --------------------------- Service areas --------------------------- */}
+      {/* --------------------------- Featured projects ------------------------ */}
       <section className="container-page py-24">
-        <div className="grid gap-12 lg:grid-cols-12">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <div className="max-w-2xl">
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-brass-600">Selected work</p>
+            <h2 className="mt-4 font-display text-4xl font-semibold text-granite-900">
+              Businesses that trusted us with their space.
+            </h2>
+          </div>
+          <Link
+            href="/projects"
+            className="rounded-full border border-granite-300 px-6 py-3 text-sm font-medium text-granite-700 transition-colors hover:border-granite-900 hover:text-granite-900"
+          >
+            All projects
+          </Link>
+        </div>
+
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {projects.slice(0, 3).map((project, index) => (
+            <Link
+              key={project.slug}
+              href="/projects"
+              className="group relative overflow-hidden rounded-xl bg-granite-900"
+            >
+              <div className="relative aspect-4/3">
+                <Image
+                  src={project.image}
+                  alt={`${project.title} — ${project.sector.toLowerCase()} project by Nash Construction`}
+                  fill
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  priority={index === 0}
+                  placeholder="blur"
+                  blurDataURL={project.blurDataURL}
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-granite-950 via-granite-950/30 to-transparent" />
+              </div>
+              <div className="absolute inset-x-0 bottom-0 p-6">
+                <h3 className="font-display text-lg font-semibold text-granite-50">{project.title}</h3>
+                <p className="mt-1 text-xs uppercase tracking-[0.14em] text-brass-300">{project.sector}</p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* ---------------------------- Service area ---------------------------- */}
+      <section className="bg-white py-24">
+        <div className="container-page grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <p className="text-xs font-medium uppercase tracking-[0.2em] text-brass-600">Where we work</p>
             <h2 className="mt-4 font-display text-4xl font-semibold text-granite-900">
-              A two-hour radius of Meredith.
+              Nashua, and the towns around it.
             </h2>
             <p className="mt-6 text-[15px] leading-relaxed text-granite-600">
-              We keep our footprint tight on purpose. If a superintendent can&rsquo;t reach your site
-              before the crew does, we&rsquo;re not the right builder for it — and we&rsquo;ll tell you
-              who is.
+              We are based on Temple Street in Nashua and work throughout southern New Hampshire. Being
+              close matters more on commercial work than people expect — it is the difference between a
+              site visit this afternoon and one next week.
             </p>
             <Link
               href="/contact"
               className="mt-8 inline-block rounded-full bg-granite-900 px-7 py-3.5 text-sm font-medium text-granite-50 transition-all duration-300 hover:bg-brass-500"
             >
-              Check your town
+              Check your location
             </Link>
           </div>
 
           <ul className="grid gap-px self-start overflow-hidden rounded-xl bg-granite-200 sm:grid-cols-2 lg:col-span-7">
             {serviceAreas.map((area) => (
-              <li key={area.region} className="bg-granite-50 p-6">
+              <li key={area.region} className="bg-white p-6">
                 <h3 className="font-display text-base font-semibold text-granite-900">{area.region}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-granite-500">{area.towns.join(" · ")}</p>
               </li>
             ))}
           </ul>
+        </div>
+      </section>
+
+      {/* ------------------------------- CTA --------------------------------- */}
+      <section className="container-page py-24">
+        <div className="rounded-2xl bg-granite-950 px-8 py-16 text-center sm:px-16">
+          <h2 className="mx-auto max-w-2xl font-display text-3xl font-semibold text-granite-50 sm:text-4xl">
+            Let&rsquo;s talk about your project.
+          </h2>
+          <p className="mx-auto mt-5 max-w-xl text-[15px] leading-relaxed text-granite-400">
+            Tell us what you&rsquo;re planning and we&rsquo;ll walk the space, scope it honestly, and
+            put a budget in writing before anyone pulls a permit.
+          </p>
+          <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
+            <Link
+              href="/contact"
+              className="rounded-full bg-brass-500 px-8 py-4 text-sm font-medium text-granite-950 transition-all duration-300 hover:bg-brass-400"
+            >
+              Request a Consultation
+            </Link>
+            <a
+              href={`tel:${site.phone}`}
+              className="rounded-full border border-granite-700 px-8 py-4 text-sm font-medium text-granite-200 transition-colors hover:border-granite-400"
+            >
+              Call {site.phoneDisplay}
+            </a>
+          </div>
         </div>
       </section>
     </>

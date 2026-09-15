@@ -9,6 +9,8 @@ type PageMetaInput = {
   path: string;
   /** Page-specific terms, merged ahead of the shared local keyword set. */
   keywords?: string[];
+  /** Social share image; defaults to the commercial hero. */
+  image?: string;
 };
 
 /**
@@ -17,7 +19,13 @@ type PageMetaInput = {
  * Every route calls this instead of hand-rolling OpenGraph/Twitter/canonical
  * blocks, so those can never drift apart between pages.
  */
-export function pageMetadata({ title, description, path, keywords = [] }: PageMetaInput): Metadata {
+export function pageMetadata({
+  title,
+  description,
+  path,
+  keywords = [],
+  image = "/projects/hero-commercial.jpg",
+}: PageMetaInput): Metadata {
   const url = `${siteUrl}${path === "/" ? "" : path}`;
 
   return {
@@ -32,11 +40,13 @@ export function pageMetadata({ title, description, path, keywords = [] }: PageMe
       siteName: site.name,
       locale: "en_US",
       type: "website",
+      images: [{ url: image, alt: title }],
     },
     twitter: {
       card: "summary_large_image",
       title: `${title} | ${site.name}`,
       description,
+      images: [image],
     },
   };
 }

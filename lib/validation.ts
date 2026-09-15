@@ -3,21 +3,22 @@ import { z } from "zod";
 import { nhCities } from "@/lib/site";
 
 export const PROJECT_TYPES = [
-  "Custom Home",
-  "Whole-Home Remodel",
-  "Kitchen & Bath",
-  "Addition / Dormer",
-  "Lakefront / Waterfront",
-  "Light Commercial",
+  "New Commercial Construction",
+  "Industrial Construction",
+  "Tenant Fit-Up",
+  "Renovation / Alteration",
+  "Mechanical, Electrical & Fire Protection",
+  "Exterior & Site Work",
+  "Building Maintenance",
+  "Emergency Repair",
 ] as const;
 
 export const BUDGET_BANDS = [
-  "Under $75k",
-  "$75k – $150k",
-  "$150k – $350k",
-  "$350k – $750k",
-  "$750k – $1.5M",
-  "$1.5M+",
+  "Under $50k",
+  "$50k – $250k",
+  "$250k – $1M",
+  "$1M – $5M",
+  "$5M+",
   "Not sure yet",
 ] as const;
 
@@ -41,12 +42,14 @@ export const contactSchema = z.object({
     .refine((value) => value.replace(/\D/g, "").length >= 10, {
       message: "Phone numbers need at least 10 digits.",
     }),
-  city: z.string().trim().min(2, "Tell us which NH town the project is in."),
+  city: z.string().trim().min(2, "Tell us which town the project is in."),
+  /** Optional, but the first thing a PM asks a commercial client. */
+  company: z.string().trim().max(120).optional(),
   projectType: z.enum(PROJECT_TYPES, { message: "Choose the type of project." }),
   budget: z.enum(BUDGET_BANDS, { message: "Choose a budget range." }),
   details: z.string().trim().max(2000, "Please keep the summary under 2000 characters.").optional(),
   /** Honeypot — real people never fill this, bots usually do. */
-  company: z.string().max(0).optional(),
+  website: z.string().max(0).optional(),
 });
 
 export type ContactInput = z.infer<typeof contactSchema>;

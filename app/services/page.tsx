@@ -1,45 +1,39 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { Amp } from "@/components/Amp";
 import { JsonLd } from "@/components/JsonLd";
 import { pageMetadata } from "@/lib/metadata";
-import { breadcrumbSchema } from "@/lib/schema";
-import { services } from "@/lib/services";
-import { serviceAreas, siteUrl } from "@/lib/site";
+import { breadcrumbSchema, serviceSchema } from "@/lib/schema";
+import { serviceGroups } from "@/lib/services";
+import { site } from "@/lib/site";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Construction Services Across New Hampshire",
+  title: "Commercial & Industrial Construction Services",
   description:
-    "Custom homes, whole-home remodels, kitchens and baths, additions, lakefront construction and light commercial work throughout New Hampshire.",
+    "General contracting, renovations and fit-ups, mechanical and electrical, exterior and site work, and building maintenance and emergency repair across southern New Hampshire.",
   path: "/services",
   keywords: [
-    "NH custom home builder services",
-    "New Hampshire kitchen remodel contractor",
-    "lakefront construction New Hampshire",
-    "NH home addition contractor",
+    "commercial general contracting NH",
+    "tenant fit-up contractor Nashua",
+    "commercial HVAC plumbing electrical New Hampshire",
+    "commercial site work contractor NH",
+    "emergency building repair Nashua NH",
   ],
 });
-
-/** Each service also gets its own `Service` node so it can surface independently. */
-function servicesSchema() {
-  return services.map((service) => ({
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "@id": `${siteUrl}/services#${service.slug}`,
-    name: service.title,
-    serviceType: service.title,
-    description: service.detail,
-    provider: { "@id": `${siteUrl}/#localbusiness` },
-    areaServed: serviceAreas.map((area) => ({ "@type": "AdministrativeArea", name: `${area.region}, NH` })),
-  }));
-}
 
 export default function ServicesPage() {
   return (
     <>
       <JsonLd
         schema={[
-          ...servicesSchema(),
+          ...serviceGroups.map((group) =>
+            serviceSchema({
+              id: `/services#${group.slug}`,
+              name: group.title,
+              description: group.detail,
+            }),
+          ),
           breadcrumbSchema([
             { name: "Home", path: "/" },
             { name: "Services", path: "/services" },
@@ -52,21 +46,21 @@ export default function ServicesPage() {
           Services
         </p>
         <h1 className="animate-fade-up mt-5 max-w-3xl font-display text-[clamp(2.25rem,5vw,3.5rem)] font-semibold leading-[1.05] text-granite-900 [animation-delay:80ms]">
-          Everything from the first stake to the final punch list.
+          Everything a building needs, under one contract.
         </h1>
         <p className="animate-fade-up mt-7 max-w-2xl text-lg leading-relaxed text-granite-600 [animation-delay:160ms]">
-          We self-perform framing, trim and tile, and we hold our subs to the same standard. That is
-          why the finish work looks like one hand made it.
+          Our capabilities are grouped into five areas. Most projects draw on more than one — and
+          carrying them together is exactly why the hand-offs between trades stop being your problem.
         </p>
       </section>
 
       <section className="container-page pb-24">
         <div className="grid gap-px overflow-hidden rounded-xl bg-granite-200">
-          {services.map((service, index) => (
+          {serviceGroups.map((group, index) => (
             <article
-              key={service.slug}
-              id={service.slug}
-              className="grid gap-8 bg-granite-50 p-8 transition-colors duration-300 hover:bg-white sm:p-12 lg:grid-cols-12 scroll-mt-28"
+              key={group.slug}
+              id={group.slug}
+              className="grid scroll-mt-28 gap-8 bg-granite-50 p-8 transition-colors duration-300 hover:bg-white sm:p-12 lg:grid-cols-12"
             >
               <div className="lg:col-span-1">
                 <span className="font-display text-sm font-semibold text-brass-600">
@@ -74,18 +68,20 @@ export default function ServicesPage() {
                 </span>
               </div>
               <div className="lg:col-span-5">
-                <h2 className="font-display text-2xl font-semibold text-granite-900">{service.title}</h2>
-                <p className="mt-3 text-[15px] leading-relaxed text-granite-600">{service.summary}</p>
+                <h2 className="font-display text-2xl font-semibold text-granite-900">
+                  <Amp>{group.title}</Amp>
+                </h2>
+                <p className="mt-3 text-[15px] leading-relaxed text-granite-600">{group.summary}</p>
               </div>
               <div className="lg:col-span-6">
-                <p className="text-[15px] leading-relaxed text-granite-600">{service.detail}</p>
+                <p className="text-[15px] leading-relaxed text-granite-600">{group.detail}</p>
                 <ul className="mt-6 flex flex-wrap gap-2">
-                  {service.bullets.map((bullet) => (
+                  {group.trades.map((trade) => (
                     <li
-                      key={bullet}
+                      key={trade}
                       className="rounded-full border border-granite-200 bg-white px-3.5 py-1.5 text-xs font-medium text-granite-600"
                     >
-                      {bullet}
+                      {trade}
                     </li>
                   ))}
                 </ul>
@@ -99,19 +95,28 @@ export default function ServicesPage() {
         <div className="flex flex-col items-start justify-between gap-8 rounded-2xl border border-granite-200 bg-white p-10 sm:flex-row sm:items-center sm:p-14">
           <div className="max-w-xl">
             <h2 className="font-display text-2xl font-semibold text-granite-900">
-              Not sure which of these your project is?
+              Need something that isn&rsquo;t listed?
             </h2>
             <p className="mt-3 text-[15px] leading-relaxed text-granite-600">
-              Most aren&rsquo;t just one. Tell us what you&rsquo;re picturing and we&rsquo;ll scope it
-              honestly — including when the answer is &ldquo;you don&rsquo;t need us for that.&rdquo;
+              After {new Date().getFullYear() - 1976} years there is not much in a commercial building
+              we have not had to deal with. Ask — and if it is genuinely not our work, we will tell you
+              who does it well.
             </p>
           </div>
-          <Link
-            href="/contact"
-            className="shrink-0 rounded-full bg-granite-900 px-8 py-4 text-sm font-medium text-granite-50 transition-all duration-300 hover:bg-brass-500"
-          >
-            Get an estimate
-          </Link>
+          <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
+            <Link
+              href="/contact"
+              className="rounded-full bg-granite-900 px-8 py-4 text-center text-sm font-medium text-granite-50 transition-all duration-300 hover:bg-brass-500"
+            >
+              Request a Consultation
+            </Link>
+            <a
+              href={`tel:${site.phone}`}
+              className="rounded-full border border-granite-300 px-8 py-4 text-center text-sm font-medium text-granite-700 transition-colors hover:border-granite-900"
+            >
+              {site.phoneDisplay}
+            </a>
+          </div>
         </div>
       </section>
     </>

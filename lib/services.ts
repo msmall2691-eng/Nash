@@ -1,81 +1,125 @@
-export type Service = {
+/**
+ * Service groups.
+ *
+ * Replaces the old site's flat list of two dozen trades with five groups a
+ * facilities manager can actually scan. Every trade from the old copy still
+ * appears — as a `trades` entry inside the group it belongs to.
+ */
+
+export type ServiceGroup = {
   slug: string;
   title: string;
   summary: string;
   detail: string;
-  bullets: string[];
+  /** The specific trades and scopes that fall under this group. */
+  trades: string[];
 };
 
-export const services: Service[] = [
+export const serviceGroups: ServiceGroup[] = [
   {
-    slug: "custom-homes",
-    title: "Custom Homes",
-    summary: "Ground-up houses designed around the site, the light, and how you actually live.",
+    slug: "general-contracting",
+    title: "General Contracting",
+    summary:
+      "Ground-up commercial and industrial construction, managed from the first consultation through closeout.",
     detail:
-      "We take a project from raw land through occupancy: site evaluation, septic and well coordination, design-build or architect-led, and a build schedule that survives a New Hampshire winter.",
-    bullets: ["Design-build or architect-led", "Site, septic & well coordination", "Envelope testing on every home"],
+      "We act as your single point of accountability: scope and budget up front, then permitting, subcontractor coordination, inspections and schedule management until the building is yours. On most projects we are also the ones holding the drawings on site.",
+    trades: [
+      "New commercial construction",
+      "Industrial construction",
+      "Project management & coordination",
+      "Demolition",
+      "Concrete",
+      "Masonry",
+      "Doors, windows & glazing",
+      "Ceilings",
+    ],
   },
   {
-    slug: "whole-home-remodeling",
-    title: "Whole-Home Remodeling",
-    summary: "Structural reworks that make an older New England house feel inevitable.",
+    slug: "renovations-fit-ups",
+    title: "Renovations & Fit-Ups",
+    summary:
+      "Tenant fit-ups and interior renovations, sequenced so the rest of your building keeps operating.",
     detail:
-      "Load-bearing changes, new mechanicals, insulation retrofits and finish work — sequenced so you can stay in the house where that's realistic, and phased where it isn't.",
-    bullets: ["Structural openings & ridge beams", "Mechanical & insulation retrofit", "Historic district experience"],
+      "Most of our work is inside buildings someone is already using. We phase the work, protect the occupied areas, and schedule the loud and disruptive scopes around your hours rather than ours — which is why a fit-up next to a working office or dining room does not cost you the week.",
+    trades: [
+      "Commercial & industrial fit-ups",
+      "Tenant improvements",
+      "Interior renovations",
+      "Repairs & alterations",
+      "Flooring",
+      "Painting",
+      "Ceilings & partitions",
+    ],
   },
   {
-    slug: "kitchens-and-baths",
-    title: "Kitchens & Baths",
-    summary: "The two rooms that carry a house, built by the crew that framed it.",
+    slug: "mechanical-electrical",
+    title: "Mechanical & Electrical",
+    summary:
+      "HVAC, plumbing, electrical and fire protection — coordinated under one contract instead of five.",
     detail:
-      "Cabinetry from New England shops, stone templated and set by our own installers, and waterproofing detailed to the letter — because these are the rooms that punish shortcuts.",
-    bullets: ["Locally milled cabinetry", "Schluter & Wedi wet-area systems", "In-house tile and stone crew"],
+      "Mechanical and electrical scopes are where commercial projects usually come apart, because nobody owns the hand-offs between them. We carry them under the same contract as the build, so the ductwork, the sprinkler main and the panel schedule get resolved against each other before anyone opens a ceiling.",
+    trades: [
+      "HVAC",
+      "Plumbing",
+      "Electrical",
+      "Fire protection & sprinkler systems",
+      "Fire suppression",
+      "Electronic security",
+    ],
   },
   {
-    slug: "additions",
-    title: "Additions & Dormers",
-    summary: "More house, without the seam showing.",
+    slug: "exterior-site-work",
+    title: "Exterior & Site Work",
+    summary: "Everything outside the walls, from site preparation to the sign over the door.",
     detail:
-      "Matching an existing roofline, siding exposure and window rhythm is the whole job. We detail the tie-in first, then build backward from it.",
-    bullets: ["Roofline & siding matching", "Foundation and frost-wall work", "Zoning and setback navigation"],
+      "Site work sets the schedule for everything that follows it, and in New Hampshire it sets the schedule around the weather. We plan the exterior scopes early so a frost date or a paving window never becomes the reason a tenant opens late.",
+    trades: [
+      "Site preparation & exterior work",
+      "Concrete & paving",
+      "Landscaping",
+      "Sign installation",
+      "Exterior repairs",
+    ],
   },
   {
-    slug: "lakefront",
-    title: "Lakefront & Waterfront",
-    summary: "Shoreland building, permitted properly and built to last on the water.",
+    slug: "maintenance-emergency",
+    title: "Maintenance & Emergency Repair",
+    summary:
+      "Ongoing building maintenance, plus a number that gets answered when something fails after hours.",
     detail:
-      "NHDES Shoreland Water Quality Protection Act permitting, helical pier foundations, boathouses and docks — plus the winter logistics of building where the driveway ends at the ice.",
-    bullets: ["NHDES Shoreland permitting", "Helical pier & barge logistics", "Boathouses, docks & seawalls"],
-  },
-  {
-    slug: "light-commercial",
-    title: "Light Commercial",
-    summary: "Mill conversions, inns and storefronts on a schedule your tenants can bank on.",
-    detail:
-      "Adaptive reuse and ground-up commercial under 30,000 square feet, delivered with the same superintendent-on-site model we use on residential work.",
-    bullets: ["Adaptive reuse & mill conversions", "Code and accessibility compliance", "Phased occupancy planning"],
+      "For a lot of our clients this is the relationship that started everything else — we fixed something once, and then we became the ones who maintain the building. Emergency work gets triaged the day it comes in.",
+    trades: [
+      "Ongoing building maintenance",
+      "Emergency repairs",
+      "Preventive & scheduled repairs",
+      "Painting & finish upkeep",
+      "Facility punch work",
+    ],
   },
 ];
+
+/** Flat trade list, used for JSON-LD and the capabilities strip. */
+export const allTrades = serviceGroups.flatMap((group) => group.trades);
 
 export const process = [
   {
     step: "01",
-    title: "Conversation",
-    body: "We walk the site, listen to what you're picturing, and tell you honestly what it costs in New Hampshire this year.",
+    title: "Consultation",
+    body: "We walk the space, ask what the building has to keep doing while we work, and tell you honestly what the scope involves.",
   },
   {
     step: "02",
-    title: "Preconstruction",
-    body: "Drawings, allowances and a line-item budget you can actually read — before a single permit is pulled.",
+    title: "Scope & Budget",
+    body: "A written scope and a budget you can take to ownership or a landlord — before anyone pulls a permit.",
   },
   {
     step: "03",
-    title: "Build",
-    body: "One superintendent, on your site, every day. Weekly written updates and a schedule that accounts for mud season.",
+    title: "Project Management",
+    body: "One project manager owning the schedule, the subs and the inspections, with updates you do not have to chase.",
   },
   {
     step: "04",
-    title: "Handover",
-    body: "Blower-door results, a punch list closed before we leave, and a two-year workmanship warranty in writing.",
+    title: "Completion",
+    body: "Punch list closed, inspections signed off, and a contractor who still answers the phone after the final invoice.",
   },
 ] as const;

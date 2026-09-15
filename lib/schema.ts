@@ -5,10 +5,11 @@
  * so crawlers get the structured data in the initial HTML payload.
  */
 
-import { serviceAreas, site, siteUrl } from "@/lib/site";
+import { allTrades, serviceGroups } from "@/lib/services";
+import { FOUNDED_YEAR, markets, serviceAreas, site, siteUrl } from "@/lib/site";
 
 /** `@id` for the business node, so other graph nodes can reference it. */
-const businessId = `${siteUrl}/#localbusiness`;
+export const businessId = `${siteUrl}/#localbusiness`;
 
 export function localBusinessSchema() {
   return {
@@ -21,11 +22,27 @@ export function localBusinessSchema() {
     url: siteUrl,
     telephone: site.phone,
     email: site.email,
-    foundingDate: site.founded,
+    foundingDate: String(FOUNDED_YEAR),
     priceRange: site.priceRange,
-    image: `${siteUrl}/opengraph-image`,
+    image: `${siteUrl}/projects/hero-commercial.jpg`,
     logo: `${siteUrl}/icon.svg`,
-    sameAs: [...site.social],
+    ...(site.social.length > 0 ? { sameAs: [...site.social] } : {}),
+    founder: {
+      "@type": "Person",
+      name: site.leadership[0].name,
+      jobTitle: site.leadership[0].role,
+    },
+    employee: site.leadership.map((person) => ({
+      "@type": "Person",
+      name: person.name,
+      jobTitle: person.role,
+    })),
+    memberOf: {
+      "@type": "Organization",
+      name: site.accreditation.body,
+      description: `Accredited since ${site.accreditation.accreditedSince} with an ${site.accreditation.rating} rating.`,
+    },
+    knowsAbout: allTrades,
     address: {
       "@type": "PostalAddress",
       streetAddress: site.address.street,
@@ -57,19 +74,24 @@ export function localBusinessSchema() {
     ],
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: "Construction Services",
-      itemListElement: [
-        "Custom Home Building",
-        "Whole-Home Remodeling",
-        "Kitchen & Bath Renovation",
-        "Additions & Dormers",
-        "Lakefront & Waterfront Construction",
-        "Light Commercial Construction",
-      ].map((service) => ({
+      name: "Commercial & Industrial Construction Services",
+      itemListElement: serviceGroups.map((group) => ({
         "@type": "Offer",
-        itemOffered: { "@type": "Service", name: service, serviceType: service },
+        itemOffered: {
+          "@type": "Service",
+          name: group.title,
+          serviceType: group.title,
+          description: group.summary,
+        },
       })),
     },
+    slogan: site.tagline,
+    // Procore's market categorization for the business.
+    additionalProperty: markets.map((market) => ({
+      "@type": "PropertyValue",
+      name: "Market served",
+      value: market,
+    })),
   };
 }
 
@@ -94,6 +116,28 @@ export function breadcrumbSchema(trail: ReadonlyArray<{ name: string; path: stri
       position: index + 1,
       name: crumb.name,
       item: `${siteUrl}${crumb.path}`,
+    })),
+  };
+}
+
+/** A `Service` node for one capability, scoped to the areas we serve. */
+export function serviceSchema(opts: {
+  id: string;
+  name: string;
+  description: string;
+  serviceType?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${siteUrl}${opts.id}`,
+    name: opts.name,
+    serviceType: opts.serviceType ?? opts.name,
+    description: opts.description,
+    provider: { "@id": businessId },
+    areaServed: serviceAreas.map((area) => ({
+      "@type": "AdministrativeArea",
+      name: `${area.region}, NH`,
     })),
   };
 }

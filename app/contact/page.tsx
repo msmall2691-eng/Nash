@@ -1,29 +1,29 @@
 import type { Metadata } from "next";
 
 import { ContactForm } from "@/components/ContactForm";
-import { EstimatorForm } from "@/components/EstimatorForm";
 import { JsonLd } from "@/components/JsonLd";
 import { pageMetadata } from "@/lib/metadata";
-import { breadcrumbSchema } from "@/lib/schema";
-import { serviceAreas, site } from "@/lib/site";
+import { breadcrumbSchema, businessId } from "@/lib/schema";
+import { serviceGroups } from "@/lib/services";
+import { FOUNDED_YEAR, serviceAreas, site } from "@/lib/site";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Contact & Free Estimate",
-  description: `Request a free construction estimate from Nash Construction. Call ${site.phoneDisplay} or send project details — we reply to every New Hampshire inquiry within one business day.`,
+  title: "Request a Consultation",
+  description: `Request a commercial or industrial construction consultation from Nash Construction in Nashua, NH. Call ${site.phoneDisplay} or send project details — we reply within one business day.`,
   path: "/contact",
   keywords: [
-    "New Hampshire contractor free estimate",
-    "NH home builder quote",
-    "contact NH general contractor",
-    "Meredith NH construction company",
+    "Nashua NH contractor consultation",
+    "commercial construction quote New Hampshire",
+    "contact commercial general contractor NH",
+    "industrial contractor Nashua NH contact",
   ],
 });
 
-function contactPointSchema() {
+function contactPageSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "ContactPage",
-    name: "Contact Nash Construction",
+    name: `Contact ${site.name}`,
     mainEntity: {
       "@type": "ContactPoint",
       contactType: "Sales",
@@ -32,6 +32,7 @@ function contactPointSchema() {
       areaServed: "US-NH",
       availableLanguage: "English",
     },
+    about: { "@id": businessId },
   };
 }
 
@@ -40,7 +41,7 @@ export default function ContactPage() {
     <>
       <JsonLd
         schema={[
-          contactPointSchema(),
+          contactPageSchema(),
           breadcrumbSchema([
             { name: "Home", path: "/" },
             { name: "Contact", path: "/contact" },
@@ -53,12 +54,15 @@ export default function ContactPage() {
           Contact
         </p>
         <h1 className="animate-fade-up mt-5 max-w-3xl font-display text-[clamp(2.25rem,5vw,3.5rem)] font-semibold leading-[1.05] text-granite-900 [animation-delay:80ms]">
-          Tell us about the project.
+          Request a consultation.
         </h1>
         <p className="animate-fade-up mt-7 max-w-2xl text-lg leading-relaxed text-granite-600 [animation-delay:160ms]">
-          A project manager reads every submission — not a queue, not a chatbot. If it&rsquo;s faster
-          to talk, call{" "}
-          <a href={`tel:${site.phone}`} className="font-medium text-granite-900 underline decoration-brass-500 underline-offset-4">
+          Tell us what the building needs. A project manager reads every submission — not a queue, not
+          a chatbot. If it&rsquo;s faster to talk, call{" "}
+          <a
+            href={`tel:${site.phone}`}
+            className="font-medium text-granite-900 underline decoration-brass-500 underline-offset-4"
+          >
             {site.phoneDisplay}
           </a>
           .
@@ -97,8 +101,14 @@ export default function ContactPage() {
                   </dd>
                 </div>
                 <div className="flex justify-between gap-4 border-t border-granite-100 pt-3">
-                  <dt className="text-granite-500">License</dt>
-                  <dd className="font-medium text-granite-900">{site.license}</dd>
+                  <dt className="text-granite-500">Established</dt>
+                  <dd className="font-medium text-granite-900">{FOUNDED_YEAR}</dd>
+                </div>
+                <div className="flex justify-between gap-4 border-t border-granite-100 pt-3">
+                  <dt className="text-granite-500">{site.accreditation.body}</dt>
+                  <dd className="font-medium text-granite-900">
+                    {site.accreditation.rating} · since {site.accreditation.accreditedSince}
+                  </dd>
                 </div>
               </dl>
               <ul className="mt-6 space-y-1.5 border-t border-granite-100 pt-4 text-sm text-granite-600">
@@ -115,10 +125,26 @@ export default function ContactPage() {
                   </li>
                 ))}
               </ul>
+              <p className="mt-5 border-t border-granite-100 pt-4 text-xs leading-relaxed text-granite-500">
+                Emergency repair work is triaged the day it comes in — call rather than email if
+                something has failed.
+              </p>
             </div>
 
             <div className="rounded-2xl bg-granite-100 p-8">
-              <h2 className="font-display text-lg font-semibold text-granite-900">Service areas</h2>
+              <h2 className="font-display text-lg font-semibold text-granite-900">What we can help with</h2>
+              <ul className="mt-4 space-y-2 text-sm text-granite-600">
+                {serviceGroups.map((group) => (
+                  <li key={group.slug} className="flex gap-2.5">
+                    <span aria-hidden="true" className="mt-1.5 size-1.5 shrink-0 rounded-full bg-brass-500" />
+                    {group.title}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="rounded-2xl border border-granite-200 bg-white p-8">
+              <h2 className="font-display text-lg font-semibold text-granite-900">Service area</h2>
               <ul className="mt-4 space-y-3 text-sm">
                 {serviceAreas.map((area) => (
                   <li key={area.region}>
@@ -132,23 +158,6 @@ export default function ContactPage() {
             </div>
           </div>
         </aside>
-      </section>
-
-      <section className="border-t border-granite-200 bg-white py-24">
-        <div className="container-page">
-          <p className="text-xs font-medium uppercase tracking-[0.2em] text-brass-600">Budget estimator</p>
-          <h2 className="mt-4 max-w-2xl font-display text-4xl font-semibold text-granite-900">
-            Want a number before you call?
-          </h2>
-          <p className="mt-5 max-w-2xl text-[15px] leading-relaxed text-granite-600">
-            Move the sliders for a planning range based on what we&rsquo;re actually building in New
-            Hampshire this year — then send it over with your details attached.
-          </p>
-
-          <div className="mt-14">
-            <EstimatorForm />
-          </div>
-        </div>
       </section>
     </>
   );

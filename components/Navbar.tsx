@@ -4,10 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { navigation, site } from "@/lib/site";
+import { fullNavigation, navigation, site } from "@/lib/site";
 
 /** Routes whose hero is a full-bleed dark image the transparent navbar sits on. */
-const DARK_HERO_ROUTES = new Set(["/"]);
+const DARK_HERO_ROUTES = new Set(["/", "/commercial", "/industrial", "/about"]);
 
 export function Navbar() {
   const pathname = usePathname();
@@ -76,12 +76,12 @@ export function Navbar() {
                 onDark ? "text-granite-300" : "text-granite-500"
               }`}
             >
-              New Hampshire
+              Nashua, New Hampshire
             </span>
           </span>
         </Link>
 
-        <ul className="hidden items-center gap-1 md:flex">
+        <ul className="hidden items-center gap-0.5 lg:flex">
           {navigation.map((item) => {
             const active = isActive(item.href);
             return (
@@ -89,7 +89,7 @@ export function Navbar() {
                 <Link
                   href={item.href}
                   aria-current={active ? "page" : undefined}
-                  className={`relative rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200 ${
+                  className={`relative rounded-full px-3 py-2 text-sm font-medium transition-colors duration-200 ${
                     onDark
                       ? active
                         ? "text-granite-50"
@@ -101,7 +101,7 @@ export function Navbar() {
                 >
                   {item.label}
                   <span
-                    className={`absolute inset-x-4 -bottom-0.5 h-px origin-left transition-transform duration-300 ${
+                    className={`absolute inset-x-3 -bottom-0.5 h-px origin-left transition-transform duration-300 ${
                       onDark ? "bg-brass-400" : "bg-brass-500"
                     } ${active ? "scale-x-100" : "scale-x-0"}`}
                   />
@@ -111,7 +111,7 @@ export function Navbar() {
           })}
         </ul>
 
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="hidden items-center gap-3 lg:flex">
           <a
             href={`tel:${site.phone}`}
             className={`text-sm font-medium transition-colors duration-300 ${
@@ -128,7 +128,7 @@ export function Navbar() {
                 : "bg-granite-900 text-granite-50 hover:bg-brass-500 hover:shadow-lg hover:shadow-brass-500/20"
             }`}
           >
-            Get an estimate
+            Request a Consultation
           </Link>
         </div>
 
@@ -137,7 +137,7 @@ export function Navbar() {
           onClick={() => setOpen((value) => !value)}
           aria-expanded={open}
           aria-controls="mobile-nav"
-          className={`grid size-10 place-items-center rounded-full transition-colors md:hidden ${
+          className={`grid size-10 place-items-center rounded-full transition-colors lg:hidden ${
             onDark ? "text-granite-50 hover:bg-granite-50/10" : "text-granite-800 hover:bg-granite-100"
           }`}
         >
@@ -155,10 +155,10 @@ export function Navbar() {
       <div
         id="mobile-nav"
         hidden={!open}
-        className="border-t border-granite-200 bg-granite-50 md:hidden"
+        className="border-t border-granite-200 bg-granite-50 lg:hidden"
       >
         <ul className="container-page flex flex-col py-3">
-          {navigation.map((item, index) => (
+          {fullNavigation.map((item, index) => (
             <li key={item.href} className="animate-fade-up" style={{ animationDelay: `${index * 40}ms` }}>
               <Link
                 href={item.href}
@@ -179,7 +179,7 @@ export function Navbar() {
               href="/contact"
               className="block rounded-full bg-granite-900 px-5 py-3 text-center text-sm font-medium text-granite-50"
             >
-              Get an estimate
+              Request a Consultation
             </Link>
           </li>
         </ul>

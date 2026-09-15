@@ -4,6 +4,7 @@ import { headers } from "next/headers";
 
 import { sendEstimateNotification } from "@/lib/email";
 import { allowSubmission } from "@/lib/rate-limit";
+import { site } from "@/lib/site";
 import {
   contactSchema,
   isServedCity,
@@ -53,10 +54,11 @@ export async function submitContactForm(
     budget: readString(formData, "budget"),
     details: readString(formData, "details"),
     company: readString(formData, "company"),
+    website: readString(formData, "website"),
   };
 
   // Honeypot: pretend it worked so bots do not learn to retry.
-  if (submitted.company.length > 0) {
+  if (submitted.website.length > 0) {
     return { status: "success", message: "Thanks — we'll be in touch.", errors: {}, reference: buildReference() };
   }
 
@@ -76,7 +78,7 @@ export async function submitContactForm(
   if (!isServedCity(lead.city)) {
     return {
       status: "error",
-      message: "We build across New Hampshire — pick the closest town to your site.",
+      message: "We work across southern New Hampshire — pick the closest town to your site.",
       errors: { city: "Choose a town from the list." },
       values: submitted,
     };
@@ -85,7 +87,7 @@ export async function submitContactForm(
   if (!allowSubmission(await clientKey())) {
     return {
       status: "error",
-      message: `Too many requests from this connection. Call us at (603) 555-0142 and we'll take it down by phone.`,
+      message: `Too many requests from this connection. Give us a call at ${site.phoneDisplay} and we'll take the details by phone.`,
       errors: {},
       values: submitted,
     };
@@ -97,7 +99,7 @@ export async function submitContactForm(
   if (!delivery.delivered && delivery.reason === "provider-error") {
     return {
       status: "error",
-      message: "We couldn't deliver that just now. Please call (603) 555-0142 — we don't want to lose your project.",
+      message: `We couldn't deliver that just now. Please call ${site.phoneDisplay} — we don't want to lose your project.`,
       errors: {},
       values: submitted,
     };

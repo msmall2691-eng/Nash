@@ -5,7 +5,7 @@ import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/JsonLd";
 import { Navbar } from "@/components/Navbar";
 import { localBusinessSchema, websiteSchema } from "@/lib/schema";
-import { localKeywords, site, siteUrl } from "@/lib/site";
+import { FOUNDED_YEAR, localKeywords, site, siteUrl } from "@/lib/site";
 
 import "./globals.css";
 
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
     default: `${site.name} | ${site.tagline}`,
-    template: `%s | ${site.name} — New Hampshire`,
+    template: `%s | ${site.name} — Nashua, NH`,
   },
   description: site.description,
   applicationName: site.name,
@@ -52,11 +52,13 @@ export const metadata: Metadata = {
     siteName: site.name,
     title: `${site.name} | ${site.tagline}`,
     description: site.description,
+    images: [{ url: "/projects/hero-commercial.jpg", width: 1600, height: 1200, alt: site.tagline }],
   },
   twitter: {
     card: "summary_large_image",
     title: `${site.name} | ${site.tagline}`,
     description: site.description,
+    images: ["/projects/hero-commercial.jpg"],
   },
   robots: {
     index: true,
@@ -73,6 +75,9 @@ export const metadata: Metadata = {
     "business:contact_data:locality": site.address.city,
     "business:contact_data:region": site.address.regionName,
     "business:contact_data:phone_number": site.phone,
+    "business:contact_data:street_address": site.address.street,
+    "business:contact_data:postal_code": site.address.postalCode,
+    foundingDate: String(FOUNDED_YEAR),
   },
 };
 

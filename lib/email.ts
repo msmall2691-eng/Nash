@@ -17,7 +17,7 @@ export type DeliveryResult =
   | { delivered: false; reason: "not-configured" | "provider-error"; detail?: string };
 
 const apiKey = process.env.RESEND_API_KEY;
-const fromAddress = process.env.CONTACT_FROM_EMAIL ?? `Nash Construction <onboarding@resend.dev>`;
+const fromAddress = process.env.CONTACT_FROM_EMAIL ?? `${site.name} <onboarding@resend.dev>`;
 const toAddress = process.env.CONTACT_TO_EMAIL ?? site.email;
 
 /** Instantiated once per server instance; `null` until a key exists. */
@@ -35,9 +35,10 @@ function renderNotification(lead: ContactInput, reference: string): string {
   const rows: Array<[string, string]> = [
     ["Reference", reference],
     ["Name", lead.name],
+    ["Company", lead.company?.trim() || "—"],
     ["Email", lead.email],
     ["Phone", normalizePhone(lead.phone)],
-    ["NH Town", lead.city],
+    ["Town", lead.city],
     ["Project Type", lead.projectType],
     ["Budget", lead.budget],
     ["Details", lead.details?.trim() || "—"],
@@ -45,8 +46,8 @@ function renderNotification(lead: ContactInput, reference: string): string {
 
   return `
     <div style="font-family:ui-sans-serif,system-ui,sans-serif;color:#1c1917;max-width:560px">
-      <h2 style="margin:0 0 4px;font-size:18px">New estimate request</h2>
-      <p style="margin:0 0 16px;color:#78716c;font-size:13px">via nashconstructionnh.com</p>
+      <h2 style="margin:0 0 4px;font-size:18px">New consultation request</h2>
+      <p style="margin:0 0 16px;color:#78716c;font-size:13px">via ${escapeHtml(site.name)} website</p>
       <table cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;font-size:14px">
         ${rows
           .map(
@@ -74,7 +75,7 @@ export async function sendEstimateNotification(
 ): Promise<DeliveryResult> {
   if (!resend) {
     console.info(
-      `[contact] RESEND_API_KEY not set — estimate request ${reference} logged instead of emailed.`,
+      `[contact] RESEND_API_KEY not set — consultation request ${reference} logged instead of emailed.`,
       { name: lead.name, email: lead.email, town: lead.city, projectType: lead.projectType },
     );
     return { delivered: false, reason: "not-configured" };

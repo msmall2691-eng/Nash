@@ -8,46 +8,84 @@
 
 export const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
-  "https://www.nashconstructionnh.com";
+  "https://www.nashconstructionllc.com";
+
+/** Founded 1976; the LLC was incorporated in 1999. */
+export const FOUNDED_YEAR = 1976;
+
+/** Computed so the headline stays true without an annual copy edit. */
+export const yearsInBusiness = new Date().getFullYear() - FOUNDED_YEAR;
 
 export const site = {
   name: "Nash Construction",
-  legalName: "Nash Construction LLC",
-  tagline: "Custom Homes & Fine Remodeling in New Hampshire",
+  legalName: "Nash Construction, LLC",
+  tagline: "Commercial & Industrial General Contracting in Southern New Hampshire",
   description:
-    "Nash Construction builds custom homes, additions and high-end remodels across New Hampshire — from the Lakes Region and Seacoast to the Merrimack Valley. Licensed, insured, and building in the Granite State since 2004.",
-  founded: "2004",
-  email: "office@nashconstructionnh.com",
-  phone: "+1-603-555-0142",
-  phoneDisplay: "(603) 555-0142",
+    "Nash Construction, LLC is a Nashua, New Hampshire general contractor specializing in commercial and industrial construction, fit-ups, renovations, site work and building maintenance. Serving southern New Hampshire since 1976.",
+  founded: String(FOUNDED_YEAR),
+  incorporated: "1999",
+
+  // TODO — REPLACE BEFORE LAUNCH. These are placeholders, not Nash Construction's
+  // real contact details. A published site with a wrong phone number sends work
+  // to the wrong place; confirm both with Mark or Karen before the domain goes live.
+  phone: "+1-603-555-0100",
+  phoneDisplay: "(603) 555-0100",
+  email: "info@nashconstructionllc.com",
+
   address: {
-    street: "84 Mill Street, Suite 3",
-    city: "Meredith",
+    street: "40 Temple Street",
+    city: "Nashua",
     region: "NH",
     regionName: "New Hampshire",
-    postalCode: "03253",
+    postalCode: "03060",
     country: "US",
   },
-  geo: { latitude: 43.6578, longitude: -71.5006 },
+  // Approximate downtown Nashua coordinates — verify against the Google Business
+  // Profile pin before launch so the map marker lands on the right building.
+  geo: { latitude: 42.7573, longitude: -71.4657 },
   hours: [
-    { days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "07:00", closes: "17:00" },
-    { days: ["Saturday"], opens: "08:00", closes: "13:00" },
+    { days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "07:00", closes: "16:00" },
   ],
-  priceRange: "$$$",
-  license: "NH HIC #0148823",
-  social: [
-    "https://www.facebook.com/nashconstructionnh",
-    "https://www.instagram.com/nashconstructionnh",
+  priceRange: "$$",
+
+  accreditation: {
+    body: "Better Business Bureau",
+    rating: "A+",
+    accreditedSince: "2009",
+  },
+
+  leadership: [
+    {
+      name: "Mark Nash",
+      role: "President",
+      bio: `Founded the business in ${FOUNDED_YEAR} and has worked in construction ever since. Mark still walks the jobs he sells.`,
+    },
+    {
+      name: "Stephen Boilard",
+      role: "Project Manager",
+      bio: "Runs schedules, subs and inspections day to day — the number clients call when something needs a decision.",
+    },
   ],
+
+  // No social profiles confirmed for the business yet; add them here and they
+  // flow into the JSON-LD `sameAs` array automatically.
+  social: [] as string[],
 } as const;
 
-/** Towns and regions we actually serve — reused for metadata keywords and `areaServed`. */
+/**
+ * Markets served, in Procore's categorization. Used for copy and JSON-LD.
+ */
+export const markets = ["Commercial", "Industrial & Energy", "Institutional"] as const;
+
+/**
+ * Nashua plus the southern New Hampshire communities the business actually
+ * works in. Grouped for the footer; flattened for keywords and `areaServed`.
+ */
 export const serviceAreas = [
-  { region: "Lakes Region", towns: ["Meredith", "Laconia", "Wolfeboro", "Gilford", "Moultonborough", "Alton"] },
-  { region: "Seacoast", towns: ["Portsmouth", "Rye", "Exeter", "Hampton", "New Castle", "Stratham"] },
-  { region: "Merrimack Valley", towns: ["Concord", "Manchester", "Bedford", "Hooksett", "Amherst"] },
-  { region: "Dartmouth–Sunapee", towns: ["Hanover", "New London", "Sunapee", "Lebanon"] },
-  { region: "White Mountains", towns: ["North Conway", "Jackson", "Lincoln", "Bartlett"] },
+  { region: "Greater Nashua", towns: ["Nashua", "Hudson", "Merrimack", "Litchfield", "Hollis", "Amherst", "Brookline"] },
+  { region: "Manchester Area", towns: ["Manchester", "Bedford", "Goffstown", "Hooksett", "Auburn"] },
+  { region: "Souhegan Valley", towns: ["Milford", "Mont Vernon", "Wilton", "New Boston"] },
+  { region: "I-93 Corridor", towns: ["Londonderry", "Derry", "Salem", "Windham", "Pelham", "Atkinson"] },
 ] as const;
 
 export const allTowns = serviceAreas.flatMap((area) => area.towns);
@@ -57,26 +95,39 @@ export const allTowns = serviceAreas.flatMap((area) => area.towns);
  * to `serviceAreas` automatically widens our local SEO surface.
  */
 export const localKeywords: string[] = [
-  "New Hampshire custom home builder",
-  "NH general contractor",
-  "Lakes Region home builder",
-  "Seacoast NH remodeling contractor",
-  "New Hampshire kitchen remodel",
-  "lakefront home builder New Hampshire",
-  "Winnipesaukee custom home",
-  "NH design build contractor",
-  "licensed home builder New Hampshire",
-  ...allTowns.map((town) => `${town} NH contractor`),
-  ...serviceAreas.map((area) => `${area.region} custom home builder`),
+  "Nashua NH commercial general contractor",
+  "southern New Hampshire commercial construction",
+  "NH industrial construction company",
+  "commercial fit-up contractor New Hampshire",
+  "tenant improvement contractor Nashua NH",
+  "industrial general contractor southern NH",
+  "commercial renovation contractor New Hampshire",
+  "NH building maintenance contractor",
+  "emergency building repair New Hampshire",
+  "Nashua construction company",
+  ...allTowns.map((town) => `${town} NH commercial contractor`),
+  ...serviceAreas.map((area) => `${area.region} commercial construction`),
 ];
 
 export const navigation = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
+  { href: "/commercial", label: "Commercial" },
+  { href: "/industrial", label: "Industrial" },
   { href: "/services", label: "Services" },
-  { href: "/gallery", label: "Gallery" },
+  { href: "/projects", label: "Projects" },
+  { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ] as const;
 
-/** Flat town list for the contact/estimate form selects. */
-export const nhCities: string[] = [...allTowns].sort((a, b) => a.localeCompare(b));
+/** Includes Home, for the mobile sheet and the footer sitemap column. */
+export const fullNavigation = [{ href: "/", label: "Home" }, ...navigation] as const;
+
+/**
+ * Town options for the consultation form. The trailing catch-all keeps the form
+ * from rejecting a legitimate project in a town we have not enumerated.
+ */
+export const OTHER_TOWN = "Other — Southern NH";
+
+export const nhCities: string[] = [
+  ...[...allTowns].sort((a, b) => a.localeCompare(b)),
+  OTHER_TOWN,
+];
