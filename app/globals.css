@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Design tokens — Tailwind v4 CSS-first theme.
+   Palette: New Hampshire granite (cool neutrals) against aged brass.
+--------------------------------------------------------------------------- */
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+
+  --color-granite-50: #f7f7f6;
+  --color-granite-100: #edecea;
+  --color-granite-200: #d8d6d2;
+  --color-granite-300: #b9b5af;
+  --color-granite-400: #928d86;
+  --color-granite-500: #74706a;
+  --color-granite-600: #5c5954;
+  --color-granite-700: #4a4744;
+  --color-granite-800: #2e2c2a;
+  --color-granite-900: #1c1b1a;
+  --color-granite-950: #111110;
+
+  --color-brass-300: #dcba86;
+  --color-brass-400: #cda264;
+  --color-brass-500: #b8894a;
+  --color-brass-600: #976d39;
+  --color-brass-700: #75542d;
+
+  --animate-fade-up: fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-fade-in: fade-in 0.4s ease-out both;
+  --animate-scale-in: scale-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-check: check-draw 0.5s cubic-bezier(0.65, 0, 0.35, 1) 0.15s forwards;
+  --animate-ring: ring-pulse 0.6s ease-out both;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translate3d(0, 1rem, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.94); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes check-draw {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes ring-pulse {
+  from { opacity: 0.6; transform: scale(0.8); }
+  to { opacity: 0; transform: scale(1.6); }
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------------- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-granite-50);
+    color: var(--color-granite-900);
+    font-family: var(--font-sans);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brass-500);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Honor the OS setting — every animation here is decorative. */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@utility container-page {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 80rem;
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 1024px) {
+  .container-page { padding-inline: 2.5rem; }
+}
