@@ -6,9 +6,31 @@
  * data Google reads.
  */
 
-export const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
-  "https://www.nashconstructionnh.com";
+const DEFAULT_SITE_URL = "https://www.nashconstructionnh.com";
+
+/**
+ * Canonical origin for metadata, sitemaps and JSON-LD.
+ *
+ * Hosts routinely hand over an env var that exists but is empty — Vercel creates
+ * blank variables, CI passes through unset values as "" — and `??` only catches
+ * null and undefined, so an empty string used to reach `new URL("")` and fail
+ * the production build at page-data collection. Anything unusable now falls back
+ * rather than throwing, and a bare hostname gets a scheme instead of being
+ * rejected.
+ */
+function resolveSiteUrl(): string {
+  const raw = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (!raw) return DEFAULT_SITE_URL;
+
+  const candidate = /^https?:\/\//i.test(raw) ? raw : `https://${raw}`;
+  try {
+    return new URL(candidate).toString().replace(/\/$/, "");
+  } catch {
+    return DEFAULT_SITE_URL;
+  }
+}
+
+export const siteUrl = resolveSiteUrl();
 
 /** Founded 1976; the LLC was incorporated in 1999. */
 export const FOUNDED_YEAR = 1976;
