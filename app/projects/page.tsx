@@ -11,7 +11,7 @@ import { site, siteUrl } from "@/lib/site";
 export const metadata: Metadata = pageMetadata({
   title: "Projects",
   description:
-    "Commercial and industrial construction projects by Nash Construction across Nashua and southern New Hampshire — retail, restaurant, nonprofit and institutional clients.",
+    "Commercial, industrial and residential projects by Nash Construction across Nashua and southern New Hampshire.",
   path: "/projects",
   keywords: [
     "Nashua NH commercial construction projects",

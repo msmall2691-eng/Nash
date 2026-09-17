@@ -70,20 +70,14 @@ export function Footer() {
               {site.phoneDisplay}
             </a>
             <br />
-            <a href={`mailto:${site.email}`} className="text-granite-200 transition-colors hover:text-brand-400">
+            {/* Long address in a narrow grid column — allow it to wrap. */}
+            <a
+              href={`mailto:${site.email}`}
+              className="break-words text-granite-200 transition-colors hover:text-brand-400"
+            >
               {site.email}
             </a>
           </p>
-          <ul className="mt-5 space-y-1 text-xs text-granite-500">
-            {site.hours.map((block) => (
-              <li key={block.days[0]}>
-                {block.days.length > 1
-                  ? `${block.days[0]?.slice(0, 3)}–${block.days[block.days.length - 1]?.slice(0, 3)}`
-                  : block.days[0]?.slice(0, 3)}{" "}
-                {block.opens}–{block.closes}
-              </li>
-            ))}
-          </ul>
         </address>
       </div>
 

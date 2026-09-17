@@ -10,9 +10,9 @@ import { breadcrumbSchema, serviceSchema } from "@/lib/schema";
 import { FOUNDED_YEAR, serviceAreas, site, yearsInBusiness } from "@/lib/site";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Commercial Construction",
+  title: "Commercial Construction, Nashua NH",
   description:
-    "Commercial general contracting in Nashua and southern New Hampshire — new construction, tenant fit-ups, renovations and building maintenance for retail, restaurant, office and institutional clients.",
+    "Commercial general contracting in Nashua and southern NH: new construction, tenant fit-ups, renovations and building maintenance. Since 1976.",
   path: "/commercial",
   keywords: [
     "commercial construction Nashua NH",

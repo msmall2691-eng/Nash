@@ -11,7 +11,7 @@ import { FOUNDED_YEAR, serviceAreas, site } from "@/lib/site";
 
 export const metadata: Metadata = pageMetadata({
   title: "Request a Consultation",
-  description: `Request a commercial or industrial construction consultation from Nash Construction in Nashua, NH. Call ${site.phoneDisplay} or send project details — we reply within one business day.`,
+  description: `Request a commercial or industrial construction consultation in Nashua, NH. Call ${site.phoneDisplay} — we reply within one business day.`,
   path: "/contact",
   keywords: [
     "Nashua NH contractor consultation",
@@ -94,10 +94,13 @@ export default function ContactPage() {
                     </a>
                   </dd>
                 </div>
-                <div className="flex justify-between gap-4 border-t border-granite-100 pt-3">
+                <div className="flex flex-wrap justify-between gap-x-4 gap-y-1 border-t border-granite-100 pt-3">
                   <dt className="text-granite-500">Email</dt>
                   <dd>
-                    <a href={`mailto:${site.email}`} className="font-medium text-granite-900 hover:text-brand-600">
+                    <a
+                      href={`mailto:${site.email}`}
+                      className="break-words font-medium text-granite-900 hover:text-brand-600"
+                    >
                       {site.email}
                     </a>
                   </dd>
@@ -113,22 +116,6 @@ export default function ContactPage() {
                   </dd>
                 </div>
               </dl>
-              <ul
-                className={`space-y-1.5 text-sm text-granite-600 ${site.hours.length > 0 ? "mt-6 border-t border-granite-100 pt-4" : ""}`}
-              >
-                {site.hours.map((block) => (
-                  <li key={block.days[0]} className="flex justify-between gap-4">
-                    <span className="text-granite-500">
-                      {block.days.length > 1
-                        ? `${block.days[0]?.slice(0, 3)}–${block.days[block.days.length - 1]?.slice(0, 3)}`
-                        : block.days[0]}
-                    </span>
-                    <span className="tabular-nums">
-                      {block.opens} – {block.closes}
-                    </span>
-                  </li>
-                ))}
-              </ul>
               <p className="mt-5 border-t border-granite-100 pt-4 text-xs leading-relaxed text-granite-500">
                 Emergency repair work is triaged the day it comes in — call rather than email if
                 something has failed.

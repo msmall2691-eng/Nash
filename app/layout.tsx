@@ -33,9 +33,11 @@ const fraunces = Fraunces({
  */
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  // Google truncates around 60 characters, so the suffix stays short and each
+  // route supplies a leaf title that fits inside the remainder.
   title: {
-    default: `${site.name} | ${site.tagline}`,
-    template: `%s | ${site.name} — Nashua, NH`,
+    default: `${site.name} | Commercial & Industrial Contractor`,
+    template: `%s | ${site.name}`,
   },
   description: site.description,
   applicationName: site.name,

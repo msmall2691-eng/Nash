@@ -56,12 +56,6 @@ export function localBusinessSchema() {
       latitude: site.geo.latitude,
       longitude: site.geo.longitude,
     },
-    openingHoursSpecification: site.hours.map((block) => ({
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: [...block.days],
-      opens: block.opens,
-      closes: block.closes,
-    })),
     areaServed: [
       ...[...new Set(serviceAreas.map((area) => area.stateName))].map((stateName) => ({
         "@type": "State" as const,

@@ -10,8 +10,8 @@ import { process } from "@/lib/services";
 import { FOUNDED_YEAR, markets, serviceAreas, site, yearsInBusiness } from "@/lib/site";
 
 export const metadata: Metadata = pageMetadata({
-  title: "About Nash Construction",
-  description: `Nash Construction, LLC has been building in southern New Hampshire since ${FOUNDED_YEAR} — a Nashua commercial and industrial general contractor, BBB accredited since ${site.accreditation.accreditedSince} with an ${site.accreditation.rating} rating.`,
+  title: "About Our Nashua Contractors",
+  description: `A Nashua commercial and industrial general contractor building in southern NH since ${FOUNDED_YEAR}. BBB accredited, ${site.accreditation.rating} rated.`,
   path: "/about",
   keywords: [
     "about Nash Construction Nashua NH",

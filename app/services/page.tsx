@@ -9,9 +9,9 @@ import { serviceGroups } from "@/lib/services";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Commercial & Industrial Construction Services",
+  title: "Construction Services",
   description:
-    "General contracting, renovations and fit-ups, mechanical and electrical, exterior and site work, and building maintenance and emergency repair across southern New Hampshire.",
+    "General contracting, fit-ups, mechanical and electrical, site work, and maintenance and emergency repair across southern NH and northern MA.",
   path: "/services",
   keywords: [
     "commercial general contracting NH",

@@ -21,7 +21,7 @@ export const site = {
   legalName: "Nash Construction, LLC",
   tagline: "Commercial & Industrial General Contracting in Southern New Hampshire",
   description:
-    "Nash Construction, LLC is a Nashua, New Hampshire general contractor specializing in commercial and industrial construction, fit-ups, renovations, site work and building maintenance. Serving southern New Hampshire and northern Massachusetts since 1976.",
+    "Nashua NH general contractor for commercial and industrial construction, fit-ups, renovations and site work. Serving southern NH and northern MA since 1976.",
   founded: String(FOUNDED_YEAR),
   incorporated: "1999",
 
@@ -44,19 +44,6 @@ export const site = {
   // Approximate downtown Nashua coordinates — verify against the Google Business
   // Profile pin before launch so the map marker lands on the right building.
   geo: { latitude: 42.7573, longitude: -71.4657 },
-  /**
-   * Office hours — intentionally empty.
-   *
-   * The hours previously here came from the Google listing for *Nash Group*, a
-   * different entity, so publishing them would have sent people to the wrong
-   * schedule. Nash Construction's own site lists none. Add the real hours here
-   * and they appear in the footer, the contact page and the JSON-LD at once.
-   */
-  hours: [] as ReadonlyArray<{
-    days: readonly string[];
-    opens: string;
-    closes: string;
-  }>,
   priceRange: "$$",
 
   accreditation: {

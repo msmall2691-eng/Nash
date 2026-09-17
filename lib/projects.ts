@@ -122,8 +122,3 @@ export const projects: Project[] = seeds.map((seed) => ({
   image: `/projects/${seed.slug}.jpg`,
   blurDataURL: blurFor(seed.slug),
 }));
-
-/** Only offer filters that actually have work behind them. */
-export const activeSectors: ProjectSector[] = PROJECT_SECTORS.filter((sector) =>
-  projects.some((project) => project.sector === sector),
-);

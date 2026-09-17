@@ -10,9 +10,9 @@ import { breadcrumbSchema, serviceSchema } from "@/lib/schema";
 import { serviceAreas, site, yearsInBusiness } from "@/lib/site";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Industrial Construction",
+  title: "Industrial Construction, Nashua NH",
   description:
-    "Industrial general contracting in southern New Hampshire — manufacturing and warehouse construction, mechanical and electrical scopes, fire suppression, demolition and site work.",
+    "Industrial general contracting in southern NH: manufacturing and warehouse space, mechanical, electrical and fire suppression, demolition and site work.",
   path: "/industrial",
   keywords: [
     "industrial construction New Hampshire",

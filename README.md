@@ -16,7 +16,9 @@ project slug and run `npm run photos` — see "Photos" below.
 | --- | --- | --- | --- |
 | Phone | 603-943-7593 | (603) 882-2702 | Website number |
 | Founded | — | "1974" (directories) | 1976 (per BBB) |
-| Hours | — | Mon–Thu 9–5, Fri 9–4 | Google's |
+
+Office hours are deliberately not published anywhere on the site, per the
+owner's request.
 
 **Local SEO — the biggest single win available.** The Google Business Profile is
 **unclaimed** ("Own this business?") and is filed under *Nash Group* with a phone
