@@ -176,6 +176,15 @@ const seeds: ProjectSeed[] = [
     hasPhoto: true,
   },
   {
+    slug: "residential-remodel",
+    title: "Residential Remodel",
+    sector: "Residential",
+    summary:
+      "Board-and-batten siding and white-trimmed replacement windows outside, a rebuilt kitchen beyond the door, and a new pressure-treated entry landing with steps and a ramp.",
+    scope: ["Remodel", "Siding & windows", "Entry deck & ramp"],
+    hasPhoto: true,
+  },
+  {
     slug: "detached-two-car-garage",
     title: "Detached Two-Car Garage",
     sector: "Residential",
