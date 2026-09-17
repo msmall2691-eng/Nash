@@ -194,9 +194,9 @@ on any Node host.
 needed. Add the environment variables above under Settings → Environment
 Variables. Every push to the production branch deploys; every PR gets a preview.
 
-**Railway** — create a service from the repo. Railway's Node detection runs
-`npm run build`; set the start command to `npm run start -- -p $PORT` so it binds
-Railway's injected port. Add the same environment variables.
+**Railway** — create a service from the repo. No start-command override is
+needed: `npm run start` binds `$PORT` when the platform injects one and falls
+back to 3000 locally. Add the same environment variables.
 
 ## Brand
 
