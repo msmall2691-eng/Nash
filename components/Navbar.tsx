@@ -114,7 +114,7 @@ export function Navbar() {
             href="/contact"
             className={`rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300 ${
               onDark
-                ? "bg-granite-50 text-white hover:bg-brand-500"
+                ? "bg-granite-50 text-granite-950 hover:bg-brand-600 hover:text-white"
                 : "bg-granite-900 text-granite-50 hover:bg-brand-500 hover:shadow-lg hover:shadow-brand-500/20"
             }`}
           >

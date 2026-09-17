@@ -1,11 +1,13 @@
 import Link from "next/link";
 
-import { ProtectedImage } from "@/components/ProtectedImage";
-
 import { Amp } from "@/components/Amp";
+import { ProtectedImage } from "@/components/ProtectedImage";
+import blurPlaceholders from "@/lib/blur-placeholders.json";
 import { projects } from "@/lib/projects";
 import { serviceGroups } from "@/lib/services";
 import { FOUNDED_YEAR, markets, serviceAreas, site, yearsInBusiness } from "@/lib/site";
+
+const heroBlur = (blurPlaceholders as Record<string, string>)["nashua-downtown"];
 
 /** The credibility strip that sits immediately under the hero. */
 const credibility = [
@@ -20,17 +22,24 @@ export default function HomePage() {
     <>
       {/* ------------------------------- Hero ------------------------------- */}
       <section className="relative -mt-20 flex min-h-[92svh] items-end overflow-hidden bg-granite-950 pt-20">
+        {/*
+          Downtown Nashua — Main at West Pearl. A CC0 public-domain photograph,
+          held deliberately faint: it is a sense-of-place backdrop, not a project
+          photo, and it steps aside the moment real site photography arrives.
+        */}
         <ProtectedImage
-          src="/projects/hero-commercial.jpg"
-          alt="Commercial construction by Nash Construction in southern New Hampshire"
+          src="/hero/nashua-downtown.jpg"
+          alt="Downtown Nashua, New Hampshire, where Nash Construction has been based since 1976"
           fill
           sizes="100vw"
           priority
-          className="object-cover opacity-70"
+          placeholder="blur"
+          blurDataURL={heroBlur}
+          className="object-cover opacity-45"
         />
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-t from-granite-950 via-granite-950/75 to-granite-950/35"
+          className="absolute inset-0 bg-gradient-to-t from-granite-950 via-granite-950/80 to-granite-950/55"
         />
 
         <div className="container-page relative pb-20 pt-32">

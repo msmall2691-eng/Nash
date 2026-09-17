@@ -91,6 +91,17 @@ lib/
   rate-limit.ts       In-memory submission throttle
 ```
 
+## Hero image
+
+`public/hero/nashua-downtown.jpg` is downtown Nashua — Main Street at West
+Pearl, looking at the Masonic building. Source: Wikimedia Commons,
+"Main_at_West_Pearl_St_Nashua.jpg" by MarkBuckawicki, released under **CC0 1.0**
+(public domain dedication — no attribution required, commercial use permitted).
+
+It is processed to 1920x990, desaturated, and rendered at 45% opacity under a
+heavy gradient. It is deliberately a *sense-of-place backdrop*, not a project
+photo — swap it for real site photography when there is a strong wide shot.
+
 ## Photos
 
 Real photography never goes in the repo by hand. Put originals in
