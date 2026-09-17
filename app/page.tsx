@@ -106,13 +106,13 @@ export default function HomePage() {
           {[
             {
               href: "/commercial",
-              image: "/projects/hero-commercial.jpg",
+              image: "/projects/galeria-retail-block.jpg",
               title: "Commercial Construction",
               body: "Retail, restaurant, office and institutional work — new construction, tenant fit-ups and renovations, phased so the business next door keeps trading.",
             },
             {
               href: "/industrial",
-              image: "/projects/hero-industrial.jpg",
+              image: "/projects/manufacturing-facility.jpg",
               title: "Industrial Construction",
               body: "Manufacturing and warehouse space, mechanical and electrical scopes, fire suppression and the site work that supports them.",
             },

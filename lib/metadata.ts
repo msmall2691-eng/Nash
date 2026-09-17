@@ -24,7 +24,7 @@ export function pageMetadata({
   description,
   path,
   keywords = [],
-  image = "/projects/hero-commercial.jpg",
+  image = "/projects/marzen-group.jpg",
 }: PageMetaInput): Metadata {
   const url = `${siteUrl}${path === "/" ? "" : path}`;
 

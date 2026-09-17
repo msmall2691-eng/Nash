@@ -24,7 +24,7 @@ export function localBusinessSchema() {
     email: site.email,
     foundingDate: String(FOUNDED_YEAR),
     priceRange: site.priceRange,
-    image: `${siteUrl}/projects/hero-commercial.jpg`,
+    image: `${siteUrl}/projects/marzen-group.jpg`,
     logo: `${siteUrl}/icon.svg`,
     ...(sameAsUrls.length > 0 ? { sameAs: sameAsUrls } : {}),
     founder: {

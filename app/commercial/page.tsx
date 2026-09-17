@@ -72,8 +72,8 @@ export default function CommercialPage() {
 
       <section className="relative -mt-20 flex min-h-[70svh] items-end overflow-hidden bg-granite-950 pt-20">
         <ProtectedImage
-          src="/projects/hero-commercial.jpg"
-          alt="Commercial construction project in southern New Hampshire"
+          src="/projects/marzen-group.jpg"
+          alt="Märzen Group commercial office building, constructed by Nash Construction in southern New Hampshire"
           fill
           sizes="100vw"
           priority

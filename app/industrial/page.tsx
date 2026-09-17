@@ -78,8 +78,8 @@ export default function IndustrialPage() {
 
       <section className="relative -mt-20 flex min-h-[70svh] items-end overflow-hidden bg-granite-950 pt-20">
         <ProtectedImage
-          src="/projects/hero-industrial.jpg"
-          alt="Industrial construction project in southern New Hampshire"
+          src="/projects/manufacturing-facility.jpg"
+          alt="Manufacturing production floor built out by Nash Construction in southern New Hampshire"
           fill
           sizes="100vw"
           priority

@@ -41,6 +41,18 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       style={{ animationDelay: `${Math.min(index, 7) * 65}ms` }}
     >
       <div className="relative aspect-4/3 overflow-hidden">
+        {/*
+          A project without a confirmed photograph gets a branded panel rather
+          than filler imagery. Abstract generated art sitting among real site
+          photos reads as a broken image, and inventing a photo is not an option.
+        */}
+        {!project.hasPhoto ? (
+          <div className="absolute inset-0 grid place-items-center bg-brand-700">
+            <span className="px-6 text-center font-display text-lg font-semibold text-brand-300/80">
+              Photography coming soon
+            </span>
+          </div>
+        ) : (
         <ProtectedImage
           src={project.image}
           alt={altFor(project)}
@@ -54,6 +66,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           blurDataURL={project.blurDataURL}
           className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
         />
+        )}
         <div
           aria-hidden="true"
           className="absolute inset-0 bg-gradient-to-t from-granite-950 via-granite-950/25 to-transparent opacity-85 transition-opacity duration-500 group-hover:opacity-95"

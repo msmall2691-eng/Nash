@@ -40,8 +40,8 @@ export default function AboutPage() {
 
       <section className="relative -mt-20 flex min-h-[62svh] items-end overflow-hidden bg-granite-950 pt-20">
         <ProtectedImage
-          src="/projects/hero-about.jpg"
-          alt="Nash Construction, a Nashua New Hampshire general contractor"
+          src="/projects/timber-frame-screened-porch.jpg"
+          alt="Timber-frame screened porch built by Nash Construction, a Nashua New Hampshire general contractor"
           fill
           sizes="100vw"
           priority

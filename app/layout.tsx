@@ -54,13 +54,13 @@ export const metadata: Metadata = {
     siteName: site.name,
     title: `${site.name} | ${site.tagline}`,
     description: site.description,
-    images: [{ url: "/projects/hero-commercial.jpg", width: 1600, height: 1200, alt: site.tagline }],
+    images: [{ url: "/projects/marzen-group.jpg", width: 1000, height: 748, alt: site.tagline }],
   },
   twitter: {
     card: "summary_large_image",
     title: `${site.name} | ${site.tagline}`,
     description: site.description,
-    images: ["/projects/hero-commercial.jpg"],
+    images: ["/projects/marzen-group.jpg"],
   },
   robots: {
     index: true,

@@ -6,9 +6,13 @@ TypeScript (strict), Tailwind CSS v4.
 
 ## ⚠️ Before this goes live
 
-**Real project photos still need importing.** `public/projects/*.jpg` are
-generated placeholders. Drop the originals into `photos-inbox/` named after each
-project slug and run `npm run photos` — see "Photos" below.
+**One project still needs a photograph:** Girls Inc. Photoless projects render
+a branded "Photography coming soon" panel rather than filler imagery, and are
+excluded from the image sitemap. Drop a photo into `photos-inbox/girls-inc.jpg`,
+run `npm run photos`, and set `hasPhoto: true` on that entry.
+
+**Two supplied photos were not published** pending identification — see
+"Unplaced photos" below.
 
 **Confirm these conflicts.** Public sources disagree with each other:
 
@@ -152,6 +156,17 @@ rather than rendered as a dead link, so adding a Facebook page later is a
 one-line change that updates every surface at once.
 
 Currently linked: BBB, Google Business Profile, Yelp, Houzz, Procore.
+
+## Unplaced photos
+
+Two images from the supplied set are not on the site because their subject could
+not be identified confidently enough to label on a real company's portfolio:
+
+- a grey board-and-batten building with a new entry deck, ramp and railings
+- (all others were matched and published)
+
+Rather than guess a sector, they are held back. Identify them and they can be
+added with the normal three-step process below.
 
 ## Adding projects
 
