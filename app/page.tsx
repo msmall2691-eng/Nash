@@ -4,7 +4,7 @@ import { ProtectedImage } from "@/components/ProtectedImage";
 import blurPlaceholders from "@/lib/blur-placeholders.json";
 import { projects } from "@/lib/projects";
 import { serviceGroups } from "@/lib/services";
-import { FOUNDED_YEAR, serviceAreas, site, yearsInBusiness } from "@/lib/site";
+import { FOUNDED_YEAR, serviceAreas, site, testimonials, yearsInBusiness } from "@/lib/site";
 
 const heroBlur = (blurPlaceholders as Record<string, string>)["nashua-downtown"];
 
@@ -252,8 +252,33 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ---------------------------- Service area ---------------------------- */}
+      {/* ---------------------------- Testimonials ---------------------------- */}
       <section className="bg-white py-24">
+        <div className="container-page">
+          <p className="text-xs font-medium uppercase tracking-[0.2em] text-brand-700">In their words</p>
+          <h2 className="mt-4 max-w-2xl font-display text-4xl font-semibold text-granite-900">
+            What clients say afterwards.
+          </h2>
+          <div className="mt-12 grid gap-6 md:grid-cols-2">
+            {testimonials.map((item) => (
+              <figure
+                key={item.attribution}
+                className="flex flex-col rounded-xl border border-granite-200 bg-granite-50 p-8 sm:p-10"
+              >
+                <blockquote className="flex-1 text-[15px] leading-relaxed text-granite-700">
+                  &ldquo;{item.quote}&rdquo;
+                </blockquote>
+                <figcaption className="mt-6 border-t border-granite-200 pt-5 text-sm font-medium text-granite-900">
+                  {item.attribution}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ---------------------------- Service area ---------------------------- */}
+      <section className="py-24">
         <div className="container-page grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <p className="text-xs font-medium uppercase tracking-[0.2em] text-brand-700">Where we work</p>

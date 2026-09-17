@@ -53,7 +53,6 @@ export const site = {
   phone: "+1-603-943-7593",
   phoneDisplay: "(603) 943-7593",
   email: "steve@nashconstructionnh.com",
-  emailAdmin: "admin@nashconstructionnh.com",
 
   address: {
     street: "40 Temple Street",
@@ -159,6 +158,31 @@ export const sameAsUrls = activeProfiles.filter((p) => p.sameAs).map((p) => p.ur
 /**
  * Markets served, in Procore's categorization. Used for copy and JSON-LD.
  */
+/** Who built the site. Rendered in the footer colophon. */
+export const studio = {
+  name: "MLinx Studio",
+  url: "https://www.mlinx.studio",
+} as const;
+
+/**
+ * Client testimonials carried over from nashconstructionnh.com.
+ *
+ * Quoted verbatim from the existing site — these are real clients' words, so
+ * they are not edited for length or tone.
+ */
+export const testimonials = [
+  {
+    quote:
+      "We really have been singing your praises to friends and family that have visited and stayed in the basement — we've been very happy with the way the basement came out and the manner in which you and your team went about the work. Thanks again.",
+    attribution: "Greg B.",
+  },
+  {
+    quote:
+      "Thank you for listening and making the vision I had for the space come to life. I'm not easy to please, but your company and crew accomplished that task! Thank you for the great work!",
+    attribution: "Sandra L.",
+  },
+] as const;
+
 export const markets = ["Commercial", "Industrial & Energy", "Institutional", "Residential"] as const;
 
 /**

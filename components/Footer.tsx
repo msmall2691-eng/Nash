@@ -4,7 +4,7 @@ import { BbbBadge } from "@/components/BbbBadge";
 import { NashMark } from "@/components/NashMark";
 import { SocialLinks } from "@/components/SocialLinks";
 import { serviceGroups } from "@/lib/services";
-import { FOUNDED_YEAR, fullNavigation, serviceAreas, site } from "@/lib/site";
+import { FOUNDED_YEAR, fullNavigation, serviceAreas, site, studio } from "@/lib/site";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -86,8 +86,20 @@ export function Footer() {
           <p>
             © {year} {site.legalName}. All rights reserved.
           </p>
-          <p>
-            Serving {serviceAreas.map((area) => area.region).join(" · ")}
+          <p className="flex flex-wrap items-center gap-x-2 gap-y-1">
+            <span>Serving {serviceAreas.map((area) => area.region).join(" · ")}</span>
+            <span aria-hidden="true" className="text-granite-700">·</span>
+            <span>
+              Site by{" "}
+              <a
+                href={studio.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-granite-400 underline-offset-4 transition-colors hover:text-granite-200 hover:underline"
+              >
+                {studio.name}
+              </a>
+            </span>
           </p>
         </div>
       </div>

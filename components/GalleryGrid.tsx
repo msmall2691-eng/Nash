@@ -69,7 +69,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         )}
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-t from-granite-950 via-granite-950/25 to-transparent opacity-85 transition-opacity duration-500 group-hover:opacity-95"
+          className="absolute inset-0 bg-gradient-to-t from-granite-950 via-granite-950/65 to-granite-950/5 transition-opacity duration-500"
         />
         <span className="absolute left-4 top-4 rounded-full bg-granite-50/90 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.12em] text-granite-800 backdrop-blur-sm">
           {project.sector}
@@ -85,12 +85,12 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           </p>
         )}
         {project.scope && project.scope.length > 0 && (
-          <p className="mt-3 text-[11px] uppercase tracking-[0.14em] text-granite-400">
+          <p className="mt-3 text-[11px] uppercase tracking-[0.14em] text-granite-300">
             {project.scope.join(" · ")}
           </p>
         )}
         {project.squareFeet && (
-          <p className="mt-2 text-[11px] uppercase tracking-[0.14em] text-granite-400">
+          <p className="mt-2 text-[11px] uppercase tracking-[0.14em] text-granite-300">
             {project.squareFeet.toLocaleString("en-US")} sq ft
           </p>
         )}
