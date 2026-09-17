@@ -1,6 +1,8 @@
 import Link from "next/link";
 
+import { BbbBadge } from "@/components/BbbBadge";
 import { ProtectedImage } from "@/components/ProtectedImage";
+import { SocialLinks } from "@/components/SocialLinks";
 import blurPlaceholders from "@/lib/blur-placeholders.json";
 import { projects } from "@/lib/projects";
 import { serviceGroups } from "@/lib/services";
@@ -8,12 +10,17 @@ import { FOUNDED_YEAR, serviceAreas, site, testimonials, yearsInBusiness } from 
 
 const heroBlur = (blurPlaceholders as Record<string, string>)["nashua-downtown"];
 
-/** The credibility strip that sits immediately under the hero. */
+/**
+ * Facts worth stating plainly, immediately under the hero.
+ *
+ * Each one is checkable — a duration, an accreditation, a footprint — rather
+ * than a slogan. They sit beside the BBB seal and the profile links, because a
+ * trust signal buried in the footer is a trust signal nobody reads.
+ */
 const credibility = [
-  { value: `${yearsInBusiness} Years`, label: "In business since " + FOUNDED_YEAR },
-  { value: site.accreditation.rating, label: `${site.accreditation.body} rated` },
-  { value: "Commercial · Industrial", label: "Our entire focus" },
-  { value: "Nashua, NH", label: "Southern New Hampshire" },
+  { value: `${yearsInBusiness} Years`, label: `Building in New Hampshire since ${FOUNDED_YEAR}` },
+  { value: "Three Markets", label: "Commercial, industrial and residential" },
+  { value: "Southern NH & Northern MA", label: `Based at ${site.address.street}, ${site.address.city}` },
 ];
 
 export default function HomePage() {
@@ -76,15 +83,29 @@ export default function HomePage() {
 
       {/* --------------------------- Credibility ---------------------------- */}
       <section className="border-b border-granite-200 bg-white">
-        <div className="container-page grid grid-cols-2 gap-8 py-12 lg:grid-cols-4">
-          {credibility.map((item) => (
-            <div key={item.label}>
-              <p className="font-display text-2xl font-semibold leading-tight text-granite-900">
-                {item.value}
-              </p>
-              <p className="mt-1.5 text-sm leading-snug text-granite-500">{item.label}</p>
-            </div>
-          ))}
+        <div className="container-page flex flex-col gap-8 py-10 xl:flex-row xl:items-center xl:gap-10">
+          {/* Accreditation leads: it is the one claim a stranger can verify in a click. */}
+          <div className="shrink-0">
+            <BbbBadge tone="light" />
+          </div>
+
+          <dl className="grid flex-1 gap-6 sm:grid-cols-3 xl:border-l xl:border-granite-200 xl:pl-10">
+            {credibility.map((item) => (
+              <div key={item.value}>
+                <dt className="font-display text-lg font-semibold leading-tight text-granite-900">
+                  {item.value}
+                </dt>
+                <dd className="mt-1.5 text-sm leading-snug text-granite-500">{item.label}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <div className="shrink-0 xl:border-l xl:border-granite-200 xl:pl-10">
+            <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.16em] text-granite-500">
+              Find us on
+            </p>
+            <SocialLinks tone="light" exclude={["bbb"]} />
+          </div>
         </div>
       </section>
 

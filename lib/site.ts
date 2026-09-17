@@ -136,7 +136,7 @@ export const socialProfiles: SocialProfile[] = [
   },
   {
     key: "procore",
-    label: "Procore Network",
+    label: "Procore",
     url: "https://www.procore.com/network/p/nash-construction-nashua",
     sameAs: true,
   },
