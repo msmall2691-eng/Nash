@@ -113,7 +113,9 @@ export default function ContactPage() {
                   </dd>
                 </div>
               </dl>
-              <ul className="mt-6 space-y-1.5 border-t border-granite-100 pt-4 text-sm text-granite-600">
+              <ul
+                className={`space-y-1.5 text-sm text-granite-600 ${site.hours.length > 0 ? "mt-6 border-t border-granite-100 pt-4" : ""}`}
+              >
                 {site.hours.map((block) => (
                   <li key={block.days[0]} className="flex justify-between gap-4">
                     <span className="text-granite-500">

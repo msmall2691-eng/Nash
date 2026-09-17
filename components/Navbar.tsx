@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { NashMark } from "@/components/NashMark";
 import { fullNavigation, navigation, site } from "@/lib/site";
 
 /** Routes whose hero is a full-bleed dark image the transparent navbar sits on. */
@@ -50,19 +51,8 @@ export function Navbar() {
     >
       <nav aria-label="Primary" className="container-page flex h-20 items-center justify-between gap-6">
         <Link href="/" className="group flex items-center gap-3" aria-label={`${site.name} home`}>
-          <span
-            className={`grid size-10 place-items-center rounded-sm transition-colors duration-300 ${
-              onDark ? "bg-granite-50 group-hover:bg-brass-400" : "bg-granite-900 group-hover:bg-brass-500"
-            }`}
-          >
-            <span
-              className={`font-display text-lg font-bold leading-none ${
-                onDark ? "text-granite-950" : "text-granite-50"
-              }`}
-            >
-              N
-            </span>
-          </span>
+          {/* The real mark, as vector — never resamples, never goes soft. */}
+          <NashMark className="h-10 w-auto shrink-0 rounded-[2px] transition-opacity duration-300 group-hover:opacity-90" />
           <span className="flex flex-col leading-none">
             <span
               className={`font-display text-lg font-semibold tracking-tight transition-colors duration-300 ${

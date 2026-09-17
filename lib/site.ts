@@ -25,9 +25,9 @@ export const site = {
   founded: String(FOUNDED_YEAR),
   incorporated: "1999",
 
-  // Taken from the live nashconstructionnh.com site.
-  // NOTE: the (unclaimed) Yelp listing shows (603) 882-2702 instead — see the
-  // NAP consistency note in the README. Confirm which number should be primary.
+  // Taken from the live nashconstructionnh.com site. This is the correct number:
+  // (603) 882-2702, which appears on the Google and Yelp listings, belongs to
+  // Nash Group — a different entity at the same address.
   phone: "+1-603-943-7593",
   phoneDisplay: "(603) 943-7593",
   email: "steve@nashconstructionnh.com",
@@ -44,11 +44,19 @@ export const site = {
   // Approximate downtown Nashua coordinates — verify against the Google Business
   // Profile pin before launch so the map marker lands on the right building.
   geo: { latitude: 42.7573, longitude: -71.4657 },
-  // From the Google Business Profile listing (currently unclaimed — verify).
-  hours: [
-    { days: ["Monday", "Tuesday", "Wednesday", "Thursday"], opens: "09:00", closes: "17:00" },
-    { days: ["Friday"], opens: "09:00", closes: "16:00" },
-  ],
+  /**
+   * Office hours — intentionally empty.
+   *
+   * The hours previously here came from the Google listing for *Nash Group*, a
+   * different entity, so publishing them would have sent people to the wrong
+   * schedule. Nash Construction's own site lists none. Add the real hours here
+   * and they appear in the footer, the contact page and the JSON-LD at once.
+   */
+  hours: [] as ReadonlyArray<{
+    days: readonly string[];
+    opens: string;
+    closes: string;
+  }>,
   priceRange: "$$",
 
   accreditation: {
@@ -99,12 +107,11 @@ export const socialProfiles: SocialProfile[] = [
     url: "https://www.bbb.org/us/nh/nashua/profile/building-contractors/nash-construction-llc-0051-92009862",
     sameAs: true,
   },
-  {
-    key: "google",
-    label: "Google Business Profile",
-    url: "https://www.google.com/maps?cid=16147363054906078765",
-    sameAs: true,
-  },
+  // NOTE: the Google Business Profile that search surfaces for "Nash Construction
+  // Nashua" resolves to *Nash Group*, a separate entity, and carries that entity's
+  // phone number — (603) 882-2702. It is deliberately NOT linked here. If Nash
+  // Construction creates its own verified profile, add the URL here.
+  { key: "google", label: "Google Business Profile", url: null, sameAs: true },
   {
     key: "houzz",
     label: "Houzz",
@@ -112,6 +119,8 @@ export const socialProfiles: SocialProfile[] = [
     sameAs: true,
   },
   {
+    // Name and address match, but this listing is unclaimed and shows the Nash
+    // Group phone number. Worth claiming and correcting before promoting it.
     key: "yelp",
     label: "Yelp",
     url: "https://www.yelp.com/biz/nash-construction-nashua-2",

@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { BbbBadge } from "@/components/BbbBadge";
+import { NashMark } from "@/components/NashMark";
 import { SocialLinks } from "@/components/SocialLinks";
 import { serviceGroups } from "@/lib/services";
 import { FOUNDED_YEAR, fullNavigation, serviceAreas, site } from "@/lib/site";
@@ -12,7 +13,10 @@ export function Footer() {
     <footer className="mt-24 bg-granite-950 text-granite-300">
       <div className="container-page grid gap-12 py-16 md:grid-cols-12">
         <div className="md:col-span-4">
-          <span className="font-display text-xl font-semibold text-granite-50">{site.legalName}</span>
+          <div className="flex items-center gap-3.5">
+            <NashMark className="h-11 w-auto shrink-0 rounded-[2px]" />
+            <span className="font-display text-xl font-semibold text-granite-50">{site.legalName}</span>
+          </div>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-granite-400">
             {site.tagline}. Serving southern New Hampshire and northern Massachusetts since{" "}
             {FOUNDED_YEAR}.

@@ -1,6 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2599 2401" role="img" aria-label="Nash Construction">
-  <path fill="#7e0843" fill-rule="evenodd" d="M0 0h2599v2401H0z"/>
-  <g transform="translate(0.000000,2401.000000) scale(0.100000,-0.100000)" fill="#ffffff"><path d="M19441 23853 c4 -87 10 -310 14 -495 7 -304 6 -344 -9 -405 -35 -133
+/**
+ * Nash Construction mark.
+ *
+ * Traced from the supplied CorelDRAW EPS at 1200 dpi, so it is true vector —
+ * sharp at any size, on any display, forever. Inlined rather than fetched as a
+ * file so the header paints with no extra request and the tile stays themeable.
+ *
+ * Brand colour is PANTONE 216 C, which the EPS declares as
+ * CMYK 0.12 0.96 0.26 0.50 — #7e0843 once converted.
+ */
+export function NashMark({
+  className = "",
+  title = "Nash Construction",
+}: {
+  className?: string;
+  title?: string;
+}) {
+  return (
+    <svg
+      viewBox="0 0 2599 2401"
+      className={className}
+      role="img"
+      aria-label={title}
+      shapeRendering="geometricPrecision"
+    >
+      <rect width="2599" height="2401" fill="var(--color-brand-600, #7e0843)" />
+      <g transform="translate(0.000000,2401.000000) scale(0.100000,-0.100000)" fill="#ffffff">
+        <path d="M19441 23853 c4 -87 10 -310 14 -495 7 -304 6 -344 -9 -405 -35 -133
 -134 -314 -350 -637 -232 -347 -298 -466 -304 -554 -4 -53 -1 -61 36 -117 79
 -118 281 -317 565 -556 117 -99 133 -117 137 -149 9 -59 70 -131 168 -198 152
 -104 202 -174 228 -321 33 -189 5 -352 -182 -1056 -120 -449 -171 -655 -210
@@ -67,5 +92,8 @@ l7 -725 42 -395 c100 -953 144 -1367 177 -1685 19 -187 50 -434 69 -550 20
 153 197 365 69 102 143 221 165 265 22 44 98 163 168 265 222 324 308 483 350
 647 17 65 21 123 26 387 9 531 8 526 220 811 195 262 300 417 369 548 94 179
 116 280 116 535 0 173 -16 268 -66 381 -39 89 -65 180 -65 228 l0 33 -1267 0
--1268 0 6 -157z"/></g>
-</svg>
+-1268 0 6 -157z" />
+      </g>
+    </svg>
+  );
+}
