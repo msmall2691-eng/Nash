@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
+
+import { ProtectedImage } from "@/components/ProtectedImage";
 
 import { Amp } from "@/components/Amp";
 import { JsonLd } from "@/components/JsonLd";
@@ -70,10 +71,11 @@ export default function CommercialPage() {
       />
 
       <section className="relative -mt-20 flex min-h-[70svh] items-end overflow-hidden bg-granite-950 pt-20">
-        <Image
+        <ProtectedImage
           src="/projects/hero-commercial.jpg"
           alt="Commercial construction project in southern New Hampshire"
           fill
+          wrapperClassName="absolute inset-0"
           sizes="100vw"
           priority
           className="object-cover opacity-65"

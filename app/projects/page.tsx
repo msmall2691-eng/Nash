@@ -5,7 +5,7 @@ import { GalleryGrid } from "@/components/GalleryGrid";
 import { JsonLd } from "@/components/JsonLd";
 import { pageMetadata } from "@/lib/metadata";
 import { projects } from "@/lib/projects";
-import { breadcrumbSchema } from "@/lib/schema";
+import { breadcrumbSchema, imageObjectSchema } from "@/lib/schema";
 import { site, siteUrl } from "@/lib/site";
 
 export const metadata: Metadata = pageMetadata({
@@ -33,6 +33,9 @@ function projectListSchema() {
         "@type": "CreativeWork",
         name: project.title,
         image: `${siteUrl}${project.image}`,
+        ...(project.hasPhoto
+          ? { thumbnailUrl: `${siteUrl}${project.image}`, creator: { "@type": "Organization", name: site.legalName } }
+          : {}),
         ...(project.summary ? { description: project.summary } : {}),
         ...(project.year ? { dateCreated: String(project.year) } : {}),
         ...(project.town
@@ -49,6 +52,17 @@ export default function ProjectsPage() {
       <JsonLd
         schema={[
           projectListSchema(),
+          // Only photographed work gets an ImageObject — we do not ask Google to
+          // index generated placeholders.
+          ...projects
+            .filter((project) => project.hasPhoto)
+            .map((project) =>
+              imageObjectSchema({
+                url: project.image,
+                name: project.title,
+                caption: project.summary ?? `${project.title} — ${project.sector} project by ${site.legalName}`,
+              }),
+            ),
           breadcrumbSchema([
             { name: "Home", path: "/" },
             { name: "Projects", path: "/projects" },
@@ -64,8 +78,9 @@ export default function ProjectsPage() {
           Work you can walk into.
         </h1>
         <p className="animate-fade-up mt-7 max-w-2xl text-lg leading-relaxed text-granite-600 [animation-delay:160ms]">
-          Retail, restaurant and nonprofit clients across the Nashua area. We have also worked for
-          public and municipal clients, including the City of Nashua.
+          Commercial fit-ups, industrial concrete work, and residential garages and additions across
+          southern New Hampshire and northern Massachusetts. We have also worked for public and
+          municipal clients, including the City of Nashua.
         </p>
       </section>
 

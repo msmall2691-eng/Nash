@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 
+import { BbbBadge } from "@/components/BbbBadge";
 import { ContactForm } from "@/components/ContactForm";
 import { JsonLd } from "@/components/JsonLd";
+import { SocialLinks } from "@/components/SocialLinks";
 import { pageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, businessId } from "@/lib/schema";
 import { serviceGroups } from "@/lib/services";
@@ -129,6 +131,13 @@ export default function ContactPage() {
                 Emergency repair work is triaged the day it comes in — call rather than email if
                 something has failed.
               </p>
+              <div className="mt-6 border-t border-granite-100 pt-6">
+                <BbbBadge tone="light" />
+              </div>
+              <div className="mt-5">
+                <p className="mb-3 text-xs uppercase tracking-[0.16em] text-granite-500">Find us</p>
+                <SocialLinks tone="light" />
+              </div>
             </div>
 
             <div className="rounded-2xl bg-granite-100 p-8">

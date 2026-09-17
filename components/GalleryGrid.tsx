@@ -1,15 +1,28 @@
 "use client";
 
-import Image from "next/image";
 import { useMemo, useState } from "react";
 
 import { GalleryFilter, type FilterOption } from "@/components/GalleryFilter";
+import { ProtectedImage } from "@/components/ProtectedImage";
 import { PROJECT_SECTORS, projects, type Project, type ProjectSector } from "@/lib/projects";
 
 type SectorFilter = ProjectSector | "All";
 
 function matches(project: Project, sector: SectorFilter): boolean {
   return sector === "All" || project.sector === sector;
+}
+
+/**
+ * Descriptive alt text, built from the detail we actually have.
+ *
+ * Alt text is the single biggest image-SEO lever: it is what Google Images
+ * ranks on, and what a screen reader announces. Generating it from the project
+ * record means it can never drift from the caption shown on screen.
+ */
+export function altFor(project: Project): string {
+  const where = project.town ? ` in ${project.town}, NH` : " in southern New Hampshire";
+  const what = project.scope?.length ? `${project.scope[0]} — ` : "";
+  return `${what}${project.title}, a ${project.sector.toLowerCase()} project by Nash Construction${where}`;
 }
 
 /**
@@ -28,10 +41,11 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       style={{ animationDelay: `${Math.min(index, 7) * 65}ms` }}
     >
       <div className="relative aspect-4/3 overflow-hidden">
-        <Image
+        <ProtectedImage
           src={project.image}
-          alt={`${project.title} — ${project.sector.toLowerCase()} project by Nash Construction`}
+          alt={altFor(project)}
           fill
+          wrapperClassName="absolute inset-0"
           // Three-up on desktop, two-up on tablet, full-bleed on phones.
           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
           // Only the first row is above the fold; the rest stay lazy.

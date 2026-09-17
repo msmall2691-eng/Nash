@@ -8,7 +8,7 @@
 
 export const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
-  "https://www.nashconstructionllc.com";
+  "https://www.nashconstructionnh.com";
 
 /** Founded 1976; the LLC was incorporated in 1999. */
 export const FOUNDED_YEAR = 1976;
@@ -21,16 +21,17 @@ export const site = {
   legalName: "Nash Construction, LLC",
   tagline: "Commercial & Industrial General Contracting in Southern New Hampshire",
   description:
-    "Nash Construction, LLC is a Nashua, New Hampshire general contractor specializing in commercial and industrial construction, fit-ups, renovations, site work and building maintenance. Serving southern New Hampshire since 1976.",
+    "Nash Construction, LLC is a Nashua, New Hampshire general contractor specializing in commercial and industrial construction, fit-ups, renovations, site work and building maintenance. Serving southern New Hampshire and northern Massachusetts since 1976.",
   founded: String(FOUNDED_YEAR),
   incorporated: "1999",
 
-  // TODO — REPLACE BEFORE LAUNCH. These are placeholders, not Nash Construction's
-  // real contact details. A published site with a wrong phone number sends work
-  // to the wrong place; confirm both with Mark or Karen before the domain goes live.
-  phone: "+1-603-555-0100",
-  phoneDisplay: "(603) 555-0100",
-  email: "info@nashconstructionllc.com",
+  // Taken from the live nashconstructionnh.com site.
+  // NOTE: the (unclaimed) Yelp listing shows (603) 882-2702 instead — see the
+  // NAP consistency note in the README. Confirm which number should be primary.
+  phone: "+1-603-943-7593",
+  phoneDisplay: "(603) 943-7593",
+  email: "steve@nashconstructionnh.com",
+  emailAdmin: "admin@nashconstructionnh.com",
 
   address: {
     street: "40 Temple Street",
@@ -43,8 +44,10 @@ export const site = {
   // Approximate downtown Nashua coordinates — verify against the Google Business
   // Profile pin before launch so the map marker lands on the right building.
   geo: { latitude: 42.7573, longitude: -71.4657 },
+  // From the Google Business Profile listing (currently unclaimed — verify).
   hours: [
-    { days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "07:00", closes: "16:00" },
+    { days: ["Monday", "Tuesday", "Wednesday", "Thursday"], opens: "09:00", closes: "17:00" },
+    { days: ["Friday"], opens: "09:00", closes: "16:00" },
   ],
   priceRange: "$$",
 
@@ -52,6 +55,10 @@ export const site = {
     body: "Better Business Bureau",
     rating: "A+",
     accreditedSince: "2009",
+    /** Exact accreditation date from the BBB profile. */
+    accreditedOn: "2009-08-31",
+    profileUrl:
+      "https://www.bbb.org/us/nh/nashua/profile/building-contractors/nash-construction-llc-0051-92009862",
   },
 
   leadership: [
@@ -67,10 +74,69 @@ export const site = {
     },
   ],
 
-  // No social profiles confirmed for the business yet; add them here and they
-  // flow into the JSON-LD `sameAs` array automatically.
-  social: [] as string[],
 } as const;
+
+/**
+ * External profiles.
+ *
+ * Every entry with a `url` renders in the footer and contact page and is added
+ * to the JSON-LD `sameAs` array — which is how Google ties these listings to
+ * the business for the local pack. Leave `url` as null for a profile that does
+ * not exist yet; it is simply skipped rather than rendered as a dead link.
+ */
+export type SocialProfile = {
+  key: string;
+  label: string;
+  url: string | null;
+  /** Whether to include in JSON-LD `sameAs`. */
+  sameAs: boolean;
+};
+
+export const socialProfiles: SocialProfile[] = [
+  {
+    key: "bbb",
+    label: "Better Business Bureau",
+    url: "https://www.bbb.org/us/nh/nashua/profile/building-contractors/nash-construction-llc-0051-92009862",
+    sameAs: true,
+  },
+  {
+    key: "google",
+    label: "Google Business Profile",
+    url: "https://www.google.com/maps?cid=16147363054906078765",
+    sameAs: true,
+  },
+  {
+    key: "houzz",
+    label: "Houzz",
+    url: "https://www.houzz.com/professionals/general-contractors/nash-construction-llc-pfvwus-pf~1041634924",
+    sameAs: true,
+  },
+  {
+    key: "yelp",
+    label: "Yelp",
+    url: "https://www.yelp.com/biz/nash-construction-nashua-2",
+    sameAs: true,
+  },
+  {
+    key: "procore",
+    label: "Procore Network",
+    url: "https://www.procore.com/network/p/nash-construction-nashua",
+    sameAs: true,
+  },
+  // No Facebook page exists for this business. Note that searches surface
+  // "Nash Construction & Remodeling" (a separate Nashua contractor doing decks)
+  // — do NOT link that page here; it is a different company.
+  { key: "facebook", label: "Facebook", url: null, sameAs: true },
+  { key: "instagram", label: "Instagram", url: null, sameAs: true },
+  { key: "linkedin", label: "LinkedIn", url: null, sameAs: true },
+];
+
+/** Only the profiles that actually exist. */
+export const activeProfiles = socialProfiles.filter(
+  (profile): profile is SocialProfile & { url: string } => profile.url !== null,
+);
+
+export const sameAsUrls = activeProfiles.filter((p) => p.sameAs).map((p) => p.url);
 
 /**
  * Markets served, in Procore's categorization. Used for copy and JSON-LD.
@@ -82,10 +148,11 @@ export const markets = ["Commercial", "Industrial & Energy", "Institutional"] as
  * works in. Grouped for the footer; flattened for keywords and `areaServed`.
  */
 export const serviceAreas = [
-  { region: "Greater Nashua", towns: ["Nashua", "Hudson", "Merrimack", "Litchfield", "Hollis", "Amherst", "Brookline"] },
-  { region: "Manchester Area", towns: ["Manchester", "Bedford", "Goffstown", "Hooksett", "Auburn"] },
-  { region: "Souhegan Valley", towns: ["Milford", "Mont Vernon", "Wilton", "New Boston"] },
-  { region: "I-93 Corridor", towns: ["Londonderry", "Derry", "Salem", "Windham", "Pelham", "Atkinson"] },
+  { region: "Greater Nashua", state: "NH", stateName: "New Hampshire", towns: ["Nashua", "Hudson", "Merrimack", "Litchfield", "Hollis", "Amherst", "Brookline"] },
+  { region: "Manchester Area", state: "NH", stateName: "New Hampshire", towns: ["Manchester", "Bedford", "Goffstown", "Hooksett", "Auburn"] },
+  { region: "Souhegan Valley", state: "NH", stateName: "New Hampshire", towns: ["Milford", "Mont Vernon", "Wilton", "New Boston"] },
+  { region: "I-93 Corridor", state: "NH", stateName: "New Hampshire", towns: ["Londonderry", "Derry", "Salem", "Windham", "Pelham", "Atkinson"] },
+  { region: "Northern Massachusetts", state: "MA", stateName: "Massachusetts", towns: ["Lowell", "Dracut", "Tyngsborough", "Chelmsford", "Westford", "Methuen", "Andover", "Haverhill"] },
 ] as const;
 
 export const allTowns = serviceAreas.flatMap((area) => area.towns);
@@ -96,6 +163,8 @@ export const allTowns = serviceAreas.flatMap((area) => area.towns);
  */
 export const localKeywords: string[] = [
   "Nashua NH commercial general contractor",
+  "northern Massachusetts commercial contractor",
+  "Lowell MA commercial construction",
   "southern New Hampshire commercial construction",
   "NH industrial construction company",
   "commercial fit-up contractor New Hampshire",
@@ -105,7 +174,9 @@ export const localKeywords: string[] = [
   "NH building maintenance contractor",
   "emergency building repair New Hampshire",
   "Nashua construction company",
-  ...allTowns.map((town) => `${town} NH commercial contractor`),
+  ...serviceAreas.flatMap((area) =>
+    area.towns.map((town) => `${town} ${area.state} commercial contractor`),
+  ),
   ...serviceAreas.map((area) => `${area.region} commercial construction`),
 ];
 

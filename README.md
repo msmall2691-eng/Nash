@@ -6,20 +6,37 @@ TypeScript (strict), Tailwind CSS v4.
 
 ## ⚠️ Before this goes live
 
-Two values in `lib/site.ts` are **placeholders, not real contact details**:
+**Real project photos still need importing.** `public/projects/*.jpg` are
+generated placeholders. Drop the originals into `photos-inbox/` named after each
+project slug and run `npm run photos` — see "Photos" below.
 
-| Field | Current placeholder | Needs |
-| --- | --- | --- |
-| `site.phone` / `phoneDisplay` | `(603) 555-0100` | The real office number |
-| `site.email` | `info@nashconstructionllc.com` | The real inbox |
+**Confirm these conflicts.** Public sources disagree with each other:
 
-Also confirm before launch:
+| Item | Their website | Google / Yelp / directories | Using |
+| --- | --- | --- | --- |
+| Phone | 603-943-7593 | (603) 882-2702 | Website number |
+| Founded | — | "1974" (directories) | 1976 (per BBB) |
+| Hours | — | Mon–Thu 9–5, Fri 9–4 | Google's |
+
+**Local SEO — the biggest single win available.** The Google Business Profile is
+**unclaimed** ("Own this business?") and is filed under *Nash Group* with a phone
+number that does not match the website. Yelp is unclaimed too. Google's local
+pack ranks heavily on NAP (name/address/phone) consistency across citations, so
+claiming both listings and making the name and number match this site will do
+more for local visibility than anything in this codebase.
+
+Also confirm:
 
 - `site.geo` — approximate downtown Nashua coordinates; check against the Google
-  Business Profile pin so the map marker lands on 40 Temple Street.
-- `NEXT_PUBLIC_SITE_URL` — canonical URLs, the sitemap and the JSON-LD `@id` all
-  derive from it.
-- `public/projects/*.jpg` are generated abstract placeholders, not photography.
+  Business Profile pin so the marker lands on 40 Temple Street.
+- `NEXT_PUBLIC_SITE_URL` — canonical URLs, sitemaps and the JSON-LD `@id` derive
+  from it.
+- **Positioning:** the site markets commercial + industrial, but three of the
+  supplied photos are residential (garages, a screened porch) and directories
+  list residential remodeling. A `Residential` sector now exists. Decide whether
+  to market it or drop those projects.
+- **Do not link the "Nash Construction & Remodeling" Facebook page** — that is a
+  different Nashua contractor. No Facebook page was found for this business.
 
 ## Getting started
 
@@ -71,6 +88,57 @@ lib/
   email.ts            Resend integration (degrades to logging)
   rate-limit.ts       In-memory submission throttle
 ```
+
+## Photos
+
+Real photography never goes in the repo by hand. Put originals in
+`photos-inbox/`, named after the project slug, then:
+
+```bash
+npm run photos                  # import
+npm run photos -- --watermark   # import with a burned-in credit
+```
+
+The script fixes EXIF rotation, resizes to 2000px, **strips all metadata
+including GPS** (job-site photos routinely carry client coordinates), writes an
+optimized progressive JPEG to `public/projects/`, and regenerates
+`lib/blur-placeholders.json`. Then set `hasPhoto: true` on that project in
+`lib/projects.ts` so it enters the image sitemap and gets `ImageObject` data.
+
+### Image protection — what it does and doesn't do
+
+`components/ProtectedImage.tsx` blocks the three one-gesture saves: right-click
+→ Save image as, drag-to-desktop, and iOS/Android long-press. A transparent
+shield sits over the bitmap so the context menu never targets the `<img>`.
+
+It is **deterrence, not protection.** Screenshots, DevTools, the network panel,
+or disabling JavaScript all still get the file. Any image a browser renders, a
+determined person can keep. The only measure that survives a screenshot is a
+visible watermark — hence the `--watermark` flag.
+
+None of this costs SEO: crawlers read `src` and `alt` from the HTML and never
+fire these handlers, so Google Images indexes normally.
+
+### Image SEO
+
+- Alt text is generated from each project record (`altFor` in `GalleryGrid`), so
+  it can never drift from the caption on screen.
+- `/image-sitemap.xml` lists photographed projects with titles and captions, and
+  is referenced from `robots.txt`.
+- Each photographed project emits an `ImageObject` node with `creditText`,
+  `copyrightNotice` and an `acquireLicensePage` pointing at `/contact` — which
+  is also how you assert ownership of the image to Google.
+- Only projects with `hasPhoto: true` are submitted. Placeholders are excluded
+  deliberately; submitting filler wastes crawl budget.
+
+## External profiles
+
+`socialProfiles` in `lib/site.ts` drives the footer links, the contact page, and
+the JSON-LD `sameAs` array in one place. An entry with `url: null` is skipped
+rather than rendered as a dead link, so adding a Facebook page later is a
+one-line change that updates every surface at once.
+
+Currently linked: BBB, Google Business Profile, Yelp, Houzz, Procore.
 
 ## Adding projects
 

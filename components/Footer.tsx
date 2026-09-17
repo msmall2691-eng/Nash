@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { BbbBadge } from "@/components/BbbBadge";
+import { SocialLinks } from "@/components/SocialLinks";
 import { serviceGroups } from "@/lib/services";
 import { FOUNDED_YEAR, fullNavigation, serviceAreas, site } from "@/lib/site";
 
@@ -12,12 +14,15 @@ export function Footer() {
         <div className="md:col-span-4">
           <span className="font-display text-xl font-semibold text-granite-50">{site.legalName}</span>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-granite-400">
-            {site.tagline}. Serving southern New Hampshire since {FOUNDED_YEAR}.
+            {site.tagline}. Serving southern New Hampshire and northern Massachusetts since{" "}
+            {FOUNDED_YEAR}.
           </p>
-          <p className="mt-6 text-xs uppercase tracking-[0.18em] text-granite-500">
-            {site.accreditation.body} Accredited since {site.accreditation.accreditedSince} ·{" "}
-            {site.accreditation.rating} Rated
-          </p>
+          <div className="mt-6">
+            <BbbBadge />
+          </div>
+          <div className="mt-6">
+            <SocialLinks />
+          </div>
         </div>
 
         <nav aria-label="Footer" className="md:col-span-2">
@@ -84,7 +89,7 @@ export function Footer() {
             © {year} {site.legalName}. All rights reserved.
           </p>
           <p>
-            Serving {serviceAreas.map((a) => a.region).slice(0, 2).join(", ")} and southern New Hampshire
+            Serving {serviceAreas.map((area) => area.region).join(" · ")}
           </p>
         </div>
       </div>

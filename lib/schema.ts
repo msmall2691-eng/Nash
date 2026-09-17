@@ -6,7 +6,7 @@
  */
 
 import { allTrades, serviceGroups } from "@/lib/services";
-import { FOUNDED_YEAR, markets, serviceAreas, site, siteUrl } from "@/lib/site";
+import { FOUNDED_YEAR, markets, sameAsUrls, serviceAreas, site, siteUrl } from "@/lib/site";
 
 /** `@id` for the business node, so other graph nodes can reference it. */
 export const businessId = `${siteUrl}/#localbusiness`;
@@ -26,7 +26,7 @@ export function localBusinessSchema() {
     priceRange: site.priceRange,
     image: `${siteUrl}/projects/hero-commercial.jpg`,
     logo: `${siteUrl}/icon.svg`,
-    ...(site.social.length > 0 ? { sameAs: [...site.social] } : {}),
+    ...(sameAsUrls.length > 0 ? { sameAs: sameAsUrls } : {}),
     founder: {
       "@type": "Person",
       name: site.leadership[0].name,
@@ -63,12 +63,15 @@ export function localBusinessSchema() {
       closes: block.closes,
     })),
     areaServed: [
-      { "@type": "State", name: site.address.regionName },
+      ...[...new Set(serviceAreas.map((area) => area.stateName))].map((stateName) => ({
+        "@type": "State" as const,
+        name: stateName,
+      })),
       ...serviceAreas.flatMap((area) =>
         area.towns.map((town) => ({
           "@type": "City" as const,
           name: town,
-          containedInPlace: { "@type": "State" as const, name: site.address.regionName },
+          containedInPlace: { "@type": "State" as const, name: area.stateName },
         })),
       ),
     ],
@@ -137,7 +140,32 @@ export function serviceSchema(opts: {
     provider: { "@id": businessId },
     areaServed: serviceAreas.map((area) => ({
       "@type": "AdministrativeArea",
-      name: `${area.region}, NH`,
+      name: `${area.region}, ${area.state}`,
     })),
+  };
+}
+
+/**
+ * `ImageObject` node for a photographed project.
+ *
+ * This is what makes a photo eligible for Google Images with its caption and
+ * subject attached, rather than being crawled as an anonymous file.
+ */
+export function imageObjectSchema(opts: {
+  url: string;
+  caption: string;
+  name: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ImageObject",
+    contentUrl: `${siteUrl}${opts.url}`,
+    url: `${siteUrl}${opts.url}`,
+    name: opts.name,
+    caption: opts.caption,
+    creditText: site.legalName,
+    creator: { "@id": businessId },
+    copyrightNotice: `© ${site.legalName}`,
+    acquireLicensePage: `${siteUrl}/contact`,
   };
 }

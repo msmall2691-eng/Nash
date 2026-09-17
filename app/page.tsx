@@ -1,5 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
+
+import { ProtectedImage } from "@/components/ProtectedImage";
 
 import { Amp } from "@/components/Amp";
 import { projects } from "@/lib/projects";
@@ -19,10 +20,11 @@ export default function HomePage() {
     <>
       {/* ------------------------------- Hero ------------------------------- */}
       <section className="relative -mt-20 flex min-h-[92svh] items-end overflow-hidden bg-granite-950 pt-20">
-        <Image
+        <ProtectedImage
           src="/projects/hero-commercial.jpg"
           alt="Commercial construction by Nash Construction in southern New Hampshire"
           fill
+          wrapperClassName="absolute inset-0"
           sizes="100vw"
           priority
           className="object-cover opacity-70"
@@ -113,10 +115,11 @@ export default function HomePage() {
               className="group relative overflow-hidden rounded-xl bg-granite-900"
             >
               <div className="relative aspect-3/2">
-                <Image
+                <ProtectedImage
                   src={card.image}
                   alt={`${card.title} in southern New Hampshire`}
                   fill
+                  wrapperClassName="absolute inset-0"
                   sizes="(min-width: 768px) 50vw, 100vw"
                   priority={index === 0}
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -218,10 +221,11 @@ export default function HomePage() {
               className="group relative overflow-hidden rounded-xl bg-granite-900"
             >
               <div className="relative aspect-4/3">
-                <Image
+                <ProtectedImage
                   src={project.image}
                   alt={`${project.title} — ${project.sector.toLowerCase()} project by Nash Construction`}
                   fill
+                  wrapperClassName="absolute inset-0"
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                   priority={index === 0}
                   placeholder="blur"

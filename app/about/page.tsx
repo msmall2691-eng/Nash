@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
+
+import { ProtectedImage } from "@/components/ProtectedImage";
 
 import { JsonLd } from "@/components/JsonLd";
 import { pageMetadata } from "@/lib/metadata";
@@ -38,10 +39,11 @@ export default function AboutPage() {
       />
 
       <section className="relative -mt-20 flex min-h-[62svh] items-end overflow-hidden bg-granite-950 pt-20">
-        <Image
+        <ProtectedImage
           src="/projects/hero-about.jpg"
           alt="Nash Construction, a Nashua New Hampshire general contractor"
           fill
+          wrapperClassName="absolute inset-0"
           sizes="100vw"
           priority
           className="object-cover opacity-60"
