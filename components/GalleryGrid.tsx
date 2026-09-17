@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import { GalleryFilter, type FilterOption } from "@/components/GalleryFilter";
+import { ProjectLightbox } from "@/components/ProjectLightbox";
 import { ProtectedImage } from "@/components/ProtectedImage";
 import { PROJECT_SECTORS, projects, type Project, type ProjectSector } from "@/lib/projects";
 
@@ -29,7 +30,15 @@ export function altFor(project: Project): string {
  * Optional detail renders only when it has been confirmed for that project, so
  * a name-and-sector entry still reads as finished rather than as a gap.
  */
-function ProjectCard({ project, index }: { project: Project; index: number }) {
+function ProjectCard({
+  project,
+  index,
+  onOpen,
+}: {
+  project: Project;
+  index: number;
+  onOpen: () => void;
+}) {
   const meta = [project.town, project.year ? String(project.year) : null]
     .filter(Boolean)
     .join(" · ");
@@ -71,12 +80,22 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           aria-hidden="true"
           className="absolute inset-0 bg-gradient-to-t from-granite-950 via-granite-950/65 to-granite-950/5 transition-opacity duration-500"
         />
-        <span className="absolute left-4 top-4 rounded-full bg-granite-50/90 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.12em] text-granite-800 backdrop-blur-sm">
+        <span className="absolute left-4 top-4 z-20 rounded-full bg-granite-50/90 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.12em] text-granite-800 backdrop-blur-sm">
           {project.sector}
         </span>
       </div>
 
-      <div className="absolute inset-x-0 bottom-0 p-5">
+      {project.hasPhoto && (
+        <button
+          type="button"
+          onClick={onOpen}
+          className="absolute inset-0 z-20 cursor-zoom-in focus-visible:outline-offset-[-3px]"
+        >
+          <span className="sr-only">{`View ${project.title} enlarged`}</span>
+        </button>
+      )}
+
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 p-5">
         <h3 className="font-display text-lg font-semibold text-granite-50">{project.title}</h3>
         {meta && <p className="mt-1 text-xs uppercase tracking-[0.14em] text-granite-300">{meta}</p>}
         {project.summary && (
@@ -101,6 +120,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
 export function GalleryGrid() {
   const [sector, setSector] = useState<SectorFilter>("All");
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const visible = useMemo(() => projects.filter((project) => matches(project, sector)), [sector]);
 
@@ -114,6 +134,28 @@ export function GalleryGrid() {
       })),
     ],
     [],
+  );
+
+  // Only photographed projects can be enlarged, so the lightbox navigates that
+  // subset — otherwise the arrows would step onto an empty frame.
+  const viewable = useMemo(() => visible.filter((project) => project.hasPhoto), [visible]);
+
+  const openLightbox = useCallback(
+    (project: Project) => {
+      const at = viewable.findIndex((candidate) => candidate.slug === project.slug);
+      if (at >= 0) setLightboxIndex(at);
+    },
+    [viewable],
+  );
+
+  const navigate = useCallback(
+    (delta: number) => {
+      setLightboxIndex((current) => {
+        if (current === null || viewable.length === 0) return current;
+        return (current + delta + viewable.length) % viewable.length;
+      });
+    },
+    [viewable.length],
   );
 
   // Part of each card's key, so a filter change remounts the grid and replays
@@ -145,7 +187,12 @@ export function GalleryGrid() {
       {visible.length > 0 ? (
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {visible.map((project, index) => (
-            <ProjectCard key={`${generation}-${project.slug}`} project={project} index={index} />
+            <ProjectCard
+              key={`${generation}-${project.slug}`}
+              project={project}
+              index={index}
+              onOpen={() => openLightbox(project)}
+            />
           ))}
         </div>
       ) : (
@@ -157,6 +204,13 @@ export function GalleryGrid() {
           </p>
         </div>
       )}
+
+      <ProjectLightbox
+        projects={viewable}
+        index={lightboxIndex}
+        onClose={() => setLightboxIndex(null)}
+        onNavigate={navigate}
+      />
     </div>
   );
 }
