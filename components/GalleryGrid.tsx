@@ -45,7 +45,6 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           src={project.image}
           alt={altFor(project)}
           fill
-          wrapperClassName="absolute inset-0"
           // Three-up on desktop, two-up on tablet, full-bleed on phones.
           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
           // Only the first row is above the fold; the rest stay lazy.

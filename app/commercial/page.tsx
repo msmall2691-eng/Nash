@@ -75,7 +75,6 @@ export default function CommercialPage() {
           src="/projects/hero-commercial.jpg"
           alt="Commercial construction project in southern New Hampshire"
           fill
-          wrapperClassName="absolute inset-0"
           sizes="100vw"
           priority
           className="object-cover opacity-65"

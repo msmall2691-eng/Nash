@@ -24,7 +24,6 @@ export default function HomePage() {
           src="/projects/hero-commercial.jpg"
           alt="Commercial construction by Nash Construction in southern New Hampshire"
           fill
-          wrapperClassName="absolute inset-0"
           sizes="100vw"
           priority
           className="object-cover opacity-70"
@@ -119,7 +118,6 @@ export default function HomePage() {
                   src={card.image}
                   alt={`${card.title} in southern New Hampshire`}
                   fill
-                  wrapperClassName="absolute inset-0"
                   sizes="(min-width: 768px) 50vw, 100vw"
                   priority={index === 0}
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -225,7 +223,6 @@ export default function HomePage() {
                   src={project.image}
                   alt={`${project.title} — ${project.sector.toLowerCase()} project by Nash Construction`}
                   fill
-                  wrapperClassName="absolute inset-0"
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                   priority={index === 0}
                   placeholder="blur"

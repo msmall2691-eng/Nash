@@ -35,8 +35,18 @@ export function ProtectedImage({
 }: ImageProps & { wrapperClassName?: string }) {
   const block = (event: React.SyntheticEvent) => event.preventDefault();
 
+  /**
+   * The wrapper's positioning depends on the layout mode, and the two cases are
+   * mutually exclusive — emitting both `relative` and `absolute` lets the
+   * cascade pick, which silently collapses the box to 0x0 and hides the image.
+   *
+   * `fill` images expect their nearest positioned ancestor to define the box, so
+   * the wrapper stretches to the parent. Fixed-size images size themselves.
+   */
+  const positioning = props.fill ? "absolute inset-0" : "relative inline-block";
+
   return (
-    <span className={`relative block ${wrapperClassName}`}>
+    <span className={`${positioning} ${wrapperClassName}`.trim()}>
       <Image
         {...props}
         alt={alt}

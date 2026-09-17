@@ -81,7 +81,6 @@ export default function IndustrialPage() {
           src="/projects/hero-industrial.jpg"
           alt="Industrial construction project in southern New Hampshire"
           fill
-          wrapperClassName="absolute inset-0"
           sizes="100vw"
           priority
           className="object-cover opacity-65"

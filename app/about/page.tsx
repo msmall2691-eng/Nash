@@ -43,7 +43,6 @@ export default function AboutPage() {
           src="/projects/hero-about.jpg"
           alt="Nash Construction, a Nashua New Hampshire general contractor"
           fill
-          wrapperClassName="absolute inset-0"
           sizes="100vw"
           priority
           className="object-cover opacity-60"
