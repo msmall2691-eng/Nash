@@ -228,18 +228,26 @@ clears WCAG AA:
 
 | Pairing | Ratio |
 | --- | --- |
-| White on brand-600 (buttons) | 10.5:1 |
-| brand-600 on white (links) | 10.5:1 |
-| brand-300 on granite-950 (dark eyebrows) | 9.4:1 |
-| brand-400 on granite-950 | 5.0:1 |
+| White on brand-700 (buttons) | 13.6:1 |
+| White on brand-600 (hover) | 10.5:1 |
+| brand-700 on granite-50 (eyebrows) | 12.7:1 |
+| granite-300 on granite-950 (dark labels) | 9.3:1 |
 
-Burgundy is dark, so anything filled with `brand-500`/`brand-600` takes white
-text — never `granite-950`, which was the contrast failure when the palette
-first went in.
+Two rules hold the palette together. Solid fills take **brand-700**, the deeper
+step: the Pantone itself reads magenta at button size. And burgundy never
+appears as a tint on the dark sections — lightening it enough to read there
+turns it pink, so those surfaces use warm neutrals and burgundy stays in solid
+fills where it is unmistakably burgundy.
 
 ## Note on typography
 
-`components/Amp.tsx` renders ampersands in the sans face inside display type.
-Fraunces' only ampersand is a decorative swash that reads as a registered-
-trademark mark at heading sizes, and no stylistic set replaces it — so the glyph
-is swapped rather than the copy rewritten.
+The display face is **Roboto Slab**. A slab serif keeps weight and structure at
+heading sizes — sturdy and industrial without being aggressive — and shares a
+serif skeleton with the wordmark in the logo. It replaced a high-contrast
+display serif that read soft and elegant, which was the wrong register for a
+commercial and industrial contractor.
+
+That swap also retired a workaround: the previous face's only ampersand was a
+decorative swash that read as a registered-trademark mark, so a component
+substituted the glyph. Roboto Slab draws a conventional ampersand, so the
+component is gone.

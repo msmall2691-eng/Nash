@@ -1,11 +1,10 @@
 import Link from "next/link";
 
-import { Amp } from "@/components/Amp";
 import { ProtectedImage } from "@/components/ProtectedImage";
 import blurPlaceholders from "@/lib/blur-placeholders.json";
 import { projects } from "@/lib/projects";
 import { serviceGroups } from "@/lib/services";
-import { FOUNDED_YEAR, markets, serviceAreas, site, yearsInBusiness } from "@/lib/site";
+import { FOUNDED_YEAR, serviceAreas, site, yearsInBusiness } from "@/lib/site";
 
 const heroBlur = (blurPlaceholders as Record<string, string>)["nashua-downtown"];
 
@@ -35,22 +34,22 @@ export default function HomePage() {
           priority
           placeholder="blur"
           blurDataURL={heroBlur}
-          className="object-cover opacity-45"
+          className="hero-parallax object-cover opacity-70"
         />
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-t from-granite-950 via-granite-950/80 to-granite-950/55"
+          className="absolute inset-0 bg-gradient-to-t from-granite-950 via-granite-950/75 to-granite-950/45"
         />
 
-        <div className="container-page relative pb-20 pt-32">
-          <p className="animate-fade-up text-xs font-medium uppercase tracking-[0.24em] text-brand-400">
+        <div className="hero-fade container-page relative pb-20 pt-32">
+          <p className="animate-fade-up text-xs font-medium uppercase tracking-[0.24em] text-granite-300">
             Nashua, New Hampshire · Est. {FOUNDED_YEAR}
           </p>
           <h1 className="animate-fade-up mt-6 max-w-4xl font-display text-[clamp(2.5rem,6.5vw,4.75rem)] font-semibold leading-[1.02] text-granite-50 [animation-delay:100ms]">
             Built on {yearsInBusiness} Years of Experience.
           </h1>
-          <p className="animate-fade-up mt-5 max-w-3xl font-display text-xl text-brand-300 [animation-delay:150ms] sm:text-2xl">
-            <Amp>{site.tagline}</Amp>
+          <p className="animate-fade-up mt-5 max-w-3xl font-display text-xl text-granite-300 [animation-delay:150ms] sm:text-2xl">
+            {site.tagline}
           </p>
           <p className="animate-fade-up mt-7 max-w-2xl text-lg leading-relaxed text-granite-300 [animation-delay:220ms]">
             Since {FOUNDED_YEAR}, Nash Construction has helped businesses and organizations bring
@@ -61,7 +60,7 @@ export default function HomePage() {
           <div className="animate-fade-up mt-10 flex flex-col gap-3 sm:flex-row [animation-delay:300ms]">
             <Link
               href="/contact"
-              className="rounded-full bg-brand-500 px-8 py-4 text-center text-sm font-medium text-white transition-all duration-300 hover:bg-brand-500 hover:shadow-xl hover:shadow-brand-500/30"
+              className="rounded-full bg-brand-700 px-8 py-4 text-center text-sm font-medium text-white transition-all duration-300 hover:bg-brand-600 hover:shadow-xl hover:shadow-brand-700/30"
             >
               Request a Consultation
             </Link>
@@ -92,17 +91,17 @@ export default function HomePage() {
       {/* ---------------------- Commercial / Industrial ---------------------- */}
       <section className="container-page py-24">
         <div className="max-w-2xl">
-          <p className="text-xs font-medium uppercase tracking-[0.2em] text-brand-600">What we build</p>
+          <p className="text-xs font-medium uppercase tracking-[0.2em] text-brand-700">What we build</p>
           <h2 className="mt-4 font-display text-4xl font-semibold text-granite-900">
-            Two markets, one contractor.
+            Three markets, one contractor.
           </h2>
           <p className="mt-5 text-[15px] leading-relaxed text-granite-600">
-            We work across {markets.join(", ").toLowerCase()} projects — but almost everything we do
-            falls into one of these two.
+            Commercial and industrial work is the core of the business, and we build for homeowners
+            across the same towns.
           </p>
         </div>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-2">
+        <div className="mt-12 grid gap-6 md:grid-cols-3">
           {[
             {
               href: "/commercial",
@@ -116,27 +115,33 @@ export default function HomePage() {
               title: "Industrial Construction",
               body: "Manufacturing and warehouse space, mechanical and electrical scopes, fire suppression and the site work that supports them.",
             },
+            {
+              href: "/residential",
+              image: "/projects/timber-frame-screened-porch.jpg",
+              title: "Residential Construction",
+              body: "Additions, garages, porches and remodels — scoped, scheduled and supervised the way a commercial project is.",
+            },
           ].map((card, index) => (
             <Link
               key={card.href}
               href={card.href}
               className="group relative overflow-hidden rounded-xl bg-granite-900"
             >
-              <div className="relative aspect-3/2">
+              <div className="relative aspect-4/3">
                 <ProtectedImage
                   src={card.image}
                   alt={`${card.title} in southern New Hampshire`}
                   fill
-                  sizes="(min-width: 768px) 50vw, 100vw"
+                  sizes="(min-width: 768px) 33vw, 100vw"
                   priority={index === 0}
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-granite-950 via-granite-950/50 to-transparent" />
+                <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-granite-950 via-granite-950/75 to-granite-950/20" />
               </div>
               <div className="absolute inset-x-0 bottom-0 p-7">
                 <h3 className="font-display text-2xl font-semibold text-granite-50">{card.title}</h3>
                 <p className="mt-3 max-w-sm text-sm leading-relaxed text-granite-300">{card.body}</p>
-                <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-brand-300">
+                <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-granite-300">
                   Explore
                   <svg viewBox="0 0 20 20" className="size-3.5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
                     <path d="M4 10h12M11 5l5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
@@ -153,7 +158,7 @@ export default function HomePage() {
         <div className="container-page">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div className="max-w-2xl">
-              <p className="text-xs font-medium uppercase tracking-[0.2em] text-brand-600">Capabilities</p>
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-brand-700">Capabilities</p>
               <h2 className="mt-4 font-display text-4xl font-semibold text-granite-900">
                 Five groups, one contract.
               </h2>
@@ -173,11 +178,9 @@ export default function HomePage() {
                 href={`/services#${group.slug}`}
                 className="group bg-white p-8 transition-colors duration-300 hover:bg-granite-50"
               >
-                <h3 className="font-display text-xl font-semibold text-granite-900">
-                  <Amp>{group.title}</Amp>
-                </h3>
+                <h3 className="font-display text-xl font-semibold text-granite-900">{group.title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-granite-600">{group.summary}</p>
-                <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-brand-600">
+                <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-brand-700">
                   What&rsquo;s included
                   <svg viewBox="0 0 20 20" className="size-3.5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
                     <path d="M4 10h12M11 5l5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
@@ -194,7 +197,7 @@ export default function HomePage() {
               </p>
               <Link
                 href="/contact"
-                className="mt-6 inline-block self-start rounded-full bg-brand-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-brand-500"
+                className="mt-6 inline-block self-start rounded-full bg-brand-700 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-brand-600"
               >
                 Request a Consultation
               </Link>
@@ -207,7 +210,7 @@ export default function HomePage() {
       <section className="container-page py-24">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-2xl">
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-brand-600">Selected work</p>
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-brand-700">Selected work</p>
             <h2 className="mt-4 font-display text-4xl font-semibold text-granite-900">
               Businesses that trusted us with their space.
             </h2>
@@ -242,7 +245,7 @@ export default function HomePage() {
               </div>
               <div className="absolute inset-x-0 bottom-0 p-6">
                 <h3 className="font-display text-lg font-semibold text-granite-50">{project.title}</h3>
-                <p className="mt-1 text-xs uppercase tracking-[0.14em] text-brand-300">{project.sector}</p>
+                <p className="mt-1 text-xs uppercase tracking-[0.14em] text-granite-300">{project.sector}</p>
               </div>
             </Link>
           ))}
@@ -253,7 +256,7 @@ export default function HomePage() {
       <section className="bg-white py-24">
         <div className="container-page grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-brand-600">Where we work</p>
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-brand-700">Where we work</p>
             <h2 className="mt-4 font-display text-4xl font-semibold text-granite-900">
               Nashua, and the towns around it.
             </h2>
@@ -264,7 +267,7 @@ export default function HomePage() {
             </p>
             <Link
               href="/contact"
-              className="mt-8 inline-block rounded-full bg-granite-900 px-7 py-3.5 text-sm font-medium text-granite-50 transition-all duration-300 hover:bg-brand-500"
+              className="mt-8 inline-block rounded-full bg-granite-900 px-7 py-3.5 text-sm font-medium text-granite-50 transition-all duration-300 hover:bg-brand-600"
             >
               Check your location
             </Link>
@@ -294,7 +297,7 @@ export default function HomePage() {
           <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
             <Link
               href="/contact"
-              className="rounded-full bg-brand-500 px-8 py-4 text-sm font-medium text-white transition-all duration-300 hover:bg-brand-500"
+              className="rounded-full bg-brand-700 px-8 py-4 text-sm font-medium text-white transition-all duration-300 hover:bg-brand-600"
             >
               Request a Consultation
             </Link>

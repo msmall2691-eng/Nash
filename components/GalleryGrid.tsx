@@ -47,8 +47,8 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           photos reads as a broken image, and inventing a photo is not an option.
         */}
         {!project.hasPhoto ? (
-          <div className="absolute inset-0 grid place-items-center bg-brand-700">
-            <span className="px-6 text-center font-display text-lg font-semibold text-brand-300/80">
+          <div className="absolute inset-0 grid place-items-center bg-granite-800">
+            <span className="px-6 text-center font-display text-lg font-semibold text-granite-300/80">
               Photography coming soon
             </span>
           </div>
@@ -78,7 +78,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
       <div className="absolute inset-x-0 bottom-0 p-5">
         <h3 className="font-display text-lg font-semibold text-granite-50">{project.title}</h3>
-        {meta && <p className="mt-1 text-xs uppercase tracking-[0.14em] text-brand-300">{meta}</p>}
+        {meta && <p className="mt-1 text-xs uppercase tracking-[0.14em] text-granite-300">{meta}</p>}
         {project.summary && (
           <p className="mt-3 max-h-0 overflow-hidden text-sm leading-relaxed text-granite-200 opacity-0 transition-all duration-500 ease-out group-hover:max-h-40 group-hover:opacity-100">
             {project.summary}

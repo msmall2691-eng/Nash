@@ -3,7 +3,6 @@ import Link from "next/link";
 
 import { ProtectedImage } from "@/components/ProtectedImage";
 
-import { Amp } from "@/components/Amp";
 import { JsonLd } from "@/components/JsonLd";
 import { pageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, serviceSchema } from "@/lib/schema";
@@ -81,7 +80,7 @@ export default function CommercialPage() {
         />
         <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-granite-950 via-granite-950/75 to-granite-950/40" />
         <div className="container-page relative pb-16 pt-28">
-          <p className="animate-fade-up text-xs font-medium uppercase tracking-[0.24em] text-brand-400">
+          <p className="animate-fade-up text-xs font-medium uppercase tracking-[0.24em] text-granite-300">
             Commercial Construction
           </p>
           <h1 className="animate-fade-up mt-5 max-w-3xl font-display text-[clamp(2.25rem,5.5vw,4rem)] font-semibold leading-[1.04] text-granite-50 [animation-delay:80ms]">
@@ -116,9 +115,7 @@ export default function CommercialPage() {
           <div className="grid gap-px self-start overflow-hidden rounded-xl bg-granite-200 sm:grid-cols-2 lg:col-span-7">
             {capabilities.map((item) => (
               <div key={item.title} className="bg-white p-7">
-                <h3 className="font-display text-lg font-semibold text-granite-900">
-                  <Amp>{item.title}</Amp>
-                </h3>
+                <h3 className="font-display text-lg font-semibold text-granite-900">{item.title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-granite-600">{item.body}</p>
               </div>
             ))}
@@ -129,7 +126,7 @@ export default function CommercialPage() {
       <section className="bg-white py-24">
         <div className="container-page grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-brand-600">Who we build for</p>
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-brand-700">Who we build for</p>
             <h2 className="mt-4 font-display text-3xl font-semibold text-granite-900">
               Sectors we work in
             </h2>
@@ -166,7 +163,7 @@ export default function CommercialPage() {
             <div className="flex flex-col gap-3 sm:flex-row lg:col-span-5 lg:justify-end">
               <Link
                 href="/contact"
-                className="rounded-full bg-brand-500 px-8 py-4 text-center text-sm font-medium text-white transition-colors hover:bg-brand-500"
+                className="rounded-full bg-brand-700 px-8 py-4 text-center text-sm font-medium text-white transition-colors hover:bg-brand-600"
               >
                 Request a Consultation
               </Link>

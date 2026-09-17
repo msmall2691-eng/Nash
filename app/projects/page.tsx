@@ -71,7 +71,7 @@ export default function ProjectsPage() {
       />
 
       <section className="container-page pt-20 pb-12">
-        <p className="animate-fade-up text-xs font-medium uppercase tracking-[0.2em] text-brand-600">
+        <p className="animate-fade-up text-xs font-medium uppercase tracking-[0.2em] text-brand-700">
           Projects
         </p>
         <h1 className="animate-fade-up mt-5 max-w-3xl font-display text-[clamp(2.25rem,5vw,3.5rem)] font-semibold leading-[1.05] text-granite-900 [animation-delay:80ms]">
@@ -102,7 +102,7 @@ export default function ProjectsPage() {
           </div>
           <Link
             href="/contact"
-            className="shrink-0 rounded-full bg-granite-900 px-8 py-4 text-sm font-medium text-granite-50 transition-all duration-300 hover:bg-brand-500"
+            className="shrink-0 rounded-full bg-granite-900 px-8 py-4 text-sm font-medium text-granite-50 transition-all duration-300 hover:bg-brand-600"
           >
             Ask about similar work
           </Link>

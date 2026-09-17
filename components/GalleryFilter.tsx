@@ -53,7 +53,7 @@ export function GalleryFilter<T extends string>({
               {option.label}
               <span
                 className={`rounded-full px-1.5 py-0.5 text-[11px] leading-none tabular-nums transition-colors duration-300 ${
-                  selected ? "bg-brand-500 text-white" : "bg-granite-100 text-granite-500"
+                  selected ? "bg-brand-700 text-white" : "bg-granite-100 text-granite-500"
                 }`}
               >
                 {option.count}

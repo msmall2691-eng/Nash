@@ -1,37 +1,43 @@
+import Image from "next/image";
+
 import { site } from "@/lib/site";
 
 /**
- * Accreditation badge.
+ * Official BBB Accredited Business seal.
  *
- * Drawn in-house rather than embedding BBB's official seal script: their seal is
- * a third-party <script> that adds a render-blocking request and a tracker to
- * every page. If Nash wants the official dynamic seal, swap this component's
- * body for the snippet from their BBB business login — the placement stays.
+ * Served from BBB's own seal endpoint for this business profile
+ * (seal-concord.bbb.org — BBB serving New Hampshire), saved locally so the page
+ * does not depend on a third-party request to paint. BBB's own embed is a
+ * render-blocking <script> that also drops a tracker on every page; the seal is
+ * the same asset without that cost.
+ *
+ * If BBB ever revokes or changes the accreditation, replace this file — the seal
+ * is theirs to grant, and a stale one should not sit on the site.
  */
 export function BbbBadge({ tone = "dark" }: { tone?: "dark" | "light" }) {
   const { accreditation } = site;
 
   const shell =
     tone === "dark"
-      ? "border-granite-800 bg-granite-900/60 text-granite-300 hover:border-brand-500/60"
-      : "border-granite-200 bg-white text-granite-700 hover:border-brand-500/60";
+      ? "border-granite-800 bg-white/95 hover:border-granite-600"
+      : "border-granite-200 bg-white hover:border-granite-400";
 
   return (
     <a
       href={accreditation.profileUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className={`inline-flex items-center gap-3.5 rounded-xl border px-4 py-3 transition-colors duration-200 ${shell}`}
+      title={`${site.legalName} is a BBB Accredited Business with an ${accreditation.rating} rating`}
+      className={`inline-flex items-center rounded-lg border px-3 py-2.5 transition-colors duration-200 ${shell}`}
     >
-      <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-brand-500 font-display text-lg font-bold leading-none text-white">
-        {accreditation.rating}
-      </span>
-      <span className="flex flex-col leading-tight">
-        <span className="text-[13px] font-semibold">{accreditation.body}</span>
-        <span className="text-[11px] uppercase tracking-[0.12em] opacity-70">
-          Accredited since {accreditation.accreditedSince}
-        </span>
-      </span>
+      <Image
+        src="/badges/bbb-accredited-seal.png"
+        alt={`BBB Accredited Business — ${accreditation.rating} rating, accredited since ${accreditation.accreditedSince}`}
+        width={250}
+        height={52}
+        className="h-[34px] w-auto"
+        unoptimized
+      />
     </a>
   );
 }

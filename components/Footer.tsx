@@ -10,7 +10,7 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-24 bg-granite-950 text-granite-300">
+    <footer className="bg-granite-950 text-granite-300">
       <div className="container-page grid gap-12 py-16 md:grid-cols-12">
         <div className="md:col-span-4">
           <div className="flex items-center gap-3.5">
@@ -34,7 +34,7 @@ export function Footer() {
           <ul className="mt-4 space-y-2.5 text-sm">
             {fullNavigation.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="text-granite-400 transition-colors hover:text-brand-400">
+                <Link href={item.href} className="text-granite-400 transition-colors hover:text-granite-50">
                   {item.label}
                 </Link>
               </li>
@@ -49,7 +49,7 @@ export function Footer() {
               <li key={group.slug}>
                 <Link
                   href={`/services#${group.slug}`}
-                  className="text-granite-400 transition-colors hover:text-brand-400"
+                  className="text-granite-400 transition-colors hover:text-granite-50"
                 >
                   {group.title}
                 </Link>
@@ -66,14 +66,14 @@ export function Footer() {
             {site.address.city}, {site.address.region} {site.address.postalCode}
           </p>
           <p className="mt-4 text-sm">
-            <a href={`tel:${site.phone}`} className="text-granite-200 transition-colors hover:text-brand-400">
+            <a href={`tel:${site.phone}`} className="text-granite-200 transition-colors hover:text-granite-50">
               {site.phoneDisplay}
             </a>
             <br />
             {/* Long address in a narrow grid column — allow it to wrap. */}
             <a
               href={`mailto:${site.email}`}
-              className="break-words text-granite-200 transition-colors hover:text-brand-400"
+              className="break-words text-granite-200 transition-colors hover:text-granite-50"
             >
               {site.email}
             </a>

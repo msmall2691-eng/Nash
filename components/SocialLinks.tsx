@@ -34,7 +34,7 @@ export function SocialLinks({ tone = "dark" }: { tone?: "dark" | "light" }) {
 
   const base =
     tone === "dark"
-      ? "border-granite-800 text-granite-400 hover:border-brand-400 hover:text-brand-400"
+      ? "border-granite-800 text-granite-400 hover:border-granite-500 hover:text-granite-50"
       : "border-granite-200 text-granite-500 hover:border-brand-500 hover:text-brand-600";
 
   return (

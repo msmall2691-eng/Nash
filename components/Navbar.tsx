@@ -8,7 +8,7 @@ import { NashMark } from "@/components/NashMark";
 import { fullNavigation, navigation, site } from "@/lib/site";
 
 /** Routes whose hero is a full-bleed dark image the transparent navbar sits on. */
-const DARK_HERO_ROUTES = new Set(["/", "/commercial", "/industrial", "/about"]);
+const DARK_HERO_ROUTES = new Set(["/", "/commercial", "/industrial", "/residential", "/about"]);
 
 export function Navbar() {
   const pathname = usePathname();
@@ -66,12 +66,12 @@ export function Navbar() {
                 onDark ? "text-granite-300" : "text-granite-500"
               }`}
             >
-              Nashua, New Hampshire
+              Nashua, NH
             </span>
           </span>
         </Link>
 
-        <ul className="hidden items-center gap-0.5 lg:flex">
+        <ul className="hidden items-center gap-0.5 xl:flex">
           {navigation.map((item) => {
             const active = isActive(item.href);
             return (
@@ -79,7 +79,7 @@ export function Navbar() {
                 <Link
                   href={item.href}
                   aria-current={active ? "page" : undefined}
-                  className={`relative rounded-full px-3 py-2 text-sm font-medium transition-colors duration-200 ${
+                  className={`relative whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium transition-colors duration-200 ${
                     onDark
                       ? active
                         ? "text-granite-50"
@@ -92,7 +92,7 @@ export function Navbar() {
                   {item.label}
                   <span
                     className={`absolute inset-x-3 -bottom-0.5 h-px origin-left transition-transform duration-300 ${
-                      onDark ? "bg-brand-400" : "bg-brand-500"
+                      onDark ? "bg-granite-300" : "bg-brand-600"
                     } ${active ? "scale-x-100" : "scale-x-0"}`}
                   />
                 </Link>
@@ -101,21 +101,21 @@ export function Navbar() {
           })}
         </ul>
 
-        <div className="hidden items-center gap-3 lg:flex">
+        <div className="hidden items-center gap-3 xl:flex">
           <a
             href={`tel:${site.phone}`}
-            className={`text-sm font-medium transition-colors duration-300 ${
-              onDark ? "text-granite-200 hover:text-brand-400" : "text-granite-600 hover:text-brand-600"
+            className={`whitespace-nowrap text-sm font-medium transition-colors duration-300 ${
+              onDark ? "text-granite-200 hover:text-granite-50" : "text-granite-600 hover:text-brand-600"
             }`}
           >
             {site.phoneDisplay}
           </a>
           <Link
             href="/contact"
-            className={`rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300 ${
+            className={`whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300 ${
               onDark
-                ? "bg-granite-50 text-granite-950 hover:bg-brand-600 hover:text-white"
-                : "bg-granite-900 text-granite-50 hover:bg-brand-500 hover:shadow-lg hover:shadow-brand-500/20"
+                ? "bg-brand-700 text-white hover:bg-brand-600"
+                : "bg-brand-700 text-white hover:bg-brand-600 hover:shadow-lg hover:shadow-brand-700/30"
             }`}
           >
             Request a Consultation
@@ -127,7 +127,7 @@ export function Navbar() {
           onClick={() => setOpen((value) => !value)}
           aria-expanded={open}
           aria-controls="mobile-nav"
-          className={`grid size-10 place-items-center rounded-full transition-colors lg:hidden ${
+          className={`grid size-10 place-items-center rounded-full transition-colors xl:hidden ${
             onDark ? "text-granite-50 hover:bg-granite-50/10" : "text-granite-800 hover:bg-granite-100"
           }`}
         >
@@ -145,7 +145,7 @@ export function Navbar() {
       <div
         id="mobile-nav"
         hidden={!open}
-        className="border-t border-granite-200 bg-granite-50 lg:hidden"
+        className="border-t border-granite-200 bg-granite-50 xl:hidden"
       >
         <ul className="container-page flex flex-col py-3">
           {fullNavigation.map((item, index) => (

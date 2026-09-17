@@ -1,84 +1,84 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { ProtectedImage } from "@/components/ProtectedImage";
-
 import { JsonLd } from "@/components/JsonLd";
+import { ProtectedImage } from "@/components/ProtectedImage";
 import { pageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, serviceSchema } from "@/lib/schema";
-import { serviceAreas, site, yearsInBusiness } from "@/lib/site";
+import { FOUNDED_YEAR, serviceAreas, site, yearsInBusiness } from "@/lib/site";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Industrial Construction, Nashua NH",
+  title: "Residential Construction, Nashua NH",
   description:
-    "Industrial general contracting in southern NH: manufacturing and warehouse space, mechanical, electrical and fire suppression, demolition and site work.",
-  path: "/industrial",
+    "Home additions, garages, porches and whole-room remodels across southern NH and northern MA — built by a commercial contractor, for homeowners.",
+  path: "/residential",
+  image: "/projects/timber-frame-screened-porch.jpg",
   keywords: [
-    "industrial construction New Hampshire",
-    "industrial general contractor Nashua NH",
-    "warehouse construction southern NH",
-    "manufacturing facility contractor New Hampshire",
-    "industrial fit-up NH",
+    "residential contractor Nashua NH",
+    "home addition builder southern New Hampshire",
+    "garage builder Nashua NH",
+    "home remodeling contractor NH",
+    "screened porch builder New Hampshire",
   ],
 });
 
 const capabilities = [
   {
-    title: "Manufacturing & Warehouse",
-    body: "New industrial space and expansions, plus the interior reconfiguration that follows a line change or a new tenant.",
+    title: "Additions & Dormers",
+    body: "New wings, second storeys and dormers tied into the existing roofline, siding exposure and window rhythm so the join does not announce itself.",
   },
   {
-    title: "Mechanical & Electrical",
-    body: "HVAC, plumbing, power and controls coordinated against each other before anything gets installed.",
+    title: "Garages & Outbuildings",
+    body: "Detached and attached garages from footing to finish — framing, roofing, siding, doors and the site work around them.",
   },
   {
-    title: "Fire Protection & Suppression",
-    body: "Sprinkler and suppression systems, including the coordination with ceilings, racking and mechanical that usually gets missed.",
+    title: "Porches & Outdoor Living",
+    body: "Screened porches, timber framing, decks and the foundation and stonework that carry them.",
   },
   {
-    title: "Demolition & Site Work",
-    body: "Selective demolition, concrete, paving and exterior work — scheduled around frost dates rather than into them.",
+    title: "Remodels & Renovations",
+    body: "Kitchens, baths and whole-room reworks, including the structural changes and mechanical updates behind the finishes.",
   },
 ];
 
-const considerations = [
+const reasons = [
   {
-    heading: "We work around production",
-    body: "Industrial clients rarely get to stop. We phase scopes into shutdown windows, weekends and off-shifts, and we plan the noisy and dusty work against your operation rather than our convenience.",
+    heading: "Commercial discipline, on a house",
+    body: `Scheduling, written scopes and a superintendent on site are ordinary on a commercial job and rare on a residential one. After ${yearsInBusiness} years of the former, we bring the same habits to the latter.`,
   },
   {
-    heading: "One contract across the trades",
-    body: "Mechanical, electrical and fire protection are where industrial projects come apart, because nobody owns the hand-offs. Carrying them together is the point.",
+    heading: "One contractor, every trade",
+    body: "Framing, mechanical, electrical, roofing and finish work are carried under one contract, so the hand-offs between them stop being your problem.",
   },
   {
-    heading: "Local means responsive",
-    body: `Being in Nashua means a project manager can be standing in your building the same day. Over ${yearsInBusiness} years that has mattered more than anything we could put in a brochure.`,
+    heading: "We live here",
+    body: `Based on Temple Street in Nashua since ${FOUNDED_YEAR}. Close enough that a question gets answered the same day, not next week.`,
   },
 ];
 
-export default function IndustrialPage() {
+export default function ResidentialPage() {
   return (
     <>
       <JsonLd
         schema={[
           serviceSchema({
-            id: "/industrial#service",
-            name: "Industrial Construction",
-            serviceType: "Industrial Construction",
+            id: "/residential#service",
+            name: "Residential Construction",
+            serviceType: "Residential Construction",
             description:
-              "Industrial general contracting, manufacturing and warehouse construction, mechanical, electrical and fire suppression scopes, demolition and site work across southern New Hampshire.",
+              "Home additions, garages, porches, and remodels and renovations across southern New Hampshire and northern Massachusetts.",
           }),
           breadcrumbSchema([
             { name: "Home", path: "/" },
-            { name: "Industrial Construction", path: "/industrial" },
+            { name: "Residential Construction", path: "/residential" },
           ]),
         ]}
       />
 
       <section className="relative -mt-20 flex min-h-[70svh] items-end overflow-hidden bg-granite-950 pt-20">
         <ProtectedImage
-          src="/projects/manufacturing-facility.jpg"
-          alt="Manufacturing production floor built out by Nash Construction in southern New Hampshire"
+          src="/projects/timber-frame-screened-porch.jpg"
+          alt="Timber-frame screened porch addition built by Nash Construction in southern New Hampshire"
           fill
           sizes="100vw"
           priority
@@ -87,15 +87,14 @@ export default function IndustrialPage() {
         <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-granite-950 via-granite-950/75 to-granite-950/40" />
         <div className="container-page relative pb-16 pt-28">
           <p className="animate-fade-up text-xs font-medium uppercase tracking-[0.24em] text-granite-300">
-            Industrial Construction
+            Residential Construction
           </p>
           <h1 className="animate-fade-up mt-5 max-w-3xl font-display text-[clamp(2.25rem,5.5vw,4rem)] font-semibold leading-[1.04] text-granite-50 [animation-delay:80ms]">
-            Industrial work that fits into a plant&rsquo;s schedule, not the other way around.
+            The crew that builds commercial buildings, working on your house.
           </h1>
           <p className="animate-fade-up mt-7 max-w-2xl text-lg leading-relaxed text-granite-300 [animation-delay:160ms]">
-            Manufacturing and warehouse space, mechanical and electrical scopes, fire suppression, and
-            the demolition and site work that supports them — delivered by a contractor who is twenty
-            minutes away when something needs a decision.
+            Additions, garages, porches and remodels across southern New Hampshire and northern
+            Massachusetts — scoped, scheduled and supervised the way a commercial project is.
           </p>
         </div>
       </section>
@@ -105,13 +104,14 @@ export default function IndustrialPage() {
           <div className="lg:col-span-5">
             <h2 className="font-display text-3xl font-semibold text-granite-900">What we take on</h2>
             <p className="mt-5 text-[15px] leading-relaxed text-granite-600">
-              Whole buildings, single systems, or the reconfiguration that a new process demands.
+              Work that needs structure, permits and trades coordinated — rather than a handyman
+              afternoon.
             </p>
             <Link
-              href="/services"
+              href="/projects"
               className="mt-8 inline-block rounded-full border border-granite-300 px-6 py-3 text-sm font-medium text-granite-700 transition-colors hover:border-granite-900 hover:text-granite-900"
             >
-              See all capabilities
+              See residential projects
             </Link>
           </div>
 
@@ -128,12 +128,12 @@ export default function IndustrialPage() {
 
       <section className="bg-white py-24">
         <div className="container-page">
-          <p className="text-xs font-medium uppercase tracking-[0.2em] text-brand-700">How we approach it</p>
+          <p className="text-xs font-medium uppercase tracking-[0.2em] text-brand-700">Why us</p>
           <h2 className="mt-4 max-w-2xl font-display text-3xl font-semibold text-granite-900">
-            Three things industrial clients tell us matter most.
+            Why a commercial contractor is worth having on a home.
           </h2>
           <div className="mt-12 grid gap-px overflow-hidden rounded-xl bg-granite-200 md:grid-cols-3">
-            {considerations.map((item) => (
+            {reasons.map((item) => (
               <div key={item.heading} className="bg-white p-8">
                 <h3 className="font-display text-lg font-semibold text-granite-900">{item.heading}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-granite-600">{item.body}</p>
@@ -148,12 +148,11 @@ export default function IndustrialPage() {
           <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
             <div className="lg:col-span-7">
               <h2 className="font-display text-3xl font-semibold text-granite-50">
-                Planning an industrial project?
+                Planning an addition, garage or remodel?
               </h2>
               <p className="mt-5 text-[15px] leading-relaxed text-granite-400">
-                We&rsquo;ll walk the facility, work out what has to happen during a shutdown versus
-                what can run alongside production, and put it in writing. Working across{" "}
-                {serviceAreas.map((a) => a.region).join(", ")}.
+                We&rsquo;ll walk the house, tell you honestly what the scope involves, and put a
+                budget in writing. Working across {serviceAreas.map((area) => area.region).join(", ")}.
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row lg:col-span-5 lg:justify-end">

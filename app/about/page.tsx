@@ -49,7 +49,7 @@ export default function AboutPage() {
         />
         <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-granite-950 via-granite-950/75 to-granite-950/40" />
         <div className="container-page relative pb-16 pt-28">
-          <p className="animate-fade-up text-xs font-medium uppercase tracking-[0.24em] text-brand-400">
+          <p className="animate-fade-up text-xs font-medium uppercase tracking-[0.24em] text-granite-300">
             About Nash
           </p>
           <h1 className="animate-fade-up mt-5 max-w-3xl font-display text-[clamp(2.25rem,5.5vw,4rem)] font-semibold leading-[1.04] text-granite-50 [animation-delay:80ms]">
@@ -111,7 +111,7 @@ export default function AboutPage() {
       {/* ------------------------------ Leadership ---------------------------- */}
       <section className="bg-white py-24">
         <div className="container-page">
-          <p className="text-xs font-medium uppercase tracking-[0.2em] text-brand-600">Leadership</p>
+          <p className="text-xs font-medium uppercase tracking-[0.2em] text-brand-700">Leadership</p>
           <h2 className="mt-4 max-w-2xl font-display text-3xl font-semibold text-granite-900">
             Who you&rsquo;ll actually be working with.
           </h2>
@@ -119,7 +119,7 @@ export default function AboutPage() {
             {site.leadership.map((person) => (
               <div key={person.name} className="bg-white p-8 sm:p-10">
                 <h3 className="font-display text-2xl font-semibold text-granite-900">{person.name}</h3>
-                <p className="mt-1.5 text-xs uppercase tracking-[0.16em] text-brand-600">{person.role}</p>
+                <p className="mt-1.5 text-xs uppercase tracking-[0.16em] text-brand-700">{person.role}</p>
                 <p className="mt-5 text-[15px] leading-relaxed text-granite-600">{person.bio}</p>
               </div>
             ))}
@@ -129,14 +129,14 @@ export default function AboutPage() {
 
       {/* ------------------------------ Timeline ------------------------------ */}
       <section className="container-page py-24">
-        <p className="text-xs font-medium uppercase tracking-[0.2em] text-brand-600">History</p>
+        <p className="text-xs font-medium uppercase tracking-[0.2em] text-brand-700">History</p>
         <h2 className="mt-4 max-w-2xl font-display text-3xl font-semibold text-granite-900">
           The short version.
         </h2>
         <ol className="mt-12 grid gap-px overflow-hidden rounded-xl bg-granite-200 md:grid-cols-4">
           {milestones.map((milestone) => (
             <li key={milestone.year} className="bg-granite-50 p-8">
-              <span className="font-display text-2xl font-semibold text-brand-600">{milestone.year}</span>
+              <span className="font-display text-2xl font-semibold text-brand-700">{milestone.year}</span>
               <p className="mt-3 text-sm leading-relaxed text-granite-600">{milestone.label}</p>
             </li>
           ))}
@@ -146,14 +146,14 @@ export default function AboutPage() {
       {/* ------------------------------- Process ------------------------------ */}
       <section className="bg-white py-24">
         <div className="container-page">
-          <p className="text-xs font-medium uppercase tracking-[0.2em] text-brand-600">How we work</p>
+          <p className="text-xs font-medium uppercase tracking-[0.2em] text-brand-700">How we work</p>
           <h2 className="mt-4 max-w-2xl font-display text-3xl font-semibold text-granite-900">
             Four phases, no surprises in between.
           </h2>
           <ol className="mt-12 grid gap-px overflow-hidden rounded-xl bg-granite-200 md:grid-cols-4">
             {process.map((phase) => (
               <li key={phase.step} className="bg-white p-8">
-                <span className="font-display text-sm font-semibold text-brand-600">{phase.step}</span>
+                <span className="font-display text-sm font-semibold text-brand-700">{phase.step}</span>
                 <h3 className="mt-4 font-display text-xl font-semibold text-granite-900">{phase.title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-granite-600">{phase.body}</p>
               </li>
@@ -174,7 +174,7 @@ export default function AboutPage() {
           </p>
           <Link
             href="/contact"
-            className="mt-10 inline-block rounded-full bg-brand-500 px-8 py-4 text-sm font-medium text-white transition-all duration-300 hover:bg-brand-500"
+            className="mt-10 inline-block rounded-full bg-brand-700 px-8 py-4 text-sm font-medium text-white transition-all duration-300 hover:bg-brand-600"
           >
             Request a Consultation
           </Link>

@@ -52,7 +52,7 @@ export default function ContactPage() {
       />
 
       <section className="container-page pt-20 pb-12">
-        <p className="animate-fade-up text-xs font-medium uppercase tracking-[0.2em] text-brand-600">
+        <p className="animate-fade-up text-xs font-medium uppercase tracking-[0.2em] text-brand-700">
           Contact
         </p>
         <h1 className="animate-fade-up mt-5 max-w-3xl font-display text-[clamp(2.25rem,5vw,3.5rem)] font-semibold leading-[1.05] text-granite-900 [animation-delay:80ms]">
@@ -89,7 +89,7 @@ export default function ContactPage() {
                 <div className="flex justify-between gap-4 border-t border-granite-100 pt-3">
                   <dt className="text-granite-500">Phone</dt>
                   <dd>
-                    <a href={`tel:${site.phone}`} className="font-medium text-granite-900 hover:text-brand-600">
+                    <a href={`tel:${site.phone}`} className="font-medium text-granite-900 hover:text-brand-700">
                       {site.phoneDisplay}
                     </a>
                   </dd>
@@ -134,7 +134,7 @@ export default function ContactPage() {
               <ul className="mt-4 space-y-2 text-sm text-granite-600">
                 {serviceGroups.map((group) => (
                   <li key={group.slug} className="flex gap-2.5">
-                    <span aria-hidden="true" className="mt-1.5 size-1.5 shrink-0 rounded-full bg-brand-500" />
+                    <span aria-hidden="true" className="mt-1.5 size-1.5 shrink-0 rounded-full bg-brand-700" />
                     {group.title}
                   </li>
                 ))}

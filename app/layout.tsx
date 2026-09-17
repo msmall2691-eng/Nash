@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Inter, Roboto_Slab } from "next/font/google";
 
 import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/JsonLd";
@@ -15,13 +15,20 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-const fraunces = Fraunces({
+/**
+ * Display face.
+ *
+ * A slab serif rather than the previous high-contrast display serif: the old
+ * face read elegant and soft at heading sizes, which is the wrong register for
+ * a commercial and industrial contractor. Slab keeps weight and structure —
+ * sturdy and industrial without being aggressive — and it shares a serif
+ * skeleton with the wordmark in the logo.
+ */
+const robotoSlab = Roboto_Slab({
   subsets: ["latin"],
   display: "swap",
-  // Variable font: `axes` and an explicit `weight` list are mutually exclusive,
-  // so we take the full variable range and tune optical softness instead.
-  axes: ["SOFT", "WONK", "opsz"],
-  variable: "--font-fraunces",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-display-slab",
 });
 
 /**
@@ -94,7 +101,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-US" className={`${inter.variable} ${fraunces.variable}`}>
+    <html lang="en-US" className={`${inter.variable} ${robotoSlab.variable}`}>
       <head>
         {/* Hoisted into <head> during SSR, so crawlers see the graph in the first byte. */}
         <JsonLd schema={[localBusinessSchema(), websiteSchema()]} />

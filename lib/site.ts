@@ -43,7 +43,7 @@ export const site = {
   legalName: "Nash Construction, LLC",
   tagline: "Commercial & Industrial General Contracting in Southern New Hampshire",
   description:
-    "Nashua NH general contractor for commercial and industrial construction, fit-ups, renovations and site work. Serving southern NH and northern MA since 1976.",
+    "Nashua NH general contractor — commercial, industrial and residential construction, fit-ups, renovations and additions. Southern NH and northern MA since 1976.",
   founded: String(FOUNDED_YEAR),
   incorporated: "1999",
 
@@ -159,7 +159,7 @@ export const sameAsUrls = activeProfiles.filter((p) => p.sameAs).map((p) => p.ur
 /**
  * Markets served, in Procore's categorization. Used for copy and JSON-LD.
  */
-export const markets = ["Commercial", "Industrial & Energy", "Institutional"] as const;
+export const markets = ["Commercial", "Industrial & Energy", "Institutional", "Residential"] as const;
 
 /**
  * Nashua plus the southern New Hampshire communities the business actually
@@ -181,6 +181,9 @@ export const allTowns = serviceAreas.flatMap((area) => area.towns);
  */
 export const localKeywords: string[] = [
   "Nashua NH commercial general contractor",
+  "Nashua NH residential contractor",
+  "home addition contractor southern New Hampshire",
+  "garage builder Nashua NH",
   "northern Massachusetts commercial contractor",
   "Lowell MA commercial construction",
   "southern New Hampshire commercial construction",
@@ -201,6 +204,7 @@ export const localKeywords: string[] = [
 export const navigation = [
   { href: "/commercial", label: "Commercial" },
   { href: "/industrial", label: "Industrial" },
+  { href: "/residential", label: "Residential" },
   { href: "/services", label: "Services" },
   { href: "/projects", label: "Projects" },
   { href: "/about", label: "About" },

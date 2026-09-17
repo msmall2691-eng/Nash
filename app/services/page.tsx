@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { Amp } from "@/components/Amp";
 import { JsonLd } from "@/components/JsonLd";
 import { pageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, serviceSchema } from "@/lib/schema";
@@ -42,7 +41,7 @@ export default function ServicesPage() {
       />
 
       <section className="container-page pt-20 pb-16">
-        <p className="animate-fade-up text-xs font-medium uppercase tracking-[0.2em] text-brand-600">
+        <p className="animate-fade-up text-xs font-medium uppercase tracking-[0.2em] text-brand-700">
           Services
         </p>
         <h1 className="animate-fade-up mt-5 max-w-3xl font-display text-[clamp(2.25rem,5vw,3.5rem)] font-semibold leading-[1.05] text-granite-900 [animation-delay:80ms]">
@@ -63,14 +62,12 @@ export default function ServicesPage() {
               className="grid scroll-mt-28 gap-8 bg-granite-50 p-8 transition-colors duration-300 hover:bg-white sm:p-12 lg:grid-cols-12"
             >
               <div className="lg:col-span-1">
-                <span className="font-display text-sm font-semibold text-brand-600">
+                <span className="font-display text-sm font-semibold text-brand-700">
                   {String(index + 1).padStart(2, "0")}
                 </span>
               </div>
               <div className="lg:col-span-5">
-                <h2 className="font-display text-2xl font-semibold text-granite-900">
-                  <Amp>{group.title}</Amp>
-                </h2>
+                <h2 className="font-display text-2xl font-semibold text-granite-900">{group.title}</h2>
                 <p className="mt-3 text-[15px] leading-relaxed text-granite-600">{group.summary}</p>
               </div>
               <div className="lg:col-span-6">
@@ -106,7 +103,7 @@ export default function ServicesPage() {
           <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
             <Link
               href="/contact"
-              className="rounded-full bg-granite-900 px-8 py-4 text-center text-sm font-medium text-granite-50 transition-all duration-300 hover:bg-brand-500"
+              className="rounded-full bg-granite-900 px-8 py-4 text-center text-sm font-medium text-granite-50 transition-all duration-300 hover:bg-brand-600"
             >
               Request a Consultation
             </Link>
