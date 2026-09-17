@@ -65,7 +65,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
       <div className="absolute inset-x-0 bottom-0 p-5">
         <h3 className="font-display text-lg font-semibold text-granite-50">{project.title}</h3>
-        {meta && <p className="mt-1 text-xs uppercase tracking-[0.14em] text-brass-300">{meta}</p>}
+        {meta && <p className="mt-1 text-xs uppercase tracking-[0.14em] text-brand-300">{meta}</p>}
         {project.summary && (
           <p className="mt-3 max-h-0 overflow-hidden text-sm leading-relaxed text-granite-200 opacity-0 transition-all duration-500 ease-out group-hover:max-h-40 group-hover:opacity-100">
             {project.summary}
@@ -122,7 +122,7 @@ export function GalleryGrid() {
           <button
             type="button"
             onClick={() => setSector("All")}
-            className="animate-fade-in text-sm font-medium text-granite-500 underline-offset-4 transition-colors hover:text-brass-600 hover:underline"
+            className="animate-fade-in text-sm font-medium text-granite-500 underline-offset-4 transition-colors hover:text-brand-600 hover:underline"
           >
             Clear filter
           </button>

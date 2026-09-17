@@ -2,7 +2,7 @@
 
 /* ---------------------------------------------------------------------------
    Design tokens — Tailwind v4 CSS-first theme.
-   Palette: New Hampshire granite (cool neutrals) against aged brass.
+   Palette: cool granite neutrals against the Nash brand burgundy (PANTONE 216 C).
 --------------------------------------------------------------------------- */
 @theme {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
@@ -20,11 +20,14 @@
   --color-granite-900: #1c1b1a;
   --color-granite-950: #111110;
 
-  --color-brass-300: #dcba86;
-  --color-brass-400: #cda264;
-  --color-brass-500: #b8894a;
-  --color-brass-600: #976d39;
-  --color-brass-700: #75542d;
+  /* Brand: PANTONE 216 C, declared in the logo EPS as CMYK 0.12 0.96 0.26 0.50.
+     brand-600 is the Pantone itself. The lighter steps exist because the Pantone
+     is far too dark to read on the near-black sections — those use brand-300. */
+  --color-brand-300: #e9a3c0;
+  --color-brand-400: #cc5f8d;
+  --color-brand-500: #9b1055;
+  --color-brand-600: #7e0843;
+  --color-brand-700: #5e0632;
 
   --animate-fade-up: fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
   --animate-fade-in: fade-in 0.4s ease-out both;
@@ -81,7 +84,7 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-brass-500);
+    outline: 2px solid var(--color-brand-600);
     outline-offset: 3px;
     border-radius: 2px;
   }

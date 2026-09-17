@@ -20,7 +20,7 @@ function SubmitButton() {
       type="submit"
       disabled={pending}
       aria-busy={pending}
-      className="group relative w-full overflow-hidden rounded-full bg-granite-900 px-8 py-4 text-sm font-medium text-granite-50 transition-all duration-300 hover:bg-brass-500 hover:shadow-xl hover:shadow-brass-500/25 disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:bg-granite-900 disabled:hover:shadow-none sm:w-auto"
+      className="group relative w-full overflow-hidden rounded-full bg-granite-900 px-8 py-4 text-sm font-medium text-granite-50 transition-all duration-300 hover:bg-brand-500 hover:shadow-xl hover:shadow-brand-500/25 disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:bg-granite-900 disabled:hover:shadow-none sm:w-auto"
     >
       <span className={`flex items-center justify-center gap-2.5 transition-opacity duration-200 ${pending ? "opacity-0" : "opacity-100"}`}>
         Request a Consultation
@@ -53,10 +53,10 @@ function SuccessPanel({
     <div
       role="status"
       aria-live="polite"
-      className="animate-scale-in flex flex-col items-center rounded-2xl border border-brass-300/60 bg-gradient-to-b from-white to-brass-300/10 px-8 py-14 text-center shadow-sm"
+      className="animate-scale-in flex flex-col items-center rounded-2xl border border-brand-300/60 bg-gradient-to-b from-white to-brand-300/10 px-8 py-14 text-center shadow-sm"
     >
-      <div className="relative grid size-16 place-items-center rounded-full bg-brass-500">
-        <span className="absolute inset-0 animate-ring rounded-full bg-brass-500" aria-hidden="true" />
+      <div className="relative grid size-16 place-items-center rounded-full bg-brand-500">
+        <span className="absolute inset-0 animate-ring rounded-full bg-brand-500" aria-hidden="true" />
         <svg viewBox="0 0 24 24" className="relative size-8" fill="none" stroke="white" strokeWidth={2.5} aria-hidden="true">
           <path
             d="M5 12.5l4.5 4.5L19 7.5"
@@ -86,7 +86,7 @@ function SuccessPanel({
       <button
         type="button"
         onClick={onReset}
-        className="animate-fade-up mt-8 text-sm font-medium text-granite-500 underline-offset-4 transition-colors hover:text-brass-600 hover:underline [animation-delay:360ms]"
+        className="animate-fade-up mt-8 text-sm font-medium text-granite-500 underline-offset-4 transition-colors hover:text-brand-600 hover:underline [animation-delay:360ms]"
       >
         Send another request
       </button>

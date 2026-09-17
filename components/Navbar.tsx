@@ -92,7 +92,7 @@ export function Navbar() {
                   {item.label}
                   <span
                     className={`absolute inset-x-3 -bottom-0.5 h-px origin-left transition-transform duration-300 ${
-                      onDark ? "bg-brass-400" : "bg-brass-500"
+                      onDark ? "bg-brand-400" : "bg-brand-500"
                     } ${active ? "scale-x-100" : "scale-x-0"}`}
                   />
                 </Link>
@@ -105,7 +105,7 @@ export function Navbar() {
           <a
             href={`tel:${site.phone}`}
             className={`text-sm font-medium transition-colors duration-300 ${
-              onDark ? "text-granite-200 hover:text-brass-400" : "text-granite-600 hover:text-brass-600"
+              onDark ? "text-granite-200 hover:text-brand-400" : "text-granite-600 hover:text-brand-600"
             }`}
           >
             {site.phoneDisplay}
@@ -114,8 +114,8 @@ export function Navbar() {
             href="/contact"
             className={`rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300 ${
               onDark
-                ? "bg-granite-50 text-granite-950 hover:bg-brass-400"
-                : "bg-granite-900 text-granite-50 hover:bg-brass-500 hover:shadow-lg hover:shadow-brass-500/20"
+                ? "bg-granite-50 text-white hover:bg-brand-500"
+                : "bg-granite-900 text-granite-50 hover:bg-brand-500 hover:shadow-lg hover:shadow-brand-500/20"
             }`}
           >
             Request a Consultation
@@ -154,7 +154,7 @@ export function Navbar() {
                 href={item.href}
                 aria-current={isActive(item.href) ? "page" : undefined}
                 className={`block border-b border-granite-100 py-3.5 text-base font-medium ${
-                  isActive(item.href) ? "text-brass-600" : "text-granite-800"
+                  isActive(item.href) ? "text-brand-600" : "text-granite-800"
                 }`}
               >
                 {item.label}

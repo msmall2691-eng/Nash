@@ -34,7 +34,7 @@ export function Footer() {
           <ul className="mt-4 space-y-2.5 text-sm">
             {fullNavigation.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="text-granite-400 transition-colors hover:text-brass-400">
+                <Link href={item.href} className="text-granite-400 transition-colors hover:text-brand-400">
                   {item.label}
                 </Link>
               </li>
@@ -49,7 +49,7 @@ export function Footer() {
               <li key={group.slug}>
                 <Link
                   href={`/services#${group.slug}`}
-                  className="text-granite-400 transition-colors hover:text-brass-400"
+                  className="text-granite-400 transition-colors hover:text-brand-400"
                 >
                   {group.title}
                 </Link>
@@ -66,11 +66,11 @@ export function Footer() {
             {site.address.city}, {site.address.region} {site.address.postalCode}
           </p>
           <p className="mt-4 text-sm">
-            <a href={`tel:${site.phone}`} className="text-granite-200 transition-colors hover:text-brass-400">
+            <a href={`tel:${site.phone}`} className="text-granite-200 transition-colors hover:text-brand-400">
               {site.phoneDisplay}
             </a>
             <br />
-            <a href={`mailto:${site.email}`} className="text-granite-200 transition-colors hover:text-brass-400">
+            <a href={`mailto:${site.email}`} className="text-granite-200 transition-colors hover:text-brand-400">
               {site.email}
             </a>
           </p>

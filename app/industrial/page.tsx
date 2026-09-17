@@ -87,7 +87,7 @@ export default function IndustrialPage() {
         />
         <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-granite-950 via-granite-950/75 to-granite-950/40" />
         <div className="container-page relative pb-16 pt-28">
-          <p className="animate-fade-up text-xs font-medium uppercase tracking-[0.24em] text-brass-400">
+          <p className="animate-fade-up text-xs font-medium uppercase tracking-[0.24em] text-brand-400">
             Industrial Construction
           </p>
           <h1 className="animate-fade-up mt-5 max-w-3xl font-display text-[clamp(2.25rem,5.5vw,4rem)] font-semibold leading-[1.04] text-granite-50 [animation-delay:80ms]">
@@ -131,7 +131,7 @@ export default function IndustrialPage() {
 
       <section className="bg-white py-24">
         <div className="container-page">
-          <p className="text-xs font-medium uppercase tracking-[0.2em] text-brass-600">How we approach it</p>
+          <p className="text-xs font-medium uppercase tracking-[0.2em] text-brand-600">How we approach it</p>
           <h2 className="mt-4 max-w-2xl font-display text-3xl font-semibold text-granite-900">
             Three things industrial clients tell us matter most.
           </h2>
@@ -162,7 +162,7 @@ export default function IndustrialPage() {
             <div className="flex flex-col gap-3 sm:flex-row lg:col-span-5 lg:justify-end">
               <Link
                 href="/contact"
-                className="rounded-full bg-brass-500 px-8 py-4 text-center text-sm font-medium text-granite-950 transition-colors hover:bg-brass-400"
+                className="rounded-full bg-brand-500 px-8 py-4 text-center text-sm font-medium text-white transition-colors hover:bg-brand-500"
               >
                 Request a Consultation
               </Link>

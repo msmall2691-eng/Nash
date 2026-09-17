@@ -196,6 +196,33 @@ Variables. Every push to the production branch deploys; every PR gets a preview.
 `npm run build`; set the start command to `npm run start -- -p $PORT` so it binds
 Railway's injected port. Add the same environment variables.
 
+## Brand
+
+The logo in `public/logo/` is traced from the supplied CorelDRAW EPS at 1200 dpi
+— true vector, sharp at any size. `nash-mark.svg` is the tile, `nash-lockup.svg`
+the full lockup with the address block, and `nash-mark-currentcolor.svg` a
+knockout variant that takes its colour from CSS. `components/NashMark.tsx`
+inlines the mark so the header paints with no extra request.
+
+The accent palette is the brand's own colour: the EPS declares **PANTONE 216 C**
+as CMYK 0.12 0.96 0.26 0.50, which converts to **#7e0843**. That is
+`--color-brand-600` in `app/globals.css` and the Pantone itself.
+
+The lighter steps are not decoration — #7e0843 is too dark to read on the
+near-black sections, so `brand-300` carries accents there. Every pairing in use
+clears WCAG AA:
+
+| Pairing | Ratio |
+| --- | --- |
+| White on brand-600 (buttons) | 10.5:1 |
+| brand-600 on white (links) | 10.5:1 |
+| brand-300 on granite-950 (dark eyebrows) | 9.4:1 |
+| brand-400 on granite-950 | 5.0:1 |
+
+Burgundy is dark, so anything filled with `brand-500`/`brand-600` takes white
+text — never `granite-950`, which was the contrast failure when the palette
+first went in.
+
 ## Note on typography
 
 `components/Amp.tsx` renders ampersands in the sans face inside display type.

@@ -15,7 +15,7 @@ const controlClass = (invalid: boolean) =>
   `w-full rounded-lg border bg-white px-4 py-3 text-[15px] text-granite-900 shadow-sm outline-none transition-all duration-200 placeholder:text-granite-400 ${
     invalid
       ? "border-red-400 focus:border-red-500 focus:ring-4 focus:ring-red-500/10"
-      : "border-granite-200 hover:border-granite-300 focus:border-brass-500 focus:ring-4 focus:ring-brass-500/10"
+      : "border-granite-200 hover:border-granite-300 focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10"
   }`;
 
 function Shell({
@@ -31,7 +31,7 @@ function Shell({
     <div className="flex flex-col gap-1.5">
       <label htmlFor={fieldId} className="text-sm font-medium text-granite-700">
         {label}
-        {required && <span className="ml-0.5 text-brass-600">*</span>}
+        {required && <span className="ml-0.5 text-brand-600">*</span>}
       </label>
       {children}
       {error ? (

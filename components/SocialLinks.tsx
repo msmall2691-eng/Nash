@@ -34,8 +34,8 @@ export function SocialLinks({ tone = "dark" }: { tone?: "dark" | "light" }) {
 
   const base =
     tone === "dark"
-      ? "border-granite-800 text-granite-400 hover:border-brass-400 hover:text-brass-400"
-      : "border-granite-200 text-granite-500 hover:border-brass-500 hover:text-brass-600";
+      ? "border-granite-800 text-granite-400 hover:border-brand-400 hover:text-brand-400"
+      : "border-granite-200 text-granite-500 hover:border-brand-500 hover:text-brand-600";
 
   return (
     <ul className="flex flex-wrap gap-2.5">
