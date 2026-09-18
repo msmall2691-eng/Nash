@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { localKeywords, site, siteUrl } from "@/lib/site";
+import { isCanonicalDeployment, localKeywords, site, siteUrl } from "@/lib/site";
 
 type PageMetaInput = {
   title: string;
@@ -33,6 +33,9 @@ export function pageMetadata({
     description,
     keywords: [...keywords, ...localKeywords],
     alternates: { canonical: url },
+    // A review deployment on a vercel.app host must not be indexed; a canonical
+    // tag alone is only a hint, and Google is free to ignore it.
+    ...(isCanonicalDeployment ? {} : { robots: { index: false, follow: false } }),
     openGraph: {
       title: `${title} | ${site.name}`,
       description,

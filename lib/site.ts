@@ -32,6 +32,23 @@ function resolveSiteUrl(): string {
 
 export const siteUrl = resolveSiteUrl();
 
+/**
+ * Whether this deployment is actually being served from the canonical domain.
+ *
+ * Until nashconstructionnh.com is pointed here, the site is public on a
+ * vercel.app address with the full content on it. Left alone that address can
+ * be indexed and end up competing with the real domain for the business's own
+ * name — the exact outcome the SEO work exists to prevent.
+ *
+ * Vercel sets VERCEL_PROJECT_PRODUCTION_URL to the project's production domain,
+ * which is the generated *.vercel.app host while no custom domain is attached
+ * and the custom domain once one is. So this flips itself the moment the domain
+ * is connected, with nothing to remember and no variable to unset.
+ */
+const productionHost = process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim();
+export const isCanonicalDeployment =
+  !productionHost || !productionHost.toLowerCase().endsWith(".vercel.app");
+
 /** Founded 1976; the LLC was incorporated in 1999. */
 export const FOUNDED_YEAR = 1976;
 

@@ -5,7 +5,7 @@ import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/JsonLd";
 import { Navbar } from "@/components/Navbar";
 import { localBusinessSchema, websiteSchema } from "@/lib/schema";
-import { FOUNDED_YEAR, localKeywords, site, siteUrl } from "@/lib/site";
+import { FOUNDED_YEAR, isCanonicalDeployment, localKeywords, site, siteUrl } from "@/lib/site";
 
 import "./globals.css";
 
@@ -69,11 +69,15 @@ export const metadata: Metadata = {
     description: site.description,
     images: ["/projects/marzen-group.jpg"],
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
-  },
+  // A review deployment on a vercel.app host must not be indexed — an indexed
+  // preview competes with the real domain for the business's own name.
+  robots: isCanonicalDeployment
+    ? {
+        index: true,
+        follow: true,
+        googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
+      }
+    : { index: false, follow: false, googleBot: { index: false, follow: false } },
   formatDetection: { telephone: true, address: true, email: true },
   // Local-pack signals that have no first-class field in the Metadata API.
   other: {

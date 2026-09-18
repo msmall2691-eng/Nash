@@ -271,6 +271,43 @@ dedicated `Service` nodes for the Commercial and Industrial pages, a portfolio
 The headline year count is computed from `FOUNDED_YEAR`, so "50 Years" stays
 accurate without an annual copy edit.
 
+## Email delivery
+
+`lib/email.ts` wraps Resend behind a narrow interface, and with no
+`RESEND_API_KEY` present it degrades to a logged no-op rather than throwing — so
+local dev, CI and preview builds exercise the full submit → validate → success
+path without credentials. **That is the current production state: the form
+confirms but nothing is delivered.**
+
+Resend rather than the client's own Google Workspace, deliberately:
+
+| | Gmail App Password (`smtp.gmail.com`) | Resend API key |
+| --- | --- | --- |
+| Cost | Free | Free — 3,000/mo, 100/day, 3 domains |
+| Limit | 2,000/day | 100/day |
+| DNS changes | None | 3 records on a subdomain |
+| What a leaked credential grants | Send as that mailbox, to anyone | Send from one verified domain, nothing else |
+| Revocation | Touches their Google account | One click, invisible to Google |
+
+Google's SMTP relay (`smtp-relay.gmail.com`, 10,000/day, free with Workspace) is
+the option Google itself recommends and does not fit here: it authenticates by
+source IP, and Vercel's functions have no stable one to allowlist.
+
+If the client would rather not touch DNS, swapping in nodemailer against
+`smtp.gmail.com` is a change confined to `sendEstimateNotification` — the server
+action, the validation and the UI are all provider-agnostic already.
+
+**The rule that outlives the provider choice:** `from` must be an address on a
+domain we control and `replyTo` carries the visitor's address. Sending `from`
+the visitor's own address fails SPF and DMARC at the receiving end, because we
+are not authorised to send as gmail.com. `lib/email.ts` is already built this
+way; keep it that way.
+
+Verify the DNS records on a subdomain (`send.nashconstructionnh.com`) so the
+root SPF and MX records that Google Workspace owns are never touched — their
+mail keeps flowing throughout, and it can be set up while the Wix site is still
+live on the apex.
+
 ## Environment variables
 
 | Variable | Required | Purpose |
@@ -285,9 +322,32 @@ accurate without an annual copy edit.
 The app builds to fully static routes plus one Server Action endpoint, so it runs
 on any Node host.
 
-**Vercel** — import the repo, framework auto-detects as Next.js, no build config
-needed. Add the environment variables above under Settings → Environment
-Variables. Every push to the production branch deploys; every PR gets a preview.
+**Vercel** — currently deployed here, as project `nash` under
+`msmall2691-engs-projects`, linked to this repo. Framework auto-detects as
+Next.js, no build config needed. Add the environment variables above under
+Settings → Environment Variables. Every push to `main` deploys; every branch
+gets a preview.
+
+Review URL: https://nash-alpha.vercel.app — deployment protection is off, so it
+is shareable.
+
+**Indexing is gated on the domain, not on a flag.** While the project's
+production domain is still a `*.vercel.app` host, every page emits
+`noindex, nofollow`; attach nashconstructionnh.com and the same build emits
+`index, follow`. `isCanonicalDeployment` in `lib/site.ts` derives this from
+Vercel's `VERCEL_PROJECT_PRODUCTION_URL`, so it flips itself when the domain is
+connected — there is nothing to remember and nothing to unset.
+
+A canonical tag alone would not have been enough: Google treats it as a hint and
+is free to index the vercel.app copy anyway, which is precisely the duplicate
+that would compete with the real domain for the business's own name. Note the
+deliberate choice of `noindex` over a `robots.txt` disallow — a disallowed page
+cannot be crawled, so the `noindex` would never be read, and URLs discovered
+elsewhere can still be indexed.
+
+Verified across all three states: production URL unset → `index, follow`;
+`nash-alpha.vercel.app` → `noindex, nofollow`; `www.nashconstructionnh.com` →
+`index, follow`.
 
 **Railway** — create a service from the repo. No start-command override is
 needed: `npm run start` binds `$PORT` when the platform injects one and falls
