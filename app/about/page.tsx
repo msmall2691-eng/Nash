@@ -91,10 +91,10 @@ export default function AboutPage() {
         </div>
         <div className="space-y-6 text-[15px] leading-relaxed text-granite-600 lg:col-span-7">
           <p>
-            Mark Nash has worked in construction since {FOUNDED_YEAR}. The business he started was
-            incorporated as Nash Construction, LLC in {site.incorporated}, and it has been operating in
-            and around Nashua ever since — long enough that a lot of our work now comes from clients
-            we first did something small for years ago.
+            Mark Nash founded the business in {FOUNDED_YEAR}. It was incorporated as Nash
+            Construction, LLC in {site.incorporated}, and it has been operating in and around Nashua
+            ever since — long enough that a lot of our work now comes from clients we first did
+            something small for years ago.
           </p>
           <p>
             We stayed deliberately focused: {markets.join(", ").toLowerCase()} work, in southern New
@@ -102,8 +102,8 @@ export default function AboutPage() {
             a facilities manager in Nashua or Manchester calls first, and keeps calling.
           </p>
           <p>
-            That is also why the same two people stay involved from the consultation through the punch
-            list. There is no hand-off to a team you have not met.
+            That is also why the person who scopes your project is the person who sees it through
+            the punch list. There is no hand-off to a team you have not met.
           </p>
         </div>
       </section>
@@ -115,7 +115,17 @@ export default function AboutPage() {
           <h2 className="mt-4 max-w-2xl font-display text-3xl font-semibold text-granite-900">
             Who you&rsquo;ll actually be working with.
           </h2>
-          <div className="mt-12 grid gap-px overflow-hidden rounded-xl bg-granite-200 sm:grid-cols-2">
+          {/*
+            The cards are white on a white section and rely on the gap-px grid
+            for their dividers — which a single card has none of. The ring keeps
+            the panel legible at any count, and the width cap stops one card
+            stretching a line of body text across the full container.
+          */}
+          <div
+            className={`mt-12 grid gap-px overflow-hidden rounded-xl bg-granite-200 ring-1 ring-granite-200 ${
+              site.leadership.length > 1 ? "sm:grid-cols-2" : "sm:max-w-2xl"
+            }`}
+          >
             {site.leadership.map((person) => (
               <div key={person.name} className="bg-white p-8 sm:p-10">
                 <h3 className="font-display text-2xl font-semibold text-granite-900">{person.name}</h3>

@@ -233,10 +233,17 @@ updates itself. So does "50 years" — it's calculated from 1976, so it becomes
    entries were deliberately left thin rather than guessed at, because these are
    real businesses and made-up specifics would be on the internet under Nash's
    name.
-3. **Confirm the phone number.** The site uses 603-943-7593 from the old site.
+3. **What is Mark Nash's role now?** We've updated the site so Steve shows as
+   President. Mark is still credited as the founder and still appears in the
+   company history — that's a fact about 1976 and doesn't change. But we
+   deliberately did not give him a new title on the leadership section, because
+   nobody told us one and making one up about a real person is not something
+   we'll do. Tell us his current role (or that he's retired / no longer
+   involved) and we'll add it in minutes.
+4. **Confirm the phone number.** The site uses 603-943-7593 from the old site.
    Google and Yelp show 603-882-2702, which belongs to Nash Group — a different
    company.
-4. **Claim the Google and Yelp listings.** Both are currently unclaimed and one
+5. **Claim the Google and Yelp listings.** Both are currently unclaimed and one
    carries the wrong company's phone number. This is the single highest-value
    thing available for local search ranking — more than anything else on this
    list, and more than anything left to do in the site itself.

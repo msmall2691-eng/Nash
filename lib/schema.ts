@@ -27,10 +27,13 @@ export function localBusinessSchema() {
     image: `${siteUrl}/projects/marzen-group.jpg`,
     logo: `${siteUrl}/icon.svg`,
     ...(sameAsUrls.length > 0 ? { sameAs: sameAsUrls } : {}),
+    // Founder carries no jobTitle: Mark Nash founded the business, but his
+    // current role is unconfirmed and this must not assert one. It also no
+    // longer reads leadership[0] — that positional coupling silently made
+    // whoever happened to be listed first into the founder.
     founder: {
       "@type": "Person",
-      name: site.leadership[0].name,
-      jobTitle: site.leadership[0].role,
+      name: site.founder.name,
     },
     employee: site.leadership.map((person) => ({
       "@type": "Person",
