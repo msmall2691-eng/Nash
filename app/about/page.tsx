@@ -17,12 +17,12 @@ export const metadata: Metadata = pageMetadata({
     "about Nash Construction Nashua NH",
     "New Hampshire commercial contractor history",
     "BBB accredited contractor Nashua",
-    "Mark Nash Construction New Hampshire",
+    "family owned contractor Nashua NH",
   ],
 });
 
 const milestones = [
-  { year: FOUNDED_YEAR, label: "Mark Nash founds the business in Nashua." },
+  { year: FOUNDED_YEAR, label: "The business is founded in Nashua." },
   { year: 1999, label: "The business is incorporated as Nash Construction, LLC." },
   { year: 2009, label: `${site.accreditation.body} accreditation, held with an ${site.accreditation.rating} rating.` },
   { year: new Date().getFullYear(), label: `${yearsInBusiness} years of continuous operation in southern New Hampshire.` },
@@ -92,10 +92,10 @@ export default function AboutPage() {
         </div>
         <div className="space-y-6 text-[15px] leading-relaxed text-granite-600 lg:col-span-7">
           <p>
-            Mark Nash founded the business in {FOUNDED_YEAR}. It was incorporated as Nash
-            Construction, LLC in {site.incorporated}, and it has been operating in and around Nashua
-            ever since — long enough that a lot of our work now comes from clients we first did
-            something small for years ago.
+            The business was founded in {FOUNDED_YEAR} and incorporated as Nash Construction, LLC
+            in {site.incorporated}. It has been operating in and around Nashua ever since — long
+            enough that a lot of our work now comes from clients we first did something small for
+            years ago.
           </p>
           <p>
             We stayed deliberately focused: {markets.join(", ").toLowerCase()} work, close to home.

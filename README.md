@@ -15,12 +15,14 @@ a branded "Photography coming soon" panel rather than filler imagery, and are
 excluded from the image sitemap. Drop a photo into `photos-inbox/girls-inc.jpg`,
 run `npm run photos`, and set `hasPhoto: true` on that entry.
 
-**Officers (settled, Sept 2026).** Stephen Boilard is President. Mark Nash
-founded the business and is retired, so he is recorded as `founder` in
-`lib/site.ts` and credited in the 1976 milestone, but is deliberately absent
-from `leadership` and from the JSON-LD `employee` list — both describe who runs
-the business now. The About page's leadership grid adapts to the count, so
-adding a second officer needs no layout change.
+**Officers (settled, Sept 2026).** Stephen Boilard is President, and he is the
+only person named anywhere on the site. The founder is retired and, at the
+client's request, is not named at all — not in `leadership`, not as a `founder`
+field, and not in the JSON-LD, which is why the Organization schema carries
+`foundingDate` but no `founder` node. **Do not reintroduce a founder's name
+without being asked**; this repo is public, so the request applies here too.
+The founding *year* stays everywhere it appeared. The About page's leadership
+grid adapts to the count, so adding a second officer needs no layout change.
 
 **Three service promises need the client's sign-off.** These are commitments the
 business has to honour, and nobody has confirmed them — they were written as

@@ -94,21 +94,14 @@ export const site = {
       "https://www.bbb.org/us/nh/nashua/profile/building-contractors/nash-construction-llc-0051-92009862",
   },
 
-  /**
-   * Who founded the business. Historical and unchanging, so it is deliberately
-   * separate from `leadership` — officers change, and that must never be able
-   * to rewrite who started the company or when.
-   */
-  founder: { name: "Mark Nash" },
 
   /**
-   * Current officers only.
+   * Current officers.
    *
-   * Mark Nash founded the business but is retired and no longer president
-   * (confirmed by the client, Sept 2026), so he is not listed here and not in
-   * the JSON-LD employee list — both describe who is running the business now.
-   * He stays as `founder` above and in the 1976 milestone, which are facts
-   * about the past and do not change on his retirement.
+   * The founder is retired and, at the client's request (Sept 2026), is not
+   * named anywhere on the site — not here, not as a `founder` field, and not in
+   * the structured data. The founding *year* stays everywhere it appeared; only
+   * the person is gone. Do not reintroduce a name here without being asked.
    */
   leadership: [
     {

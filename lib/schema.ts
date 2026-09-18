@@ -27,14 +27,9 @@ export function localBusinessSchema() {
     image: `${siteUrl}/projects/marzen-group.jpg`,
     logo: `${siteUrl}/icon.svg`,
     ...(sameAsUrls.length > 0 ? { sameAs: sameAsUrls } : {}),
-    // Founder carries no jobTitle: Mark Nash founded the business, but his
-    // current role is unconfirmed and this must not assert one. It also no
-    // longer reads leadership[0] — that positional coupling silently made
-    // whoever happened to be listed first into the founder.
-    founder: {
-      "@type": "Person",
-      name: site.founder.name,
-    },
+    // No `founder` node: the founder is retired and, at the client's request, is
+    // not named on the site. `foundingDate` above still carries the year, which
+    // is the part Google actually uses for an established-business signal.
     employee: site.leadership.map((person) => ({
       "@type": "Person",
       name: person.name,
