@@ -5,8 +5,8 @@ southern New Hampshire since 1976. Next.js 16 (App Router), React 19,
 TypeScript (strict), Tailwind CSS v4.
 
 **Non-technical summary:** [WEBSITE-GUIDE.md](./WEBSITE-GUIDE.md) — what the site
-does and how quickly it can be changed, written for the client rather than for a
-developer.
+does, where it is hosted, what it costs, why it cannot move to Wix, and how
+quickly it can be changed. Written for the client rather than for a developer.
 
 ## ⚠️ Before this goes live
 
