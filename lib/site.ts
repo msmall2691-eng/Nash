@@ -104,12 +104,11 @@ export const site = {
   /**
    * Current officers only.
    *
-   * Mark Nash is no longer president (confirmed by the client, Sept 2026) and
-   * we have not been told what his role is now, or whether he is still with the
-   * business — so he is not listed here. Inventing a title for a real, named
-   * person is worse than an incomplete list. He remains the founder above, and
-   * the history section still credits him, because that is a fact about 1976
-   * rather than a claim about today. Add him back with a confirmed role.
+   * Mark Nash founded the business but is retired and no longer president
+   * (confirmed by the client, Sept 2026), so he is not listed here and not in
+   * the JSON-LD employee list — both describe who is running the business now.
+   * He stays as `founder` above and in the 1976 milestone, which are facts
+   * about the past and do not change on his retirement.
    */
   leadership: [
     {

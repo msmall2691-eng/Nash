@@ -15,14 +15,12 @@ a branded "Photography coming soon" panel rather than filler imagery, and are
 excluded from the image sitemap. Drop a photo into `photos-inbox/girls-inc.jpg`,
 run `npm run photos`, and set `hasPhoto: true` on that entry.
 
-**Mark Nash's current role is unknown.** The client confirmed (Sept 2026) that
-he is no longer president — Stephen Boilard is — but not what his role is now,
-or whether he is still with the business. He is therefore recorded as `founder`
-in `lib/site.ts` and credited in the history, but he is *not* in `leadership`
-and *not* in the JSON-LD `employee` list, because both require a current title
-and guessing one about a real named person is worse than an incomplete list.
-Ask, then add him back with a confirmed role — the About page's leadership grid
-already adapts to the count.
+**Officers (settled, Sept 2026).** Stephen Boilard is President. Mark Nash
+founded the business and is retired, so he is recorded as `founder` in
+`lib/site.ts` and credited in the 1976 milestone, but is deliberately absent
+from `leadership` and from the JSON-LD `employee` list — both describe who runs
+the business now. The About page's leadership grid adapts to the count, so
+adding a second officer needs no layout change.
 
 **Three service promises need the client's sign-off.** These are commitments the
 business has to honour, and nobody has confirmed them — they were written as
