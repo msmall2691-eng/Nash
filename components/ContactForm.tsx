@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useActionState, useEffect, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 
@@ -98,6 +99,12 @@ function ContactFormInner({ onReset }: { onReset: () => void }) {
   const [state, formAction] = useActionState(submitContactForm, initialContactState);
   const formRef = useRef<HTMLFormElement>(null);
 
+  // The service-area checker links here with the town it just confirmed. Only
+  // a town we actually offer is accepted, so the parameter cannot inject a
+  // value the select does not contain.
+  const townParam = useSearchParams().get("town");
+  const presetTown = townParam && nhCities.includes(townParam) ? townParam : undefined;
+
   // Clear the inputs once a submission lands, so "Submit another" starts clean.
   useEffect(() => {
     if (state.status === "success") formRef.current?.reset();
@@ -168,7 +175,7 @@ function ContactFormInner({ onReset }: { onReset: () => void }) {
           options={nhCities}
           placeholder="Where is the building?"
           error={state.errors.city}
-          defaultValue={state.values?.city}
+          defaultValue={state.values?.city || presetTown}
         />
         <SelectField
           label="Project Type"

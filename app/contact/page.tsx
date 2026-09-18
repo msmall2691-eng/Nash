@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 import { BbbBadge } from "@/components/BbbBadge";
 import { ContactForm } from "@/components/ContactForm";
@@ -73,7 +74,10 @@ export default function ContactPage() {
 
       <section className="container-page grid gap-12 pb-24 lg:grid-cols-12">
         <div className="lg:col-span-7">
-          <ContactForm />
+          {/* Reads ?town= from the URL, so the boundary keeps this page static. */}
+          <Suspense fallback={<div className="min-h-[38rem]" />}>
+            <ContactForm />
+          </Suspense>
         </div>
 
         <aside className="lg:col-span-5">

@@ -1,16 +1,31 @@
 "use client";
 
+import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 
 import { GalleryFilter, type FilterOption } from "@/components/GalleryFilter";
 import { ProjectLightbox } from "@/components/ProjectLightbox";
 import { ProtectedImage } from "@/components/ProtectedImage";
-import { PROJECT_SECTORS, projects, type Project, type ProjectSector } from "@/lib/projects";
+import {
+  MARKET_LABELS,
+  PROJECT_MARKETS,
+  parseMarket,
+  parseSector,
+  populatedSectors,
+  projects,
+  type Project,
+  type ProjectMarket,
+  type ProjectSector,
+} from "@/lib/projects";
 
 type SectorFilter = ProjectSector | "All";
+type MarketFilter = ProjectMarket | "All";
 
-function matches(project: Project, sector: SectorFilter): boolean {
-  return sector === "All" || project.sector === sector;
+function matches(project: Project, market: MarketFilter, sector: SectorFilter): boolean {
+  return (
+    (market === "All" || project.market === market) &&
+    (sector === "All" || project.sector === sector)
+  );
 }
 
 /**
@@ -119,21 +134,70 @@ function ProjectCard({
 }
 
 export function GalleryGrid() {
-  const [sector, setSector] = useState<SectorFilter>("All");
+  const router = useRouter();
+  const params = useSearchParams();
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  const visible = useMemo(() => projects.filter((project) => matches(project, sector)), [sector]);
+  // The URL is the source of truth, so /projects?market=residential lands
+  // pre-filtered and any filtered view can be linked, shared or bookmarked.
+  const market: MarketFilter = parseMarket(params.get("market")) ?? "All";
+  const sector: SectorFilter = parseSector(params.get("sector")) ?? "All";
+
+  const setFilters = useCallback(
+    (next: { market?: MarketFilter; sector?: SectorFilter }) => {
+      const query = new URLSearchParams();
+      const nextMarket = next.market ?? market;
+      const nextSector = next.sector ?? sector;
+      if (nextMarket !== "All") query.set("market", nextMarket);
+      if (nextSector !== "All") query.set("sector", nextSector);
+      const qs = query.toString();
+      // `scroll: false` keeps the grid in place; a filter change is not a new page.
+      router.replace(qs ? `/projects?${qs}` : "/projects", { scroll: false });
+    },
+    [market, sector, router],
+  );
+
+  const visible = useMemo(
+    () => projects.filter((project) => matches(project, market, sector)),
+    [market, sector],
+  );
+
+  const marketOptions: FilterOption<ProjectMarket>[] = useMemo(
+    () => [
+      { value: "All", label: "All work", count: projects.filter((p) => matches(p, "All", sector)).length },
+      ...PROJECT_MARKETS.map((option) => ({
+        value: option,
+        label: MARKET_LABELS[option],
+        count: projects.filter((project) => matches(project, option, sector)).length,
+      })),
+    ],
+    [sector],
+  );
+
+  // Types present in the market currently in force.
+  const sectorsInMarket = useMemo(
+    () => populatedSectors.filter((option) => projects.some((p) => matches(p, market, option))),
+    [market],
+  );
+
+  /**
+   * Only offer a type filter when it can actually narrow the result.
+   *
+   * Industrial and Residential each map to a single type, so showing a second
+   * row there just repeats the market pill under a different heading.
+   */
+  const showSectorFilter = sectorsInMarket.length > 1;
 
   const sectorOptions: FilterOption<ProjectSector>[] = useMemo(
     () => [
-      { value: "All", label: "All work", count: projects.length },
-      ...PROJECT_SECTORS.map((option) => ({
+      { value: "All", label: "All types", count: projects.filter((p) => matches(p, market, "All")).length },
+      ...sectorsInMarket.map((option) => ({
         value: option,
         label: option,
-        count: projects.filter((project) => project.sector === option).length,
+        count: projects.filter((project) => matches(project, market, option)).length,
       })),
     ],
-    [],
+    [market, sectorsInMarket],
   );
 
   // Only photographed projects can be enlarged, so the lightbox navigates that
@@ -160,12 +224,25 @@ export function GalleryGrid() {
 
   // Part of each card's key, so a filter change remounts the grid and replays
   // the staggered entrance rather than swapping content in place.
-  const generation = sector;
+  const generation = `${market}|${sector}`;
 
   return (
     <div>
-      <div className="border-b border-granite-200 pb-8">
-        <GalleryFilter label="Sector" options={sectorOptions} value={sector} onChange={setSector} />
+      <div className="flex flex-col gap-6 border-b border-granite-200 pb-8 md:flex-row md:gap-12">
+        <GalleryFilter
+          label="Market"
+          options={marketOptions}
+          value={market}
+          onChange={(value) => setFilters({ market: value, sector: "All" })}
+        />
+        {showSectorFilter && (
+          <GalleryFilter
+            label="Type"
+            options={sectorOptions}
+            value={sector}
+            onChange={(value) => setFilters({ sector: value })}
+          />
+        )}
       </div>
 
       <div className="mt-6 flex items-center justify-between gap-4">
@@ -173,13 +250,13 @@ export function GalleryGrid() {
           Showing <span className="font-medium tabular-nums text-granite-900">{visible.length}</span> of{" "}
           {projects.length} projects
         </p>
-        {sector !== "All" && (
+        {(market !== "All" || sector !== "All") && (
           <button
             type="button"
-            onClick={() => setSector("All")}
+            onClick={() => setFilters({ market: "All", sector: "All" })}
             className="animate-fade-in text-sm font-medium text-granite-500 underline-offset-4 transition-colors hover:text-brand-600 hover:underline"
           >
-            Clear filter
+            Clear filters
           </button>
         )}
       </div>

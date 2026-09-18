@@ -4,6 +4,10 @@ Marketing site for a commercial and industrial general contractor serving
 southern New Hampshire since 1976. Next.js 16 (App Router), React 19,
 TypeScript (strict), Tailwind CSS v4.
 
+**Non-technical summary:** [WEBSITE-GUIDE.md](./WEBSITE-GUIDE.md) — what the site
+does and how quickly it can be changed, written for the client rather than for a
+developer.
+
 ## ⚠️ Before this goes live
 
 **One project still needs a photograph:** Girls Inc. Photoless projects render
@@ -34,10 +38,8 @@ Also confirm:
   Business Profile pin so the marker lands on 40 Temple Street.
 - `NEXT_PUBLIC_SITE_URL` — canonical URLs, sitemaps and the JSON-LD `@id` derive
   from it.
-- **Positioning:** the site markets commercial + industrial, but three of the
-  supplied photos are residential (garages, a screened porch) and directories
-  list residential remodeling. A `Residential` sector now exists. Decide whether
-  to market it or drop those projects.
+- **Positioning:** resolved — residential is marketed openly. It has its own
+  landing page at `/residential`, its own market filter, and five projects.
 - **Do not link the "Nash Construction & Remodeling" Facebook page** — that is a
   different Nashua contractor. No Facebook page was found for this business.
 
@@ -77,14 +79,20 @@ app/
   actions/contact.ts  Server Action behind the form
   sitemap.ts robots.ts icon.svg not-found.tsx
 components/
-  Navbar  Footer  JsonLd  FormField  Amp
+  Navbar  Footer  JsonLd  FormField  NashMark  BbbBadge  SocialLinks
   ContactForm         useActionState + useFormStatus, animated success state
-  GalleryGrid         Stateful sector-filtered project grid
+  GalleryGrid         Project grid, filtered from the URL (see "Deep links")
   GalleryFilter       Pill-shaped filter menu
+  ProjectLightbox     Native <dialog> enlargement, arrow-key navigation
+  ProtectedImage      Next <Image> plus download deterrents
+  ServiceAreaCheck    "Do we work in your town?" widget
+  NashuaConditions    One quiet line of live Nashua weather in the footer
 lib/
   site.ts             Brand, NAP, leadership, service areas — SEO source of truth
   services.ts         The five service groups and their trades
   projects.ts         Portfolio data (see "Adding projects" below)
+  service-area.ts     Town lookup behind ServiceAreaCheck
+  weather.ts          Open-Meteo current conditions (no API key)
   metadata.ts         Per-page Metadata factory
   schema.ts           Schema.org builders
   validation.ts       Zod schemas + shared form-state types
@@ -145,6 +153,80 @@ fire these handlers, so Google Images indexes normally.
 - Only projects with `hasPhoto: true` are submitted. Placeholders are excluded
   deliberately; submitting filler wastes crawl budget.
 
+## Deep links into the portfolio
+
+`/projects` reads its filters from the query string rather than from component
+state, so any filtered view is a real, linkable URL:
+
+| URL | Shows |
+| --- | --- |
+| `/projects` | Everything |
+| `/projects?market=commercial` | Commercial only |
+| `/projects?market=industrial` | Industrial only |
+| `/projects?market=residential` | Residential only |
+| `/projects?sector=Restaurant` | One sector across all markets |
+
+The Commercial, Industrial and Residential pages and the home page's featured
+cards all link to the matching filtered view, so "see more of this work" lands
+on that work rather than on the full grid. An unrecognised value falls back to
+"All" instead of erroring, and clicking a pill rewrites the URL with
+`router.replace(..., { scroll: false })` — the back button still works and the
+page does not jump.
+
+`market` is derived from `sector`, never stored on a project, so a project can
+never be filed under a market that contradicts its type. The Type row is hidden
+when the selected market only contains one type, where a second row would just
+repeat the first.
+
+## Live weather
+
+`lib/weather.ts` reads current conditions for the office coordinates from
+**Open-Meteo** and `components/NashuaConditions.tsx` renders them as a single
+line in the footer: *"Nashua right now · 70°F, clear"*. When conditions would
+actually stop exterior work — freezing, snow, heavy rain, thunderstorms — it
+adds *"— a day we plan around"* and marks the dot in the brand colour.
+
+Why Open-Meteo: no API key, no account, no billing relationship, and free for
+commercial use. There is nothing to add to the host's environment variables and
+nothing anyone has to rotate. NOAA's `api.weather.gov` is the other keyless
+option and is a reasonable swap if the source ever needs to change.
+
+It is cached for 30 minutes (`next: { revalidate: 1800 }`), so traffic volume
+does not change the number of upstream calls, and it carries a 4-second timeout.
+**Every failure path returns `null` and the line simply does not render.** A
+weather outage must never be able to break a contractor's website — the
+`<Suspense fallback={null}>` around it in the footer means it cannot block the
+page either.
+
+This is why the build reports a 30-minute revalidate on every route. The pages
+are still prerendered; they just refresh in the background on that interval.
+
+## Service-area checker
+
+`components/ServiceAreaCheck.tsx` sits in the home page's "Where we work"
+section and answers the first question most visitors have. Type a town, get an
+immediate answer:
+
+- **A town we serve** → "Yes — Bedford, NH is in our Manchester Area service
+  area," plus a link to `/contact?town=Bedford` that arrives with the town
+  already selected in the form.
+- **Anything else** → an honest "not on our published list — but the list is
+  where we work most, not a boundary," with the phone number.
+
+Everything it knows comes from `serviceAreas` in `lib/site.ts`, so it cannot
+promise coverage the business has not claimed, and adding a town there teaches
+the checker about it with no second list to maintain. `lib/service-area.ts`
+folds away case and punctuation, strips a trailing state ("Nashua NH"), offers
+suggestions from two characters on, and carries a short alias map for the
+spellings locals actually use (Tyngsboro, Mt Vernon).
+
+The `?town=` parameter is validated against the select's own options before it
+is applied, so it cannot inject a value the form does not contain.
+
+Deliberately **not** an estimator. Quoting construction work from a web form
+requires numbers this business has not published, and inventing them would put
+a price in a customer's head that no project manager agreed to.
+
 ## External profiles
 
 `socialProfiles` in `lib/site.ts` drives the footer links, the contact page, and
@@ -152,7 +234,8 @@ the JSON-LD `sameAs` array in one place. An entry with `url: null` is skipped
 rather than rendered as a dead link, so adding a Facebook page later is a
 one-line change that updates every surface at once.
 
-Currently linked: BBB, Google Business Profile, Yelp, Houzz, Procore.
+Currently linked: BBB, Houzz, Yelp, Procore. The Google entry is present but
+`null` — see the note in `lib/site.ts` about why.
 
 ## Adding projects
 

@@ -5,7 +5,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { pageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, serviceSchema } from "@/lib/schema";
 import { serviceGroups } from "@/lib/services";
-import { site } from "@/lib/site";
+import {} from "@/lib/site";
 
 export const metadata: Metadata = pageMetadata({
   title: "Construction Services",
@@ -102,17 +102,17 @@ export default function ServicesPage() {
           </div>
           <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
             <Link
-              href="/contact"
+              href="/projects"
               className="rounded-full bg-granite-900 px-8 py-4 text-center text-sm font-medium text-granite-50 transition-all duration-300 hover:bg-brand-600"
+            >
+              See the work
+            </Link>
+            <Link
+              href="/contact"
+              className="rounded-full border border-granite-300 px-8 py-4 text-center text-sm font-medium text-granite-700 transition-colors hover:border-granite-900"
             >
               Request a Consultation
             </Link>
-            <a
-              href={`tel:${site.phone}`}
-              className="rounded-full border border-granite-300 px-8 py-4 text-center text-sm font-medium text-granite-700 transition-colors hover:border-granite-900"
-            >
-              {site.phoneDisplay}
-            </a>
           </div>
         </div>
       </section>

@@ -108,10 +108,10 @@ export default function IndustrialPage() {
               Whole buildings, single systems, or the reconfiguration that a new process demands.
             </p>
             <Link
-              href="/services"
+              href="/projects?market=industrial"
               className="mt-8 inline-block rounded-full border border-granite-300 px-6 py-3 text-sm font-medium text-granite-700 transition-colors hover:border-granite-900 hover:text-granite-900"
             >
-              See all capabilities
+              See industrial projects
             </Link>
           </div>
 

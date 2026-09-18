@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { BbbBadge } from "@/components/BbbBadge";
 import { ProtectedImage } from "@/components/ProtectedImage";
+import { ServiceAreaCheck } from "@/components/ServiceAreaCheck";
 import { SocialLinks } from "@/components/SocialLinks";
 import blurPlaceholders from "@/lib/blur-placeholders.json";
 import { projects } from "@/lib/projects";
@@ -248,7 +249,7 @@ export default function HomePage() {
           {projects.slice(0, 3).map((project, index) => (
             <Link
               key={project.slug}
-              href="/projects"
+              href={`/projects?market=${project.market}`}
               className="group relative overflow-hidden rounded-xl bg-granite-900"
             >
               <div className="relative aspect-4/3">
@@ -311,15 +312,12 @@ export default function HomePage() {
               close matters more on commercial work than people expect — it is the difference between a
               site visit this afternoon and one next week.
             </p>
-            <Link
-              href="/contact"
-              className="mt-8 inline-block rounded-full bg-granite-900 px-7 py-3.5 text-sm font-medium text-granite-50 transition-all duration-300 hover:bg-brand-600"
-            >
-              Check your location
-            </Link>
+            <div className="mt-8">
+              <ServiceAreaCheck />
+            </div>
           </div>
 
-          <ul className="grid gap-px self-start overflow-hidden rounded-xl bg-granite-200 sm:grid-cols-2 lg:col-span-7">
+          <ul className="grid gap-px self-start overflow-hidden rounded-xl bg-granite-200 sm:grid-cols-2 sm:[&>li:last-child]:col-span-2 lg:col-span-7">
             {serviceAreas.map((area) => (
               <li key={area.region} className="bg-white p-6">
                 <h3 className="font-display text-base font-semibold text-granite-900">{area.region}</h3>

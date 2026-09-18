@@ -33,11 +33,55 @@ export const PROJECT_SECTORS = [
 
 export type ProjectSector = (typeof PROJECT_SECTORS)[number];
 
+/**
+ * The three markets the site is organised around.
+ *
+ * A sector is what the building is; a market is which page sells it. Keeping
+ * the mapping here means a market page can deep-link into the gallery without
+ * either side hard-coding a list of sectors.
+ */
+export const PROJECT_MARKETS = ["commercial", "industrial", "residential"] as const;
+export type ProjectMarket = (typeof PROJECT_MARKETS)[number];
+
+export const MARKET_LABELS: Record<ProjectMarket, string> = {
+  commercial: "Commercial",
+  industrial: "Industrial",
+  residential: "Residential",
+};
+
+const SECTOR_MARKET: Record<ProjectSector, ProjectMarket> = {
+  Retail: "commercial",
+  Restaurant: "commercial",
+  "Office & Professional": "commercial",
+  "Nonprofit & Institutional": "commercial",
+  "Municipal & Public": "commercial",
+  Industrial: "industrial",
+  Residential: "residential",
+};
+
+export function marketForSector(sector: ProjectSector): ProjectMarket {
+  return SECTOR_MARKET[sector];
+}
+
+/** Narrows an arbitrary query-string value to a market, or nothing. */
+export function parseMarket(value: string | null | undefined): ProjectMarket | null {
+  return PROJECT_MARKETS.find((market) => market === value?.toLowerCase()) ?? null;
+}
+
+/** Narrows an arbitrary query-string value to a sector, or nothing. */
+export function parseSector(value: string | null | undefined): ProjectSector | null {
+  if (!value) return null;
+  const needle = value.toLowerCase();
+  return PROJECT_SECTORS.find((sector) => sector.toLowerCase() === needle) ?? null;
+}
+
 export type Project = {
   slug: string;
   /** Client or project name. */
   title: string;
   sector: ProjectSector;
+  /** Derived from `sector` — never set by hand. */
+  market: ProjectMarket;
   image: string;
   blurDataURL: string;
   /** Everything below is optional — supply it once the detail is confirmed. */
@@ -64,7 +108,7 @@ function blurFor(slug: string): string {
   );
 }
 
-type ProjectSeed = Omit<Project, "image" | "blurDataURL">;
+type ProjectSeed = Omit<Project, "image" | "blurDataURL" | "market">;
 
 const seeds: ProjectSeed[] = [
   {
@@ -198,6 +242,12 @@ const seeds: ProjectSeed[] = [
 
 export const projects: Project[] = seeds.map((seed) => ({
   ...seed,
+  market: marketForSector(seed.sector),
   image: `/projects/${seed.slug}.jpg`,
   blurDataURL: blurFor(seed.slug),
 }));
+
+/** Sectors that actually have work behind them, in declaration order. */
+export const populatedSectors: ProjectSector[] = PROJECT_SECTORS.filter((sector) =>
+  projects.some((project) => project.sector === sector),
+);

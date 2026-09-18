@@ -19,7 +19,7 @@ export default function NotFound() {
           Back home
         </Link>
         <Link
-          href="/gallery"
+          href="/projects"
           className="rounded-full border border-granite-300 px-7 py-3.5 text-sm font-medium text-granite-700 transition-colors hover:border-granite-900 hover:text-granite-900"
         >
           See our projects

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Suspense } from "react";
 
 import { GalleryGrid } from "@/components/GalleryGrid";
 import { JsonLd } from "@/components/JsonLd";
@@ -85,7 +86,11 @@ export default function ProjectsPage() {
       </section>
 
       <section className="container-page pb-16">
-        <GalleryGrid />
+        {/* GalleryGrid reads the filter from the URL, so it needs a boundary to
+            stay statically rendered. */}
+        <Suspense fallback={<div className="min-h-[60svh]" />}>
+          <GalleryGrid />
+        </Suspense>
       </section>
 
       <section className="container-page pb-24">

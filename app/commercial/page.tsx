@@ -105,10 +105,10 @@ export default function CommercialPage() {
               contract so the trades coordinate with each other rather than with you.
             </p>
             <Link
-              href="/services"
+              href="/projects?market=commercial"
               className="mt-8 inline-block rounded-full border border-granite-300 px-6 py-3 text-sm font-medium text-granite-700 transition-colors hover:border-granite-900 hover:text-granite-900"
             >
-              See all capabilities
+              See commercial projects
             </Link>
           </div>
 
