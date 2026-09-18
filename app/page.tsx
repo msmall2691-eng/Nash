@@ -36,7 +36,7 @@ export default function HomePage() {
         */}
         <ProtectedImage
           src="/hero/nashua-downtown.jpg"
-          alt="Downtown Nashua, New Hampshire, where Nash Construction has been based since 1976"
+          alt="Downtown Nashua, New Hampshire, where Nash Construction has built since 1976"
           fill
           sizes="100vw"
           priority

@@ -24,6 +24,18 @@ and guessing one about a real named person is worse than an incomplete list.
 Ask, then add him back with a confirmed role — the About page's leadership grid
 already adapts to the count.
 
+**Three service promises need the client's sign-off.** These are commitments the
+business has to honour, and nobody has confirmed them — they were written as
+plausible marketing and left in place deliberately rather than deleted, because
+narrowing what the site offers is the client's call:
+
+- "a number that gets answered when something fails after hours" (home, /services)
+- "Emergency work gets triaged the day it comes in" (/services, /contact)
+- "We reply to every request within one business day" (/contact, and the form's
+  success panel)
+
+Note the mild tension with the owner's request to publish no office hours.
+
 **Confirm these conflicts.** Public sources disagree with each other:
 
 | Item | Their website | Google / Yelp / directories | Using |

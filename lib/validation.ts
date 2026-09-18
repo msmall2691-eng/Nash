@@ -11,6 +11,13 @@ export const PROJECT_TYPES = [
   "Exterior & Site Work",
   "Building Maintenance",
   "Emergency Repair",
+  // Residential is marketed openly — with its own landing page, nav entry and
+  // five projects — so a homeowner has to be able to categorise their job.
+  // Without these the form was commercial-only and quietly contradicted the site.
+  "Addition or Dormer",
+  "Garage or Outbuilding",
+  "Porch, Deck or Outdoor Living",
+  "Home Remodel or Renovation",
 ] as const;
 
 export const BUDGET_BANDS = [

@@ -22,7 +22,7 @@ export const metadata: Metadata = pageMetadata({
 });
 
 const milestones = [
-  { year: FOUNDED_YEAR, label: "Mark Nash starts working in construction and founds the business." },
+  { year: FOUNDED_YEAR, label: "Mark Nash founds the business in Nashua." },
   { year: 1999, label: "The business is incorporated as Nash Construction, LLC." },
   { year: 2009, label: `${site.accreditation.body} accreditation, held with an ${site.accreditation.rating} rating.` },
   { year: new Date().getFullYear(), label: `${yearsInBusiness} years of continuous operation in southern New Hampshire.` },
@@ -53,11 +53,12 @@ export default function AboutPage() {
             About Nash
           </p>
           <h1 className="animate-fade-up mt-5 max-w-3xl font-display text-[clamp(2.25rem,5.5vw,4rem)] font-semibold leading-[1.04] text-granite-50 [animation-delay:80ms]">
-            {yearsInBusiness} years, one state, the same standard.
+            {yearsInBusiness} years, one region, the same standard.
           </h1>
           <p className="animate-fade-up mt-7 max-w-2xl text-lg leading-relaxed text-granite-300 [animation-delay:160ms]">
-            Nash Construction, LLC is a Nashua general contractor working on commercial and industrial
-            projects throughout southern New Hampshire — from the first consultation through project
+            Nash Construction, LLC is a Nashua general contractor working on commercial, industrial
+            and residential projects throughout southern New Hampshire and northern Massachusetts —
+            from the first consultation through project
             management and completion.
           </p>
         </div>
@@ -97,8 +98,8 @@ export default function AboutPage() {
             something small for years ago.
           </p>
           <p>
-            We stayed deliberately focused: {markets.join(", ").toLowerCase()} work, in southern New
-            Hampshire. We are not trying to be a regional builder. We are trying to be the contractor
+            We stayed deliberately focused: {markets.join(", ").toLowerCase()} work, close to home.
+            We are not trying to be a statewide builder. We are trying to be the contractor
             a facilities manager in Nashua or Manchester calls first, and keeps calling.
           </p>
           <p>
@@ -175,7 +176,7 @@ export default function AboutPage() {
       <section className="container-page py-24">
         <div className="rounded-2xl bg-granite-950 px-8 py-16 text-center sm:px-16">
           <h2 className="mx-auto max-w-2xl font-display text-3xl font-semibold text-granite-50">
-            Working across {serviceAreas.length} regions of southern New Hampshire.
+            Working across {serviceAreas.length} regions of southern New Hampshire and northern Massachusetts.
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-[15px] leading-relaxed text-granite-400">
             {site.address.street}, {site.address.city}, {site.address.region}{" "}

@@ -44,7 +44,7 @@ const capabilities = [
 const reasons = [
   {
     heading: "Commercial discipline, on a house",
-    body: `Scheduling, written scopes and a superintendent on site are ordinary on a commercial job and rare on a residential one. After ${yearsInBusiness} years of the former, we bring the same habits to the latter.`,
+    body: `Scheduling, written scopes and someone accountable on site are ordinary on a commercial job and rare on a residential one. After ${yearsInBusiness} years of the former, we bring the same habits to the latter.`,
   },
   {
     heading: "One contractor, every trade",
@@ -52,7 +52,7 @@ const reasons = [
   },
   {
     heading: "We live here",
-    body: `Based on Temple Street in Nashua since ${FOUNDED_YEAR}. Close enough that a question gets answered the same day, not next week.`,
+    body: `Based on Temple Street in Nashua, building in these towns since ${FOUNDED_YEAR}. Close enough that a question gets answered the same day, not next week.`,
   },
 ];
 

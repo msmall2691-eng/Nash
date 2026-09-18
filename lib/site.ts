@@ -212,7 +212,16 @@ export const testimonials = [
   },
 ] as const;
 
-export const markets = ["Commercial", "Industrial & Energy", "Institutional", "Residential"] as const;
+/**
+ * The markets the site actually organises itself around — one landing page and
+ * one project filter each.
+ *
+ * Previously this listed "Industrial & Energy" and "Institutional" as separate
+ * markets, which contradicted the home page's "three markets" and claimed an
+ * energy practice nobody confirmed. Institutional work still appears as a
+ * *sector* under Commercial on /commercial, which is where it belongs.
+ */
+export const markets = ["Commercial", "Industrial", "Residential"] as const;
 
 /**
  * Nashua plus the southern New Hampshire communities the business actually
@@ -271,7 +280,9 @@ export const fullNavigation = [{ href: "/", label: "Home" }, ...navigation] as c
  * Town options for the consultation form. The trailing catch-all keeps the form
  * from rejecting a legitimate project in a town we have not enumerated.
  */
-export const OTHER_TOWN = "Other — Southern NH";
+// Not "Southern NH": the service area reaches into northern Massachusetts, and
+// a Lowell project that is not on the list still has to be selectable.
+export const OTHER_TOWN = "Other — not listed";
 
 export const nhCities: string[] = [
   ...[...allTowns].sort((a, b) => a.localeCompare(b)),

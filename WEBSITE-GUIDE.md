@@ -240,11 +240,18 @@ updates itself. So does "50 years" — it's calculated from 1976, so it becomes
    nobody told us one and making one up about a real person is not something
    we'll do. Tell us his current role (or that he's retired / no longer
    involved) and we'll add it in minutes.
-4. **Confirm the phone number.** The site uses 603-943-7593 from the old site.
+4. **Confirm three promises the site makes.** It currently says someone answers
+   after hours for emergencies, that emergency work is triaged the same day, and
+   that every inquiry gets a reply within one business day. Those are reasonable
+   things for a contractor to say — but they're commitments, and nobody told us
+   they're true. Confirm them or we'll reword them.
+5. **Confirm the phone number.** The site uses 603-943-7593 from the old site.
    Google and Yelp show 603-882-2702, which belongs to Nash Group — a different
    company.
-5. **Claim the Google and Yelp listings.** Both are currently unclaimed and one
-   carries the wrong company's phone number. This is the single highest-value
+6. **Claim the Google and Yelp listings.** Both are currently unclaimed and one
+   carries the wrong company's phone number — and the site links to Yelp from
+   every page, so visitors who click through see 603-882-2702, which belongs to
+   Nash Group. Worth claiming and correcting, or we pull the link. This is the single highest-value
    thing available for local search ranking — more than anything else on this
    list, and more than anything left to do in the site itself.
 
