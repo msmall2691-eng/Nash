@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { JsonLd } from "@/components/JsonLd";
 import { ProtectedImage } from "@/components/ProtectedImage";
+import { formatList } from "@/lib/format";
 import { pageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, serviceSchema } from "@/lib/schema";
 import { FOUNDED_YEAR, serviceAreas, site, yearsInBusiness } from "@/lib/site";
@@ -56,6 +58,11 @@ const reasons = [
   },
 ];
 
+const trail = [
+  { name: "Home", path: "/" },
+  { name: "Residential Construction", path: "/residential" },
+];
+
 export default function ResidentialPage() {
   return (
     <>
@@ -68,10 +75,7 @@ export default function ResidentialPage() {
             description:
               "Home additions, garages, porches, and remodels and renovations across southern New Hampshire and northern Massachusetts.",
           }),
-          breadcrumbSchema([
-            { name: "Home", path: "/" },
-            { name: "Residential Construction", path: "/residential" },
-          ]),
+          breadcrumbSchema(trail),
         ]}
       />
 
@@ -86,6 +90,7 @@ export default function ResidentialPage() {
         />
         <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-granite-950 via-granite-950/75 to-granite-950/40" />
         <div className="container-page relative pb-16 pt-28">
+          <Breadcrumbs trail={trail} tone="dark" />
           <p className="animate-fade-up text-xs font-medium uppercase tracking-[0.24em] text-granite-300">
             Residential Construction
           </p>
@@ -152,7 +157,7 @@ export default function ResidentialPage() {
               </h2>
               <p className="mt-5 text-[15px] leading-relaxed text-granite-400">
                 We&rsquo;ll walk the house, tell you honestly what the scope involves, and put a
-                budget in writing. Working across {serviceAreas.map((area) => area.region).join(", ")}.
+                budget in writing. Working across {formatList(serviceAreas.map((area) => area.region))}.
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row lg:col-span-5 lg:justify-end">

@@ -5,7 +5,7 @@ import { ProtectedImage } from "@/components/ProtectedImage";
 import { ServiceAreaCheck } from "@/components/ServiceAreaCheck";
 import { SocialLinks } from "@/components/SocialLinks";
 import blurPlaceholders from "@/lib/blur-placeholders.json";
-import { projects } from "@/lib/projects";
+import { featuredProjects } from "@/lib/projects";
 import { serviceGroups } from "@/lib/services";
 import { FOUNDED_YEAR, serviceAreas, site, testimonials, yearsInBusiness } from "@/lib/site";
 
@@ -246,7 +246,7 @@ export default function HomePage() {
         </div>
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {projects.slice(0, 3).map((project, index) => (
+          {featuredProjects.map((project, index) => (
             <Link
               key={project.slug}
               href={`/projects?market=${project.market}`}

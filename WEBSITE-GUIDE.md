@@ -136,15 +136,14 @@ would have to buy your way out of. If you ever wanted a different developer to
 take it over, they would need two things — a link to the code and access to the
 hosting account — and both are yours to hand over.
 
-**Seeing the site's numbers.** Steve can be added to the hosting account as a
-**Viewer**. It is free — Vercel does not charge for viewer access — and it is
-read-only, so there is nothing he could accidentally change or break. He would
-see the site, every update as it goes out, and the visitor numbers.
-
-One honest note: **visitor tracking is not switched on yet**, so there would be
-nothing to look at today. It is a small change on our side and it costs nothing
-at this traffic level — say the word and we will turn it on. It is
-privacy-friendly and uses no cookies, so it adds no cookie banner to the site.
+**Seeing the site's numbers.** Visitor tracking is now switched on — free,
+privacy-friendly (no cookies, so it adds no cookie banner), and it costs
+nothing at this traffic level. Steve can be added to the hosting account as a
+**Viewer** to see it. That role is free too — Vercel does not charge for
+viewer access — and it is read-only, so there is nothing he could
+accidentally change or break. He would see the site, every update as it goes
+out, how many people visited, which pages they looked at, and roughly how
+fast each page loaded for them.
 
 Also worth doing, also free: **Google Search Console**. It shows what people
 typed into Google before they landed on the site. For a contractor that is the

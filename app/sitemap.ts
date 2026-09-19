@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 import { fullNavigation, siteUrl } from "@/lib/site";
 
-/** Priority by role: home, then the two market pages, then everything else. */
+/** Priority by role: home, then the three market pages, then everything else. */
 const PRIORITY: Record<string, number> = {
   "/": 1,
   "/commercial": 0.9,

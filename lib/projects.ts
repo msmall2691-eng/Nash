@@ -251,3 +251,18 @@ export const projects: Project[] = seeds.map((seed) => ({
 export const populatedSectors: ProjectSector[] = PROJECT_SECTORS.filter((sector) =>
   projects.some((project) => project.sector === sector),
 );
+
+/**
+ * One photographed project per market, for the home page's featured strip.
+ *
+ * Picked by hand rather than `projects.slice(0, 3)` — the home page pitches
+ * "Three markets, one contractor" directly above this section, and the first
+ * three entries in declaration order happened to be two industrial jobs and
+ * an office building. Slicing the array would show visitors zero residential
+ * work on the page that most prominently claims residential as a market.
+ */
+export const featuredSlugs = ["marzen-group", "manufacturing-facility", "colonial-addition"] as const;
+
+export const featuredProjects: Project[] = featuredSlugs
+  .map((slug) => projects.find((project) => project.slug === slug))
+  .filter((project): project is Project => Boolean(project));

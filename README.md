@@ -101,6 +101,7 @@ app/
   sitemap.ts robots.ts icon.svg not-found.tsx
 components/
   Navbar  Footer  JsonLd  FormField  NashMark  BbbBadge  SocialLinks
+  Breadcrumbs         Visible trail matching each page's BreadcrumbList
   ContactForm         useActionState + useFormStatus, animated success state
   GalleryGrid         Project grid, filtered from the URL (see "Deep links")
   GalleryFilter       Pill-shaped filter menu
@@ -114,6 +115,7 @@ lib/
   projects.ts         Portfolio data (see "Adding projects" below)
   service-area.ts     Town lookup behind ServiceAreaCheck
   weather.ts          Open-Meteo current conditions (no API key)
+  format.ts           Shared text helpers (e.g. "A, B and C" list formatting)
   metadata.ts         Per-page Metadata factory
   schema.ts           Schema.org builders
   validation.ts       Zod schemas + shared form-state types
@@ -198,6 +200,14 @@ page does not jump.
 never be filed under a market that contradicts its type. The Type row is hidden
 when the selected market only contains one type, where a second row would just
 repeat the first.
+
+The home page's "Selected work" strip is `featuredProjects` in
+`lib/projects.ts` — three hand-picked slugs, one per market — not
+`projects.slice(0, 3)`. That section sits directly under "Three markets, one
+contractor," and slicing the array by declaration order used to show two
+industrial jobs and an office building, i.e. zero residential work on the
+page that most prominently claims residential as a market. Add a fourth
+market someday and `featuredSlugs` is the one place to add its pick.
 
 ## Live weather
 
@@ -286,11 +296,35 @@ hand-rolling OpenGraph/canonical blocks, and `sitemap.ts` derives from the nav.
 Structured data shipped in the initial HTML: `LocalBusiness` (as
 `GeneralContractor`) carrying the 1976 founding date, leadership, BBB
 accreditation and 31 trades; plus `WebSite`, per-group `Service` nodes,
-dedicated `Service` nodes for the Commercial and Industrial pages, a portfolio
-`ItemList`, `ContactPage`, and `BreadcrumbList`.
+dedicated `Service` nodes for the Commercial, Industrial and Residential
+pages, a portfolio `ItemList`, `ContactPage`, and `BreadcrumbList`.
+
+Every page carrying a `BreadcrumbList` also renders `<Breadcrumbs>`
+(`components/Breadcrumbs.tsx`) — search engines are cautious about rich
+results that don't match what a visitor actually sees, so an invisible-only
+breadcrumb trail is a soft ranking risk as well as a missed navigation aid.
+Each page builds one `trail` array and passes it to both `breadcrumbSchema()`
+and `<Breadcrumbs>`, so the visible trail and the structured data can never
+drift apart.
 
 The headline year count is computed from `FOUNDED_YEAR`, so "50 Years" stays
 accurate without an annual copy edit.
+
+## Analytics
+
+`@vercel/analytics` and `@vercel/speed-insights`, both wired into the root
+layout. Visitor counts, top pages and referrers live under the project's
+**Analytics** tab in the Vercel dashboard; page-load performance (Core Web
+Vitals) lives under **Speed Insights**. Both are free at this traffic level
+and add no cookie banner — Vercel's analytics identifies a visitor from a
+same-day hash of the request rather than a cookie, so nothing needs consent.
+
+Both packages render nothing outside a Vercel deployment (the collection
+endpoint is `/_vercel/insights/script.js`, served by Vercel's edge, not by
+this app), so `next dev` and a bare `next start` log a harmless 404 for that
+request. That is expected, not a bug — the scripts start working the moment
+the build is actually deployed to Vercel, this project's own review link
+included.
 
 ## Email delivery
 

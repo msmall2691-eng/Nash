@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { ProtectedImage } from "@/components/ProtectedImage";
-
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { JsonLd } from "@/components/JsonLd";
+import { ProtectedImage } from "@/components/ProtectedImage";
+import blurPlaceholders from "@/lib/blur-placeholders.json";
+import { formatList } from "@/lib/format";
 import { pageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema } from "@/lib/schema";
 import { process } from "@/lib/services";
 import { FOUNDED_YEAR, markets, serviceAreas, site, yearsInBusiness } from "@/lib/site";
+
+const heroBlur = (blurPlaceholders as Record<string, string>)["nashua-downtown"];
 
 export const metadata: Metadata = pageMetadata({
   title: "About Our Nashua Contractors",
@@ -21,6 +25,11 @@ export const metadata: Metadata = pageMetadata({
   ],
 });
 
+const trail = [
+  { name: "Home", path: "/" },
+  { name: "About", path: "/about" },
+];
+
 const milestones = [
   { year: FOUNDED_YEAR, label: "The business is founded in Nashua." },
   { year: 1999, label: "The business is incorporated as Nash Construction, LLC." },
@@ -31,24 +40,30 @@ const milestones = [
 export default function AboutPage() {
   return (
     <>
-      <JsonLd
-        schema={breadcrumbSchema([
-          { name: "Home", path: "/" },
-          { name: "About", path: "/about" },
-        ])}
-      />
+      <JsonLd schema={breadcrumbSchema(trail)} />
 
       <section className="relative -mt-20 flex min-h-[62svh] items-end overflow-hidden bg-granite-950 pt-20">
+        {/*
+          Downtown Nashua, not a project photo — the page below is about the
+          company's history in this city, not about any one job. The screened
+          porch that used to sit here is real Nash work, but it made About read
+          like a residential remodeler, and it is also the hero on /residential
+          and a market card on the home page; this keeps each image doing one
+          job.
+        */}
         <ProtectedImage
-          src="/projects/timber-frame-screened-porch.jpg"
-          alt="Timber-frame screened porch built by Nash Construction, a Nashua New Hampshire general contractor"
+          src="/hero/nashua-downtown.jpg"
+          alt="Downtown Nashua, New Hampshire, where Nash Construction has built since 1976"
           fill
           sizes="100vw"
           priority
+          placeholder="blur"
+          blurDataURL={heroBlur}
           className="object-cover opacity-60"
         />
         <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-granite-950 via-granite-950/75 to-granite-950/40" />
         <div className="container-page relative pb-16 pt-28">
+          <Breadcrumbs trail={trail} tone="dark" />
           <p className="animate-fade-up text-xs font-medium uppercase tracking-[0.24em] text-granite-300">
             About Nash
           </p>
@@ -98,7 +113,7 @@ export default function AboutPage() {
             years ago.
           </p>
           <p>
-            We stayed deliberately focused: {markets.join(", ").toLowerCase()} work, close to home.
+            We stayed deliberately focused: {formatList(markets).toLowerCase()} work, close to home.
             We are not trying to be a statewide builder. We are trying to be the contractor
             a facilities manager in Nashua or Manchester calls first, and keeps calling.
           </p>

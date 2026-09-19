@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ProtectedImage } from "@/components/ProtectedImage";
 
 import { JsonLd } from "@/components/JsonLd";
+import { formatList } from "@/lib/format";
 import { pageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, serviceSchema } from "@/lib/schema";
 import { serviceAreas, site, yearsInBusiness } from "@/lib/site";
@@ -20,6 +22,9 @@ export const metadata: Metadata = pageMetadata({
     "manufacturing facility contractor New Hampshire",
     "industrial fit-up NH",
   ],
+  // Override the site-wide default (an office building) — sharing this page
+  // should show industrial work, not a commercial storefront.
+  image: "/projects/manufacturing-facility.jpg",
 });
 
 const capabilities = [
@@ -56,6 +61,11 @@ const considerations = [
   },
 ];
 
+const trail = [
+  { name: "Home", path: "/" },
+  { name: "Industrial Construction", path: "/industrial" },
+];
+
 export default function IndustrialPage() {
   return (
     <>
@@ -68,10 +78,7 @@ export default function IndustrialPage() {
             description:
               "Industrial general contracting, manufacturing and warehouse construction, mechanical, electrical and fire suppression scopes, demolition and site work across southern New Hampshire.",
           }),
-          breadcrumbSchema([
-            { name: "Home", path: "/" },
-            { name: "Industrial Construction", path: "/industrial" },
-          ]),
+          breadcrumbSchema(trail),
         ]}
       />
 
@@ -86,6 +93,7 @@ export default function IndustrialPage() {
         />
         <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-granite-950 via-granite-950/75 to-granite-950/40" />
         <div className="container-page relative pb-16 pt-28">
+          <Breadcrumbs trail={trail} tone="dark" />
           <p className="animate-fade-up text-xs font-medium uppercase tracking-[0.24em] text-granite-300">
             Industrial Construction
           </p>
@@ -94,8 +102,8 @@ export default function IndustrialPage() {
           </h1>
           <p className="animate-fade-up mt-7 max-w-2xl text-lg leading-relaxed text-granite-300 [animation-delay:160ms]">
             Manufacturing and warehouse space, mechanical and electrical scopes, fire suppression, and
-            the demolition and site work that supports them — delivered by a contractor who is twenty
-            minutes away when something needs a decision.
+            the demolition and site work that supports them — delivered by a contractor based in
+            Nashua, not commuting in from out of state.
           </p>
         </div>
       </section>
@@ -153,7 +161,7 @@ export default function IndustrialPage() {
               <p className="mt-5 text-[15px] leading-relaxed text-granite-400">
                 We&rsquo;ll walk the facility, work out what has to happen during a shutdown versus
                 what can run alongside production, and put it in writing. Working across{" "}
-                {serviceAreas.map((a) => a.region).join(", ")}.
+                {formatList(serviceAreas.map((a) => a.region))}.
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row lg:col-span-5 lg:justify-end">

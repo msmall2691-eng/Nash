@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { Inter, Roboto_Slab } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/JsonLd";
@@ -122,6 +124,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </main>
         <Footer />
+        {/*
+          Vercel's own analytics: cookieless, no consent banner needed, and it
+          costs nothing at this traffic level. It reports from every
+          deployment (including this review one), which is what we want — a
+          real visit is a real visit regardless of which URL it lands on.
+        */}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

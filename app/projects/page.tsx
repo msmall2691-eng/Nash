@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { GalleryGrid } from "@/components/GalleryGrid";
 import { JsonLd } from "@/components/JsonLd";
 import { pageMetadata } from "@/lib/metadata";
@@ -47,6 +48,11 @@ function projectListSchema() {
   };
 }
 
+const trail = [
+  { name: "Home", path: "/" },
+  { name: "Projects", path: "/projects" },
+];
+
 export default function ProjectsPage() {
   return (
     <>
@@ -64,14 +70,12 @@ export default function ProjectsPage() {
                 caption: project.summary ?? `${project.title} — ${project.sector} project by ${site.legalName}`,
               }),
             ),
-          breadcrumbSchema([
-            { name: "Home", path: "/" },
-            { name: "Projects", path: "/projects" },
-          ]),
+          breadcrumbSchema(trail),
         ]}
       />
 
       <section className="container-page pt-20 pb-12">
+        <Breadcrumbs trail={trail} />
         <p className="animate-fade-up text-xs font-medium uppercase tracking-[0.2em] text-brand-700">
           Projects
         </p>

@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { JsonLd } from "@/components/JsonLd";
 import { pageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, serviceSchema } from "@/lib/schema";
 import { serviceGroups } from "@/lib/services";
-import {} from "@/lib/site";
 
 export const metadata: Metadata = pageMetadata({
   title: "Construction Services",
@@ -21,6 +21,11 @@ export const metadata: Metadata = pageMetadata({
   ],
 });
 
+const trail = [
+  { name: "Home", path: "/" },
+  { name: "Services", path: "/services" },
+];
+
 export default function ServicesPage() {
   return (
     <>
@@ -33,14 +38,12 @@ export default function ServicesPage() {
               description: group.detail,
             }),
           ),
-          breadcrumbSchema([
-            { name: "Home", path: "/" },
-            { name: "Services", path: "/services" },
-          ]),
+          breadcrumbSchema(trail),
         ]}
       />
 
       <section className="container-page pt-20 pb-16">
+        <Breadcrumbs trail={trail} />
         <p className="animate-fade-up text-xs font-medium uppercase tracking-[0.2em] text-brand-700">
           Services
         </p>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 
 import { BbbBadge } from "@/components/BbbBadge";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ContactForm } from "@/components/ContactForm";
 import { JsonLd } from "@/components/JsonLd";
 import { SocialLinks } from "@/components/SocialLinks";
@@ -39,20 +40,18 @@ function contactPageSchema() {
   };
 }
 
+const trail = [
+  { name: "Home", path: "/" },
+  { name: "Contact", path: "/contact" },
+];
+
 export default function ContactPage() {
   return (
     <>
-      <JsonLd
-        schema={[
-          contactPageSchema(),
-          breadcrumbSchema([
-            { name: "Home", path: "/" },
-            { name: "Contact", path: "/contact" },
-          ]),
-        ]}
-      />
+      <JsonLd schema={[contactPageSchema(), breadcrumbSchema(trail)]} />
 
       <section className="container-page pt-20 pb-12">
+        <Breadcrumbs trail={trail} />
         <p className="animate-fade-up text-xs font-medium uppercase tracking-[0.2em] text-brand-700">
           Contact
         </p>

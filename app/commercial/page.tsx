@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ProtectedImage } from "@/components/ProtectedImage";
 
 import { JsonLd } from "@/components/JsonLd";
+import { formatList } from "@/lib/format";
 import { pageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, serviceSchema } from "@/lib/schema";
 import { FOUNDED_YEAR, serviceAreas, site, yearsInBusiness } from "@/lib/site";
@@ -50,6 +52,11 @@ const sectors = [
   "Municipal & public",
 ];
 
+const trail = [
+  { name: "Home", path: "/" },
+  { name: "Commercial Construction", path: "/commercial" },
+];
+
 export default function CommercialPage() {
   return (
     <>
@@ -62,10 +69,7 @@ export default function CommercialPage() {
             description:
               "Commercial general contracting, tenant fit-ups, renovations and building maintenance throughout Nashua and southern New Hampshire.",
           }),
-          breadcrumbSchema([
-            { name: "Home", path: "/" },
-            { name: "Commercial Construction", path: "/commercial" },
-          ]),
+          breadcrumbSchema(trail),
         ]}
       />
 
@@ -80,6 +84,7 @@ export default function CommercialPage() {
         />
         <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-granite-950 via-granite-950/75 to-granite-950/40" />
         <div className="container-page relative pb-16 pt-28">
+          <Breadcrumbs trail={trail} tone="dark" />
           <p className="animate-fade-up text-xs font-medium uppercase tracking-[0.24em] text-granite-300">
             Commercial Construction
           </p>
@@ -157,7 +162,7 @@ export default function CommercialPage() {
                 Building commercially in southern New Hampshire since {FOUNDED_YEAR}.
               </h2>
               <p className="mt-5 text-[15px] leading-relaxed text-granite-400">
-                Based in Nashua, working across {serviceAreas.map((a) => a.region).join(", ")}.
+                Based in Nashua, working across {formatList(serviceAreas.map((a) => a.region))}.
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row lg:col-span-5 lg:justify-end">
