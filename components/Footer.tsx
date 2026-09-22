@@ -4,7 +4,9 @@ import { Suspense } from "react";
 import { BbbBadge } from "@/components/BbbBadge";
 import { NashMark } from "@/components/NashMark";
 import { NashuaConditions } from "@/components/NashuaConditions";
+import { PhotoCredits } from "@/components/PhotoCredits";
 import { SocialLinks } from "@/components/SocialLinks";
+import { cityPhotos } from "@/lib/city-photos";
 import { serviceGroups } from "@/lib/services";
 import { FOUNDED_YEAR, fullNavigation, serviceAreas, site, studio } from "@/lib/site";
 
@@ -94,21 +96,30 @@ export function Footer() {
               <NashuaConditions />
             </Suspense>
           </div>
-          <p className="flex flex-wrap items-center gap-x-2 gap-y-1">
-            <span>Serving {serviceAreas.map((area) => area.region).join(" · ")}</span>
-            <span aria-hidden="true" className="text-granite-700">·</span>
-            <span>
-              Site by{" "}
-              <a
-                href={studio.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-granite-400 underline-offset-4 transition-colors hover:text-granite-200 hover:underline"
-              >
-                {studio.name}
-              </a>
-            </span>
-          </p>
+          <div className="flex flex-col items-start gap-1.5 sm:items-end">
+            <p className="flex flex-wrap items-center gap-x-2 gap-y-1">
+              <span>Serving {serviceAreas.map((area) => area.region).join(" · ")}</span>
+              <span aria-hidden="true" className="text-granite-700">·</span>
+              <span>
+                Site by{" "}
+                <a
+                  href={studio.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-granite-400 underline-offset-4 transition-colors hover:text-granite-200 hover:underline"
+                >
+                  {studio.name}
+                </a>
+              </span>
+            </p>
+            {/*
+              The home page's rotating header uses these — CC BY-SA requires
+              visible attribution, and the footer is where a visitor actually
+              expects to find photo credits, rather than beside anything else
+              on the page they're trying to read.
+            */}
+            <PhotoCredits credits={cityPhotos.map((photo) => photo.credit)} />
+          </div>
         </div>
       </div>
     </footer>

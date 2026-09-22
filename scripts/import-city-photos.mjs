@@ -31,7 +31,10 @@ const sharp = require("sharp");
 const INBOX = "city-photos-inbox";
 const OUT = "public/city";
 const BLURS = "lib/blur-placeholders.json";
-const MAX_WIDTH = 1600;
+// Matches the hero photo's own resolution headroom (2000px wide) — these run
+// full-bleed at up to 100vw same as the hero, so they need the same margin
+// against large screens and the hero's zoom/parallax transform.
+const MAX_WIDTH = 2400;
 
 const IMAGE_RE = /\.(jpe?g|png|webp|avif|heic|tiff?)$/i;
 

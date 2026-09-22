@@ -1,89 +1,17 @@
 import Link from "next/link";
 
 import { BbbBadge } from "@/components/BbbBadge";
-import type { CityPhoto } from "@/components/CityMarquee";
 import { HeroCarousel, type HeroPhoto } from "@/components/HeroCarousel";
-import { PhotoCredits } from "@/components/PhotoCredits";
 import { ProtectedImage } from "@/components/ProtectedImage";
 import { ServiceAreaCheck } from "@/components/ServiceAreaCheck";
 import { SocialLinks } from "@/components/SocialLinks";
 import blurPlaceholders from "@/lib/blur-placeholders.json";
+import { cityPhotos } from "@/lib/city-photos";
 import { featuredProjects } from "@/lib/projects";
 import { serviceGroups } from "@/lib/services";
 import { FOUNDED_YEAR, serviceAreas, site, testimonials, yearsInBusiness } from "@/lib/site";
 
 const heroBlur = (blurPlaceholders as Record<string, string>)["nashua-downtown"];
-
-const CC_BY_SA = { label: "CC BY-SA", url: "https://creativecommons.org/licenses/by-sa/2.0" };
-const CC_BY_SA_4 = { label: "CC BY-SA 4.0", url: "https://creativecommons.org/licenses/by-sa/4.0" };
-
-/**
- * More of the city than one hero photo can hold — a scrolling strip on the
- * home page. Sourced from Wikimedia Commons, the same standard the hero photo
- * was held to: real photographs of Nashua, provenance and license recorded
- * here and credited on the page itself (`CityMarquee`'s "Photo credits").
- */
-const cityPhotos: CityPhoto[] = [
-  {
-    src: "/city/deschenes-oval.jpg",
-    alt: "Deschenes Oval and the World War II Memorial at Railroad Square, Nashua, New Hampshire",
-    blurDataURL: (blurPlaceholders as Record<string, string>)["deschenes-oval"],
-    credit: {
-      name: "Sluglife6826",
-      url: "https://commons.wikimedia.org/wiki/File:Deschenes_Oval,_World_War_II_Memorial_-_Railroad_Square_-_Nashua,_New_Hampshire.jpg",
-    },
-  },
-  {
-    src: "/city/mill-canal-falls.jpg",
-    alt: "The mill canal and falls behind the former train repair facility in downtown Nashua, New Hampshire",
-    blurDataURL: (blurPlaceholders as Record<string, string>)["mill-canal-falls"],
-    credit: {
-      name: "Jane023",
-      url: "https://commons.wikimedia.org/wiki/File:Former_train_repair_facility,_downtown_Nashua,_NH_01.jpg",
-      license: CC_BY_SA_4,
-    },
-  },
-  {
-    src: "/city/main-street-deco-building.jpg",
-    alt: "A commercial building on Main Street, Nashua, New Hampshire",
-    blurDataURL: (blurPlaceholders as Record<string, string>)["main-street-deco-building"],
-    credit: {
-      name: "Dougtone",
-      url: "https://commons.wikimedia.org/wiki/File:Nashua,_New_Hampshire_-_8225898859.jpg",
-      license: CC_BY_SA,
-    },
-  },
-  {
-    src: "/city/canal-reflection.jpg",
-    alt: "The Nashua River canal running behind downtown Nashua, New Hampshire",
-    blurDataURL: (blurPlaceholders as Record<string, string>)["canal-reflection"],
-    credit: {
-      name: "Jane023",
-      url: "https://commons.wikimedia.org/wiki/File:Former_train_repair_facility,_downtown_Nashua,_NH_02.jpg",
-      license: CC_BY_SA_4,
-    },
-  },
-  {
-    src: "/city/main-street-storefronts.jpg",
-    alt: "Storefronts along Main Street, Nashua, New Hampshire",
-    blurDataURL: (blurPlaceholders as Record<string, string>)["main-street-storefronts"],
-    credit: {
-      name: "Dougtone",
-      url: "https://commons.wikimedia.org/wiki/File:Nashua,_New_Hampshire_-_8225899003.jpg",
-      license: CC_BY_SA,
-    },
-  },
-  {
-    src: "/city/main-street-bank-building.jpg",
-    alt: "A former bank building on Main Street, Nashua, New Hampshire",
-    blurDataURL: (blurPlaceholders as Record<string, string>)["main-street-bank-building"],
-    credit: {
-      name: "Dougtone",
-      url: "https://commons.wikimedia.org/wiki/File:Nashua,_New_Hampshire_-_8225899181.jpg",
-      license: CC_BY_SA,
-    },
-  },
-];
 
 /**
  * The rotating hero: the same brightened downtown photo Steve first saw,
@@ -190,18 +118,14 @@ export default function HomePage() {
             <SocialLinks tone="light" exclude={["bbb"]} />
           </div>
         </div>
-
-        {/*
-          The licensed city photos are the header rotation now, not a
-          separate strip — but the CC BY-SA ones among them still need
-          visible credit, so that requirement moves here rather than
-          disappearing with the strip. Folded into this section rather than
-          given its own band so it doesn't call attention to itself.
-        */}
-        <div className="container-page pb-4">
-          <PhotoCredits credits={cityPhotos.map((photo) => photo.credit)} tone="light" />
-        </div>
       </section>
+
+      {/*
+        The licensed city photos are the header rotation now, not a separate
+        strip — but the CC BY-SA ones among them still need visible credit.
+        That lives in the site footer (see Footer.tsx) rather than here:
+        present and findable, without fighting for attention on the page.
+      */}
 
       {/* ---------------------- Commercial / Industrial ---------------------- */}
       <section className="container-page py-24">

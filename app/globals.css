@@ -53,8 +53,8 @@
   to { stroke-dashoffset: 0; }
 }
 @keyframes hero-drift {
-  from { transform: translate3d(0, -4%, 0) scale(1.12); }
-  to   { transform: translate3d(0, 8%, 0) scale(1.12); }
+  from { transform: translate3d(0, -1.5%, 0) scale(1.05); }
+  to   { transform: translate3d(0, 3.5%, 0) scale(1.05); }
 }
 @keyframes hero-recede {
   from { opacity: 1; }
@@ -132,9 +132,15 @@
    compositor and costs no main-thread work. Browsers without scroll-driven
    animation support simply get the static image — the `scale` is applied
    unconditionally so the frame is filled either way.
+
+   Kept small on purpose: this scale enlarges the rendered image beyond its
+   actual pixel size, and the photos in the rotation aren't all as
+   high-resolution as the original hero shot — an aggressive zoom made that
+   softness obvious. 1.05 is just enough overscan to cover the vertical pan
+   below without leaving a gap at the edges.
 --------------------------------------------------------------------------- */
 .hero-parallax {
-  transform: scale(1.12);
+  transform: scale(1.05);
   will-change: transform;
 }
 
