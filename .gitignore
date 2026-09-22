@@ -15,3 +15,8 @@ next-env.d.ts
 # public/projects/ is what ships.
 photos-inbox/*
 !photos-inbox/README.md
+
+# City photo originals staged for `npm run city-photos` — the processed
+# output in public/city/ is what ships.
+city-photos-inbox/*
+!city-photos-inbox/README.md

@@ -66,6 +66,14 @@
   to { opacity: 0; transform: scale(1.6); }
 }
 
+@keyframes marquee-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  /* The track is the photo set twice back to back, so -50% is exactly one
+     full set — the loop point lands invisibly on identical content rather
+     than snapping. */
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
 /* ---------------------------------------------------------------------------
    Base
 --------------------------------------------------------------------------- */
@@ -147,6 +155,45 @@
   width: 100%;
   max-width: 80rem;
   padding-inline: 1.25rem;
+}
+
+/**
+ * The scrolling city-photo strip.
+ *
+ * The track holds the photo set twice, back to back, so `.marquee-track`
+ * animates a continuous, seamless loop rather than resetting visibly. The
+ * animation is opt-in under `no-preference` only: a reduced-motion visitor
+ * gets a still frame (the global reduced-motion rule below still applies as a
+ * backstop), and because the loop point is identical content, freezing
+ * anywhere in it still reads as a normal, complete row of photos — never a
+ * half-scrolled or glitched one.
+ */
+.marquee-track {
+  width: max-content;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .marquee-track {
+    animation: marquee-scroll 48s linear infinite;
+  }
+  .marquee-track:hover,
+  .marquee-track:focus-within {
+    animation-play-state: paused;
+  }
+}
+
+/**
+ * A dark drop-shadow behind light text sitting on a photograph.
+ *
+ * A gradient scrim alone can only guarantee contrast at points it was tuned
+ * against — a photo has bright patches (sky, a cloud, a window) wherever it
+ * has them, not wherever the copy happens to sit, and measuring actual
+ * rendered pixels under the home hero's text found spots near white behind
+ * both the headline and the transparent navbar's logo. This holds legibility
+ * regardless, which is what lets the photo itself run brighter.
+ */
+@utility hero-text-shadow {
+  text-shadow: 0 2px 14px rgba(17, 17, 16, 0.7), 0 1px 3px rgba(17, 17, 16, 0.8);
 }
 
 @media (min-width: 1024px) {

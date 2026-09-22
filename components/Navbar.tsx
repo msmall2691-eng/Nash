@@ -56,14 +56,14 @@ export function Navbar() {
           <span className="flex flex-col leading-none">
             <span
               className={`font-display text-lg font-semibold tracking-tight transition-colors duration-300 ${
-                onDark ? "text-granite-50" : "text-granite-900"
+                onDark ? "hero-text-shadow text-granite-50" : "text-granite-900"
               }`}
             >
               {site.name}
             </span>
             <span
               className={`mt-1 text-[11px] uppercase tracking-[0.18em] transition-colors duration-300 ${
-                onDark ? "text-granite-300" : "text-granite-500"
+                onDark ? "hero-text-shadow text-granite-300" : "text-granite-500"
               }`}
             >
               Nashua, NH
@@ -82,8 +82,8 @@ export function Navbar() {
                   className={`relative whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium transition-colors duration-200 ${
                     onDark
                       ? active
-                        ? "text-granite-50"
-                        : "text-granite-300 hover:text-granite-50"
+                        ? "hero-text-shadow text-granite-50"
+                        : "hero-text-shadow text-granite-300 hover:text-granite-50"
                       : active
                         ? "text-granite-900"
                         : "text-granite-500 hover:text-granite-900"
@@ -105,7 +105,9 @@ export function Navbar() {
           <a
             href={`tel:${site.phone}`}
             className={`whitespace-nowrap text-sm font-medium transition-colors duration-300 ${
-              onDark ? "text-granite-200 hover:text-granite-50" : "text-granite-600 hover:text-brand-600"
+              onDark
+                ? "hero-text-shadow text-granite-200 hover:text-granite-50"
+                : "text-granite-600 hover:text-brand-600"
             }`}
           >
             {site.phoneDisplay}

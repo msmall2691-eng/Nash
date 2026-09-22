@@ -102,6 +102,7 @@ app/
 components/
   Navbar  Footer  JsonLd  FormField  NashMark  BbbBadge  SocialLinks
   Breadcrumbs         Visible trail matching each page's BreadcrumbList
+  CityMarquee         Scrolling strip of licensed Nashua photographs
   ContactForm         useActionState + useFormStatus, animated success state
   GalleryGrid         Project grid, filtered from the URL (see "Deep links")
   GalleryFilter       Pill-shaped filter menu
@@ -125,14 +126,77 @@ lib/
 
 ## Hero image
 
-`public/hero/nashua-downtown.jpg` is downtown Nashua — Main Street at West
-Pearl, looking at the Masonic building. Source: Wikimedia Commons,
-"Main_at_West_Pearl_St_Nashua.jpg" by MarkBuckawicki, released under **CC0 1.0**
-(public domain dedication — no attribution required, commercial use permitted).
+`public/hero/nashua-downtown.jpg` (2000×1344) is downtown Nashua — Main
+Street at West Pearl, looking at the Masonic building. Source: Wikimedia
+Commons, "Main_at_West_Pearl_St_Nashua.jpg" by MarkBuckawicki, released under
+**CC0 1.0** (public domain dedication — no attribution required, commercial
+use permitted).
 
-It is processed to 1920x990, desaturated, and rendered at 45% opacity under a
-heavy gradient. It is deliberately a *sense-of-place backdrop*, not a project
-photo — swap it for real site photography when there is a strong wide shot.
+Rendered full-color at 95% opacity under a gradient that stays strong only at
+the very bottom, behind the headline and paragraph, and eases off well before
+the top — Steve asked for it brighter, and it had been carrying two darkening
+layers (a faint image opacity plus a heavy overlay) that were more than the
+photo needed. Legibility over the brighter parts doesn't rely on the gradient
+alone: measuring actual rendered pixels found genuinely near-white patches
+behind both the headline and the transparent navbar's logo (clouds, gaps in
+foliage), and `.hero-text-shadow` in `globals.css` — a dark drop-shadow behind
+the light hero text and the navbar's dark-mode text — is what keeps every line
+readable regardless of what the photo happens to be doing at that exact pixel.
+A gradient can only be tuned against the spots it was tested at; a photo has
+bright spots wherever it has them.
+
+## City photo strip
+
+Home also carries a small scrolling strip of Nashua photographs
+(`components/CityMarquee.tsx`) — Steve asked for the single hero photo to be
+joined by a few more, so `app/page.tsx` renders six alongside it. Sourced from
+Wikimedia Commons at the standard this project holds photography to: real,
+identifiable places in Nashua, license and photographer recorded here *and* on
+the page itself, because a CC BY-SA license's attribution requirement is a
+real condition on whoever redistributes the image, not a courtesy that a
+README-only credit would satisfy. The "Photo credits" `<details>` under the
+strip is that attribution, in front of the visitors it's legally for.
+
+| Photo | Slug | Photographer | License |
+| --- | --- | --- | --- |
+| Deschenes Oval, WWII Memorial | `deschenes-oval` | Sluglife6826 | CC0 |
+| Mill canal & falls, former train repair facility | `mill-canal-falls` | Jane023 | CC BY-SA 4.0 |
+| Canal reflection, former train repair facility | `canal-reflection` | Jane023 | CC BY-SA 4.0 |
+| Main Street commercial building | `main-street-deco-building` | Dougtone | CC BY-SA 2.0 |
+| Main Street storefronts | `main-street-storefronts` | Dougtone | CC BY-SA 2.0 |
+| Main Street bank building | `main-street-bank-building` | Dougtone | CC BY-SA 2.0 |
+
+The track renders that set twice back to back and CSS animates a translate
+across exactly one set's width, so the loop point lands on identical content
+rather than visibly resetting. The animation only runs under
+`prefers-reduced-motion: no-preference`; a reduced-motion visitor gets a still,
+complete row rather than a half-scrolled one, because freezing anywhere in an
+identical loop still looks like a normal frame. Hover or keyboard focus pauses
+it, so a visitor can actually look at one before it slides on.
+
+The photos load eagerly rather than lazily, deliberately — a few browsers pick
+an oversized `srcset` candidate for a lazy `<img>` inside a continuously
+CSS-animated ancestor, because its layout box hasn't settled at the moment an
+`IntersectionObserver` fires mid-animation. Twelve small images sitting near
+the top of the page cost little to load eagerly, and it sidesteps that
+category of bug entirely rather than working around one instance of it.
+
+### Adding a city photo
+
+Same pipeline as project photos, with its own inbox so the two never get
+confused:
+
+```bash
+npm run city-photos
+```
+
+Drop an original into `city-photos-inbox/`, named after the slug it should be
+served under. The script fixes rotation, resizes, strips all metadata
+(GPS included), writes an optimized JPEG to `public/city/`, and regenerates the
+shared `lib/blur-placeholders.json` — city photos and project photos share
+that map, since their slugs live in different directories and can never
+collide. Then add the entry to `cityPhotos` in `app/page.tsx`, license and
+photographer included, and to the table above.
 
 ## Photos
 
@@ -149,6 +213,12 @@ including GPS** (job-site photos routinely carry client coordinates), writes an
 optimized progressive JPEG to `public/projects/`, and regenerates
 `lib/blur-placeholders.json`. Then set `hasPhoto: true` on that project in
 `lib/projects.ts` so it enters the image sitemap and gets `ImageObject` data.
+
+This pipeline is for Nash's own project photography specifically. Photographs
+of the city itself (the home hero, the "City photo strip" below) go through
+the sibling `npm run city-photos` pipeline instead — same treatment, separate
+inbox, because the two are sourced completely differently and shouldn't get
+mixed up.
 
 ### Image protection — what it does and doesn't do
 
