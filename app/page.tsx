@@ -190,18 +190,18 @@ export default function HomePage() {
             <SocialLinks tone="light" exclude={["bbb"]} />
           </div>
         </div>
-      </section>
 
-      {/*
-        The licensed city photos are the header rotation now, not a separate
-        strip — but the CC BY-SA ones among them still need visible credit,
-        so that requirement moves here rather than disappearing with the strip.
-      */}
-      <div className="bg-granite-950 px-4 py-3">
-        <div className="container-page">
-          <PhotoCredits credits={cityPhotos.map((photo) => photo.credit)} />
+        {/*
+          The licensed city photos are the header rotation now, not a
+          separate strip — but the CC BY-SA ones among them still need
+          visible credit, so that requirement moves here rather than
+          disappearing with the strip. Folded into this section rather than
+          given its own band so it doesn't call attention to itself.
+        */}
+        <div className="container-page pb-4">
+          <PhotoCredits credits={cityPhotos.map((photo) => photo.credit)} tone="light" />
         </div>
-      </div>
+      </section>
 
       {/* ---------------------- Commercial / Industrial ---------------------- */}
       <section className="container-page py-24">
