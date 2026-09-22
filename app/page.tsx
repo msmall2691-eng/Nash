@@ -1,7 +1,9 @@
 import Link from "next/link";
 
 import { BbbBadge } from "@/components/BbbBadge";
-import { CityMarquee, type CityPhoto } from "@/components/CityMarquee";
+import type { CityPhoto } from "@/components/CityMarquee";
+import { HeroCarousel, type HeroPhoto } from "@/components/HeroCarousel";
+import { PhotoCredits } from "@/components/PhotoCredits";
 import { ProtectedImage } from "@/components/ProtectedImage";
 import { ServiceAreaCheck } from "@/components/ServiceAreaCheck";
 import { SocialLinks } from "@/components/SocialLinks";
@@ -84,6 +86,17 @@ const cityPhotos: CityPhoto[] = [
 ];
 
 /**
+ * The rotating hero: the same brightened downtown photo Steve first saw,
+ * followed by the same licensed Nashua photos the scrolling strip used —
+ * here read as "movement and images of Nashua" belonging in the header
+ * itself, the alternate to that separate strip lower on the page.
+ */
+const heroPhotos: HeroPhoto[] = [
+  { src: "/hero/nashua-downtown.jpg", alt: "Downtown Nashua, New Hampshire, where Nash Construction has built since 1976", blurDataURL: heroBlur },
+  ...cityPhotos.map(({ src, alt, blurDataURL }) => ({ src, alt, blurDataURL })),
+];
+
+/**
  * Facts worth stating plainly, immediately under the hero.
  *
  * Each one is checkable — a duration, an accreditation, a footprint — rather
@@ -102,25 +115,17 @@ export default function HomePage() {
       {/* ------------------------------- Hero ------------------------------- */}
       <section className="relative -mt-20 flex min-h-[92svh] items-end overflow-hidden bg-granite-950 pt-20">
         {/*
-          Downtown Nashua — Main at West Pearl. A CC0 public-domain photograph.
-          Steve asked for this brighter — it was carrying two darkening layers
-          stacked on top of each other (a faint image opacity plus a heavy
-          overlay), which was more than needed once you actually look at it.
-          The overlay now stays strong only right at the bottom, behind the
-          headline and paragraph, and eases off well before the top so the
-          city itself reads clearly; the navbar keeps a light scrim behind it
-          so its transparent white logo and links stay legible at the very top.
+          Rotating hero — see HeroCarousel. Steve asked for the downtown
+          photo brighter and, reviewing it, wondered if he'd actually meant
+          movement and more images of Nashua in the header itself rather
+          than a separate strip lower on the page. This is that alternate:
+          the same photos, crossfading here instead. The overlay below stays
+          strong only right at the bottom, behind the headline and
+          paragraph, and eases off well before the top so each photo reads
+          clearly; the navbar keeps a light scrim behind it so its
+          transparent white logo and links stay legible at the very top.
         */}
-        <ProtectedImage
-          src="/hero/nashua-downtown.jpg"
-          alt="Downtown Nashua, New Hampshire, where Nash Construction has built since 1976"
-          fill
-          sizes="100vw"
-          priority
-          placeholder="blur"
-          blurDataURL={heroBlur}
-          className="hero-parallax object-cover opacity-95"
-        />
+        <HeroCarousel photos={heroPhotos} />
         <div
           aria-hidden="true"
           className="absolute inset-0 bg-gradient-to-t from-granite-950/95 via-granite-950/35 to-granite-950/15"
@@ -187,8 +192,16 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ------------------------------ City strip ---------------------------- */}
-      <CityMarquee photos={cityPhotos} />
+      {/*
+        The licensed city photos are the header rotation now, not a separate
+        strip — but the CC BY-SA ones among them still need visible credit,
+        so that requirement moves here rather than disappearing with the strip.
+      */}
+      <div className="bg-granite-950 px-4 py-3">
+        <div className="container-page">
+          <PhotoCredits credits={cityPhotos.map((photo) => photo.credit)} />
+        </div>
+      </div>
 
       {/* ---------------------- Commercial / Industrial ---------------------- */}
       <section className="container-page py-24">

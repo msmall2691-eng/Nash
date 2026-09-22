@@ -61,6 +61,13 @@
   to   { opacity: 0.25; }
 }
 
+@keyframes hero-crossfade {
+  0%, 100% { opacity: 0; }
+  2%  { opacity: 1; }
+  12% { opacity: 1; }
+  14% { opacity: 0; }
+}
+
 @keyframes ring-pulse {
   from { opacity: 0.6; transform: scale(0.8); }
   to { opacity: 0; transform: scale(1.6); }
@@ -147,6 +154,36 @@
       animation-timeline: scroll(root block);
       animation-range: 0 80svh;
     }
+  }
+}
+
+/**
+ * The rotating hero banner — seven photos crossfading through the header.
+ *
+ * All seven slides share one keyframe and the same `animation-duration` (one
+ * span per photo, below); each slide's `animation-delay` is a negative
+ * offset of one photo-span, so slide 2 starts already partway into the loop
+ * where slide 1 left off, and so on — a shared keyframe turned into a
+ * rotation purely by staggering when each copy starts. The keyframe's
+ * percentages are hand-tuned to seven photos at 6s each (a 42s loop) rather
+ * than computed from a variable — keyframe selectors can't read custom
+ * properties, so changing the photo count means adjusting these numbers to
+ * match.
+ *
+ * Reduced motion gets a plain, un-animated first photo: the default outside
+ * the opt-in media query below is every slide transparent except the first,
+ * which is exactly what a frozen frame of the rotation should look like.
+ */
+.hero-carousel-slide {
+  opacity: 0;
+}
+.hero-carousel-slide:first-child {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-carousel-slide {
+    animation: hero-crossfade 42s linear infinite;
   }
 }
 
