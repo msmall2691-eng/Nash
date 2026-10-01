@@ -2,26 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { NashMark } from "@/components/NashMark";
 import { fullNavigation, navigation, site } from "@/lib/site";
 
-/** Routes whose hero is a full-bleed dark image the transparent navbar sits on. */
-const DARK_HERO_ROUTES = new Set(["/", "/commercial", "/industrial", "/residential", "/about"]);
-
 export function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  // Swap to the solid treatment once the hero is behind us.
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 16);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   // A route change should never leave the mobile sheet hanging open. Adjusting
   // during render rather than in an effect avoids a cascading second render —
@@ -35,37 +23,17 @@ export function Navbar() {
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
-  /**
-   * While we're transparent over a dark hero the default dark-on-light palette
-   * drops below readable contrast, so the whole bar inverts until we scroll.
-   */
-  const onDark = DARK_HERO_ROUTES.has(pathname) && !scrolled && !open;
-
   return (
-    <header
-      className={`sticky top-0 z-50 transition-all duration-300 ${
-        scrolled || open
-          ? "border-b border-granite-200 bg-granite-50/85 backdrop-blur-md"
-          : "border-b border-transparent bg-transparent"
-      }`}
-    >
+    <header className="sticky top-0 z-50 border-b border-granite-200 bg-granite-50/95 backdrop-blur-md">
       <nav aria-label="Primary" className="container-page flex h-20 items-center justify-between gap-6">
         <Link href="/" className="group flex items-center gap-3" aria-label={`${site.name} home`}>
           {/* The real mark, as vector — never resamples, never goes soft. */}
           <NashMark className="h-10 w-auto shrink-0 rounded-[2px] transition-opacity duration-300 group-hover:opacity-90" />
           <span className="flex flex-col leading-none">
-            <span
-              className={`font-display text-lg font-semibold tracking-tight transition-colors duration-300 ${
-                onDark ? "hero-text-shadow text-granite-50" : "text-granite-900"
-              }`}
-            >
+            <span className="font-display text-lg font-semibold tracking-tight text-granite-900">
               {site.name}
             </span>
-            <span
-              className={`mt-1 text-[11px] uppercase tracking-[0.18em] transition-colors duration-300 ${
-                onDark ? "hero-text-shadow text-granite-300" : "text-granite-500"
-              }`}
-            >
+            <span className="mt-1 text-[11px] uppercase tracking-[0.18em] text-granite-500">
               Nashua, NH
             </span>
           </span>
@@ -80,20 +48,14 @@ export function Navbar() {
                   href={item.href}
                   aria-current={active ? "page" : undefined}
                   className={`relative whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium transition-colors duration-200 ${
-                    onDark
-                      ? active
-                        ? "hero-text-shadow text-granite-50"
-                        : "hero-text-shadow text-granite-300 hover:text-granite-50"
-                      : active
-                        ? "text-granite-900"
-                        : "text-granite-500 hover:text-granite-900"
+                    active ? "text-granite-900" : "text-granite-500 hover:text-granite-900"
                   }`}
                 >
                   {item.label}
                   <span
-                    className={`absolute inset-x-3 -bottom-0.5 h-px origin-left transition-transform duration-300 ${
-                      onDark ? "bg-granite-300" : "bg-brand-600"
-                    } ${active ? "scale-x-100" : "scale-x-0"}`}
+                    className={`absolute inset-x-3 -bottom-0.5 h-px origin-left bg-brand-600 transition-transform duration-300 ${
+                      active ? "scale-x-100" : "scale-x-0"
+                    }`}
                   />
                 </Link>
               </li>
@@ -104,21 +66,13 @@ export function Navbar() {
         <div className="hidden items-center gap-3 xl:flex">
           <a
             href={`tel:${site.phone}`}
-            className={`whitespace-nowrap text-sm font-medium transition-colors duration-300 ${
-              onDark
-                ? "hero-text-shadow text-granite-200 hover:text-granite-50"
-                : "text-granite-600 hover:text-brand-600"
-            }`}
+            className="whitespace-nowrap text-sm font-medium text-granite-600 transition-colors hover:text-brand-600"
           >
             {site.phoneDisplay}
           </a>
           <Link
             href="/contact"
-            className={`whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300 ${
-              onDark
-                ? "bg-brand-700 text-white hover:bg-brand-600"
-                : "bg-brand-700 text-white hover:bg-brand-600 hover:shadow-lg hover:shadow-brand-700/30"
-            }`}
+            className="whitespace-nowrap rounded-full bg-brand-700 px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:bg-brand-600 hover:shadow-lg hover:shadow-brand-700/30"
           >
             Request a Consultation
           </Link>
@@ -129,9 +83,7 @@ export function Navbar() {
           onClick={() => setOpen((value) => !value)}
           aria-expanded={open}
           aria-controls="mobile-nav"
-          className={`grid size-10 place-items-center rounded-full transition-colors xl:hidden ${
-            onDark ? "text-granite-50 hover:bg-granite-50/10" : "text-granite-800 hover:bg-granite-100"
-          }`}
+          className="grid size-10 place-items-center rounded-full text-granite-800 transition-colors hover:bg-granite-100 xl:hidden"
         >
           <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
           <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth={1.75} aria-hidden="true">
