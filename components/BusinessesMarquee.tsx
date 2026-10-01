@@ -26,8 +26,12 @@ export function BusinessesMarquee({ projects }: { projects: Project[] }) {
       <div className="overflow-hidden">
         <div className="marquee-track flex gap-4 px-4">
           {track.map((project, index) => {
-            // The second copy exists only to make the loop seamless — a
-            // screen reader has no reason to announce every project twice.
+            // The second copy exists to make the loop seamless, but the
+            // animation runs continuously — a viewer sees it for roughly
+            // half of every cycle, not just for an instant at the seam — so
+            // it still needs its caption. Only a screen reader, which has no
+            // reason to announce every project twice, skips it (aria-hidden
+            // plus empty alt below).
             const duplicate = index >= projects.length;
             return (
               <div
@@ -60,11 +64,9 @@ export function BusinessesMarquee({ projects }: { projects: Project[] }) {
                   aria-hidden="true"
                   className="absolute inset-0 bg-gradient-to-t from-granite-950/90 via-granite-950/5 to-transparent"
                 />
-                {!duplicate && (
-                  <p className="absolute inset-x-3 bottom-2.5 text-sm font-medium text-granite-50">
-                    {project.title}
-                  </p>
-                )}
+                <p className="absolute inset-x-3 bottom-2.5 text-sm font-medium text-granite-50">
+                  {project.title}
+                </p>
               </div>
             );
           })}
