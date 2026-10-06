@@ -10,14 +10,13 @@ import { serviceGroups } from "@/lib/services";
 export const metadata: Metadata = pageMetadata({
   title: "Construction Services",
   description:
-    "General contracting, fit-ups, mechanical and electrical, site work, and maintenance and emergency repair across southern NH and northern MA.",
+    "General contracting, fit-ups, mechanical and electrical, site work, and ongoing maintenance across southern NH and northern MA.",
   path: "/services",
   keywords: [
     "commercial general contracting NH",
     "tenant fit-up contractor Nashua",
     "commercial HVAC plumbing electrical New Hampshire",
     "commercial site work contractor NH",
-    "emergency building repair Nashua NH",
   ],
 });
 

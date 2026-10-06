@@ -82,15 +82,13 @@ export const serviceGroups: ServiceGroup[] = [
     ],
   },
   {
-    slug: "maintenance-emergency",
-    title: "Maintenance & Emergency Repair",
-    summary:
-      "Ongoing building maintenance, plus a number that gets answered when something fails after hours.",
+    slug: "maintenance-repairs",
+    title: "Maintenance & Repairs",
+    summary: "Ongoing building maintenance and repairs, from a contractor who already knows the building.",
     detail:
-      "For a lot of our clients this is the relationship that started everything else — we fixed something once, and then we became the ones who maintain the building. Emergency work gets triaged the day it comes in.",
+      "For a lot of our clients this is the relationship that started everything else — we fixed something once, and then we became the ones who maintain the building.",
     trades: [
       "Ongoing building maintenance",
-      "Emergency repairs",
       "Preventive & scheduled repairs",
       "Painting & finish upkeep",
       "Facility punch work",

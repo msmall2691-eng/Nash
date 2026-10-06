@@ -119,11 +119,7 @@ export default function ContactPage() {
                   </dd>
                 </div>
               </dl>
-              <p className="mt-5 border-t border-granite-100 pt-4 text-xs leading-relaxed text-granite-500">
-                Emergency repair work is triaged the day it comes in — call rather than email if
-                something has failed.
-              </p>
-              <div className="mt-6 border-t border-granite-100 pt-6">
+              <div className="mt-5 border-t border-granite-100 pt-6">
                 <BbbBadge tone="light" />
               </div>
               <div className="mt-5">

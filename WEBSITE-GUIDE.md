@@ -31,7 +31,7 @@ mainly for Google: someone searching "industrial contractor southern NH" needs
 a page that's *about* that. Each links straight to the matching projects.
 
 **Services** — the five groups: General Contracting, Renovations & Fit-Ups,
-Mechanical & Electrical, Exterior & Site Work, Maintenance & Emergency Repair.
+Mechanical & Electrical, Exterior & Site Work, Maintenance & Repairs.
 
 **Projects** — 15 projects with real photographs, filterable by market and by
 type. Click any photo to enlarge it.
@@ -193,11 +193,11 @@ own. Nobody has to remember.
 2. **Details on five older projects** — square footage, year, scope. Those
    entries were left thin rather than guessed at, because these are real
    businesses and invented specifics would be online under Nash's name.
-3. **Confirm three promises the site makes** — that someone answers after hours
-   for emergencies, that emergency work is triaged the same day, and that every
-   inquiry gets a reply within one business day. Reasonable things for a
-   contractor to say, but they're commitments nobody has confirmed. Confirm
-   them or we'll reword them.
+3. **Confirm one promise the site makes** — that every inquiry gets a reply
+   within one business day. Reasonable for a contractor to say, but it's a
+   commitment nobody has confirmed. Confirm it or we'll reword it. (The site
+   no longer claims after-hours or emergency response — you told us that's
+   not something you do, so that language is gone everywhere it appeared.)
 4. **Confirm the phone number.** The site uses 603-943-7593 from the old site.
    Google and Yelp show 603-882-2702, which belongs to Nash Group — a different
    company.
