@@ -39,7 +39,7 @@ const capabilities = [
   },
   {
     title: "Building Maintenance",
-    body: "Ongoing upkeep and emergency repair for clients who would rather call one number than manage six trades.",
+    body: "Ongoing upkeep and repairs for clients who would rather call one number than manage six trades.",
   },
 ];
 

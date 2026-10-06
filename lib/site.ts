@@ -247,7 +247,6 @@ export const localKeywords: string[] = [
   "industrial general contractor southern NH",
   "commercial renovation contractor New Hampshire",
   "NH building maintenance contractor",
-  "emergency building repair New Hampshire",
   "Nashua construction company",
   ...serviceAreas.flatMap((area) =>
     area.towns.map((town) => `${town} ${area.state} commercial contractor`),

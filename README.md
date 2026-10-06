@@ -24,17 +24,21 @@ without being asked**; this repo is public, so the request applies here too.
 The founding *year* stays everywhere it appeared. The About page's leadership
 grid adapts to the count, so adding a second officer needs no layout change.
 
-**Three service promises need the client's sign-off.** These are commitments the
-business has to honour, and nobody has confirmed them — they were written as
-plausible marketing and left in place deliberately rather than deleted, because
-narrowing what the site offers is the client's call:
+**No emergency or after-hours service (confirmed, Oct 2026).** The client
+said plainly they don't do that — the site previously implied an after-hours
+response and emergency-repair capability ("a number that gets answered when
+something fails after hours," "Emergency work gets triaged the day it comes
+in," an "Emergency Repair" project type on the contact form) as plausible but
+unconfirmed marketing. All of it has been removed: the services group is now
+"Maintenance & Repairs" rather than "Maintenance & Emergency Repair," and the
+emergency-repair line is gone from the contact page, the commercial page, the
+contact form's project types, and the SEO keyword lists. **Do not
+reintroduce emergency/after-hours language without being asked.**
 
-- "a number that gets answered when something fails after hours" (home, /services)
-- "Emergency work gets triaged the day it comes in" (/services, /contact)
+**One service promise still needs the client's sign-off:**
+
 - "We reply to every request within one business day" (/contact, and the form's
   success panel)
-
-Note the mild tension with the owner's request to publish no office hours.
 
 **Confirm these conflicts.** Public sources disagree with each other:
 
