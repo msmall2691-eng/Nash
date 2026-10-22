@@ -55,6 +55,7 @@ export default function HomePage() {
           fill
           sizes="100vw"
           priority
+          fetchPriority="high"
           placeholder="blur"
           blurDataURL={heroBlur}
           className="hero-parallax object-cover opacity-95"
@@ -174,6 +175,7 @@ export default function HomePage() {
                   fill
                   sizes="(min-width: 768px) 33vw, 100vw"
                   priority={index === 0}
+                  fetchPriority={index === 0 ? "high" : undefined}
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-granite-950 via-granite-950/75 to-granite-950/20" />
@@ -277,6 +279,7 @@ export default function HomePage() {
                   fill
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                   priority={index === 0}
+                  fetchPriority={index === 0 ? "high" : undefined}
                   placeholder="blur"
                   blurDataURL={project.blurDataURL}
                   className="object-cover transition-transform duration-700 group-hover:scale-105"

@@ -86,6 +86,7 @@ export default function ResidentialPage() {
           fill
           sizes="100vw"
           priority
+          fetchPriority="high"
           className="object-cover opacity-65"
         />
         <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-granite-950 via-granite-950/75 to-granite-950/40" />

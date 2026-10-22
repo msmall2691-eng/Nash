@@ -57,6 +57,7 @@ export default function AboutPage() {
           fill
           sizes="100vw"
           priority
+          fetchPriority="high"
           placeholder="blur"
           blurDataURL={heroBlur}
           className="object-cover opacity-60"
