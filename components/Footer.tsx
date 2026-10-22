@@ -68,14 +68,20 @@ export function Footer() {
             {site.address.city}, {site.address.region} {site.address.postalCode}
           </p>
           <p className="mt-4 text-sm">
-            <a href={`tel:${site.phone}`} className="text-granite-200 transition-colors hover:text-granite-50">
+            {/* inline-block py-1: a text link's own line-height falls short of
+                the 24px minimum tap target; the padding clears it without
+                changing how the text reads. */}
+            <a
+              href={`tel:${site.phone}`}
+              className="inline-block py-1 text-granite-200 transition-colors hover:text-granite-50"
+            >
               {site.phoneDisplay}
             </a>
             <br />
             {/* Long address in a narrow grid column — allow it to wrap. */}
             <a
               href={`mailto:${site.email}`}
-              className="break-words text-granite-200 transition-colors hover:text-granite-50"
+              className="inline-block break-words py-1 text-granite-200 transition-colors hover:text-granite-50"
             >
               {site.email}
             </a>
@@ -84,7 +90,12 @@ export function Footer() {
       </div>
 
       <div className="border-t border-granite-800">
-        <div className="container-page flex flex-col gap-3 py-6 text-xs text-granite-500 sm:flex-row sm:items-center sm:justify-between">
+        {/*
+          text-granite-400, not -500: against this background (granite-950),
+          -500 measures 3.84:1 — under the 4.5:1 WCAG AA floor for text this
+          small. -400 clears it at 5.75:1.
+        */}
+        <div className="container-page flex flex-col gap-3 py-6 text-xs text-granite-400 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col gap-1.5">
             <p>
               © {year} {site.legalName}. All rights reserved.

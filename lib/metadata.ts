@@ -24,7 +24,11 @@ export function pageMetadata({
   description,
   path,
   keywords = [],
-  image = "/projects/marzen-group.jpg",
+  // 1200x630 — the aspect ratio Facebook, LinkedIn, Twitter and iMessage link
+  // previews actually use. The old default (a 1000x748 project photo) got
+  // center-cropped into a much tighter frame than intended on every platform
+  // that renders link previews.
+  image = "/og/default.jpg",
 }: PageMetaInput): Metadata {
   const url = `${siteUrl}${path === "/" ? "" : path}`;
 
@@ -43,7 +47,10 @@ export function pageMetadata({
       siteName: site.name,
       locale: "en_US",
       type: "website",
-      images: [{ url: image, alt: title }],
+      // Declaring the real dimensions lets a crawler pick the image without
+      // fetching it first to measure it — every page uses the one shared,
+      // correctly-sized default, so a fixed pair is accurate here.
+      images: [{ url: image, alt: title, width: 1200, height: 630 }],
     },
     twitter: {
       card: "summary_large_image",
