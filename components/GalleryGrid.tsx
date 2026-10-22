@@ -85,6 +85,7 @@ function ProjectCard({
           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
           // Only the first row is above the fold; the rest stay lazy.
           priority={index < 3}
+          fetchPriority={index === 0 ? "high" : undefined}
           loading={index < 3 ? "eager" : "lazy"}
           placeholder="blur"
           blurDataURL={project.blurDataURL}

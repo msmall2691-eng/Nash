@@ -56,6 +56,11 @@ export function BusinessesMarquee({ projects }: { projects: Project[] }) {
                   // and sits near the top of the page regardless, so eager
                   // loading costs little and sidesteps that entirely.
                   loading="eager"
+                  // These 14 images still shouldn't out-compete the actual
+                  // hero image above for the mobile connection's early
+                  // bandwidth — eager just means "don't lazy-load", not
+                  // "load first".
+                  fetchPriority="low"
                   placeholder="blur"
                   blurDataURL={project.blurDataURL}
                   className="object-cover"
