@@ -111,7 +111,9 @@ function ProjectCard({
       )}
 
       <div className="pointer-events-none absolute inset-x-0 bottom-0 p-5">
-        <h3 className="font-display text-lg font-semibold text-granite-50">{project.title}</h3>
+        {/* h2, not h3: nothing on this page introduces the grid with its own
+            h2, so a card title jumping straight to h3 skips a level. */}
+        <h2 className="font-display text-lg font-semibold text-granite-50">{project.title}</h2>
         {meta && <p className="mt-1 text-xs uppercase tracking-[0.14em] text-granite-300">{meta}</p>}
         {project.summary && (
           <p className="mt-3 max-h-0 overflow-hidden text-sm leading-relaxed text-granite-200 opacity-0 transition-all duration-500 ease-out group-hover:max-h-40 group-hover:opacity-100">

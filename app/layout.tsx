@@ -63,13 +63,18 @@ export const metadata: Metadata = {
     siteName: site.name,
     title: `${site.name} | ${site.tagline}`,
     description: site.description,
-    images: [{ url: "/projects/marzen-group.jpg", width: 1000, height: 748, alt: site.tagline }],
+    // 1200x630, the aspect ratio link previews actually use — see
+    // lib/metadata.ts, which every other route gets this same image from.
+    // The home page sets its own OpenGraph/Twitter blocks here rather than
+    // calling that helper (Next.js metadata doesn't deep-merge a child
+    // page's export into the layout's), so it needs the same fix repeated.
+    images: [{ url: "/og/default.jpg", width: 1200, height: 630, alt: site.tagline }],
   },
   twitter: {
     card: "summary_large_image",
     title: `${site.name} | ${site.tagline}`,
     description: site.description,
-    images: ["/projects/marzen-group.jpg"],
+    images: ["/og/default.jpg"],
   },
   // A review deployment on a vercel.app host must not be indexed — an indexed
   // preview competes with the real domain for the business's own name.
