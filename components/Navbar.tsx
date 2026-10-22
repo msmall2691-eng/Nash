@@ -26,12 +26,22 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-granite-200 bg-granite-50/95 backdrop-blur-md">
       <nav aria-label="Primary" className="container-page flex h-20 items-center justify-between gap-6">
-        <Link href="/" className="group flex items-center gap-3" aria-label={`${site.name} home`}>
-          {/* The real mark, as vector — never resamples, never goes soft. */}
-          <NashMark className="h-10 w-auto shrink-0 rounded-[2px] transition-opacity duration-300 group-hover:opacity-90" />
+        {/*
+          No aria-label here: it used to override the link's accessible name
+          with text ("Nash Construction home") that didn't contain what's
+          actually visible inside it ("Nash Construction" + "Nashua, NH"),
+          which fails WCAG 2.5.3 for anyone navigating by voice. The mark is
+          aria-hidden since the adjacent text already names the business —
+          without that, its own aria-label would announce redundantly.
+        */}
+        <Link href="/" className="group flex items-center gap-3">
+          <span aria-hidden="true">
+            <NashMark className="h-10 w-auto shrink-0 rounded-[2px] transition-opacity duration-300 group-hover:opacity-90" />
+          </span>
           <span className="flex flex-col leading-none">
             <span className="font-display text-lg font-semibold tracking-tight text-granite-900">
               {site.name}
+              <span className="sr-only"> — home</span>
             </span>
             <span className="mt-1 text-[11px] uppercase tracking-[0.18em] text-granite-500">
               Nashua, NH

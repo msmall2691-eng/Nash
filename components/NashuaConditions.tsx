@@ -15,7 +15,9 @@ export async function NashuaConditions() {
   if (!conditions) return null;
 
   return (
-    <p className="flex items-center gap-2.5 text-xs text-granite-500">
+    // text-granite-400, not -500: against the footer's background (granite-950),
+    // -500 falls short of WCAG AA for text this small (see Footer.tsx).
+    <p className="flex items-center gap-2.5 text-xs text-granite-400">
       <span
         aria-hidden="true"
         className={`size-1.5 shrink-0 rounded-full ${conditions.disruptive ? "bg-brand-500" : "bg-granite-500"}`}
