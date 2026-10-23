@@ -1,10 +1,11 @@
 import Link from "next/link";
+import { Suspense } from "react";
 
 import { BbbBadge } from "@/components/BbbBadge";
 import { BusinessesMarquee } from "@/components/BusinessesMarquee";
+import { HeroConditions } from "@/components/HeroConditions";
 import { ProtectedImage } from "@/components/ProtectedImage";
 import { ServiceAreaCheck } from "@/components/ServiceAreaCheck";
-import { SocialLinks } from "@/components/SocialLinks";
 import blurPlaceholders from "@/lib/blur-placeholders.json";
 import { featuredProjects, projects } from "@/lib/projects";
 import { serviceGroups } from "@/lib/services";
@@ -66,9 +67,15 @@ export default function HomePage() {
         />
 
         <div className="hero-fade container-page relative pb-20 pt-32">
-          <p className="hero-text-shadow animate-fade-up text-xs font-medium uppercase tracking-[0.24em] text-granite-300">
-            Nashua, New Hampshire · Est. {FOUNDED_YEAR}
-          </p>
+          <div className="animate-fade-up flex flex-wrap items-center gap-x-4 gap-y-2">
+            <p className="hero-text-shadow text-xs font-medium uppercase tracking-[0.24em] text-granite-300">
+              Nashua, New Hampshire · Est. {FOUNDED_YEAR}
+            </p>
+            {/* Live, but never load-bearing — see HeroConditions. */}
+            <Suspense fallback={null}>
+              <HeroConditions />
+            </Suspense>
+          </div>
           <h1 className="hero-text-shadow animate-fade-up mt-6 max-w-4xl font-display text-[clamp(2.5rem,6.5vw,4.75rem)] font-semibold leading-[1.02] text-granite-50 [animation-delay:100ms]">
             Built on {yearsInBusiness} Years of Experience.
           </h1>
@@ -99,7 +106,14 @@ export default function HomePage() {
       </section>
 
       {/* --------------------------- Credibility ---------------------------- */}
-      <section className="border-b border-granite-200 bg-white">
+      {/*
+        granite-50, not white: this band sits between the dark hero above and
+        the dark businesses strip below, and a stark white flashed as a hard
+        bright seam between them. granite-50 matches the page's own base
+        background, so it reads as the page continuing rather than a strip
+        dropped on top of it — no border needed to separate it either way.
+      */}
+      <section className="bg-granite-50">
         <div className="container-page flex flex-col gap-8 py-10 xl:flex-row xl:items-center xl:gap-10">
           {/* Accreditation leads: it is the one claim a stranger can verify in a click. */}
           <div className="shrink-0">
@@ -116,13 +130,6 @@ export default function HomePage() {
               </div>
             ))}
           </dl>
-
-          <div className="shrink-0 xl:border-l xl:border-granite-200 xl:pl-10">
-            <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.16em] text-granite-500">
-              Find us on
-            </p>
-            <SocialLinks tone="light" exclude={["bbb"]} />
-          </div>
         </div>
       </section>
 
