@@ -1,9 +1,7 @@
 import Link from "next/link";
-import { Suspense } from "react";
 
 import { BbbBadge } from "@/components/BbbBadge";
 import { NashMark } from "@/components/NashMark";
-import { NashuaConditions } from "@/components/NashuaConditions";
 import { SocialLinks } from "@/components/SocialLinks";
 import { serviceGroups } from "@/lib/services";
 import { FOUNDED_YEAR, fullNavigation, serviceAreas, site, studio } from "@/lib/site";
@@ -96,15 +94,9 @@ export function Footer() {
           small. -400 clears it at 5.75:1.
         */}
         <div className="container-page flex flex-col gap-3 py-6 text-xs text-granite-400 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex flex-col gap-1.5">
-            <p>
-              © {year} {site.legalName}. All rights reserved.
-            </p>
-            {/* Live, but never load-bearing — a slow weather API just renders nothing. */}
-            <Suspense fallback={null}>
-              <NashuaConditions />
-            </Suspense>
-          </div>
+          <p>
+            © {year} {site.legalName}. All rights reserved.
+          </p>
           <p className="flex flex-wrap items-center gap-x-2 gap-y-1">
             <span>Serving {serviceAreas.map((area) => area.region).join(" · ")}</span>
             <span aria-hidden="true" className="text-granite-700">·</span>
