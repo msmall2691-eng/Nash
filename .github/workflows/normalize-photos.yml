@@ -1,0 +1,56 @@
+# Keeps the privacy guarantee that `npm run photos` provides, for photos that
+# never go through it.
+#
+# `scripts/import-photos.mjs` fixes rotation, resizes, and strips all metadata —
+# GPS included, because a photo taken on a phone at a job site carries that
+# client's coordinates. A photo uploaded through /admin goes straight to the
+# repository through the GitHub API and never touches that pipeline, so without
+# this workflow the first phone upload would publish a client's location.
+#
+# This re-processes anything that lands in public/projects and commits the
+# result, so the guarantee holds regardless of how the photo got there.
+name: Normalize uploaded photos
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'public/projects/**'
+
+jobs:
+  normalize:
+    # Skip the run triggered by this workflow's own commit. Keyed on the actor
+    # rather than the commit message: a message is attacker-controlled input,
+    # and keying on it would also let any commit opt itself out of having its
+    # metadata stripped.
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install sharp
+        run: npm install --no-save sharp
+
+      - name: Strip metadata, fix rotation, resize
+        run: node scripts/normalize-public-photos.mjs
+
+      - name: Commit if anything changed
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "Nothing to normalize."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/projects lib/blur-placeholders.json
+          git commit -m "Normalize uploaded photos: strip metadata, fix rotation, resize"
+          git push

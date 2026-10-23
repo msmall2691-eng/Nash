@@ -1,3 +1,6 @@
+import business from "@/content/business.json";
+import testimonialData from "@/content/testimonials.json";
+
 /**
  * Single source of truth for brand, contact and geography data.
  *
@@ -64,21 +67,18 @@ export const site = {
   founded: String(FOUNDED_YEAR),
   incorporated: "1999",
 
-  // Taken from the live nashconstructionnh.com site. This is the correct number:
-  // (603) 882-2702, which appears on the Google and Yelp listings, belongs to
-  // Nash Group — a different entity at the same address.
-  phone: "+1-603-943-7593",
-  phoneDisplay: "(603) 943-7593",
-  email: "steve@nashconstructionnh.com",
+  // Editable from /admin — see content/business.json. These four fields are the
+  // ones that actually change, and every surface that shows them (header,
+  // footer, contact page, form confirmation, JSON-LD) reads them from here, so
+  // one edit still updates all of them at once.
+  //
+  // On the number: (603) 882-2702, which appears on the Google and Yelp
+  // listings, belongs to Nash Group — a different entity at the same address.
+  phone: business.phone,
+  phoneDisplay: business.phoneDisplay,
+  email: business.email,
 
-  address: {
-    street: "40 Temple Street",
-    city: "Nashua",
-    region: "NH",
-    regionName: "New Hampshire",
-    postalCode: "03060",
-    country: "US",
-  },
+  address: business.address,
   // Approximate downtown Nashua coordinates — verify against the Google Business
   // Profile pin before launch so the map marker lands on the right building.
   geo: { latitude: 42.7573, longitude: -71.4657 },
@@ -191,18 +191,7 @@ export const studio = {
  * Quoted verbatim from the existing site — these are real clients' words, so
  * they are not edited for length or tone.
  */
-export const testimonials = [
-  {
-    quote:
-      "We really have been singing your praises to friends and family that have visited and stayed in the basement — we've been very happy with the way the basement came out and the manner in which you and your team went about the work. Thanks again.",
-    attribution: "Greg B.",
-  },
-  {
-    quote:
-      "Thank you for listening and making the vision I had for the space come to life. I'm not easy to please, but your company and crew accomplished that task! Thank you for the great work!",
-    attribution: "Sandra L.",
-  },
-] as const;
+export const testimonials: { quote: string; attribution: string }[] = testimonialData;
 
 /**
  * The markets the site actually organises itself around — one landing page and

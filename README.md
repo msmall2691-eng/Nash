@@ -8,7 +8,17 @@ TypeScript (strict), Tailwind CSS v4.
 does, where it is hosted, what it costs, why it cannot move to Wix, and how
 quickly it can be changed. Written for the client rather than for a developer.
 
-## ⚠️ Before this goes live
+## Status
+
+**Live** at <https://www.nashconstructionnh.com> (Vercel; apex redirects to
+`www`). The indexing gate described under *Deployment* has flipped itself —
+the production pages now emit `index, follow`, verified on the live domain.
+
+Lighthouse against the live site, Oct 2026: **95 / 100 / 100 / 100** mobile and
+**99 / 100 / 100 / 100** desktop (performance / accessibility / best practices /
+SEO), CLS 0.
+
+## ⚠️ Still outstanding
 
 **One project still needs a photograph:** Girls Inc. Photoless projects render
 a branded "Photography coming soon" panel rather than filler imagery, and are
@@ -68,6 +78,63 @@ Also confirm:
 - **Do not link the "Nash Construction & Remodeling" Facebook page** — that is a
   different Nashua contractor. No Facebook page was found for this business.
 
+## Editing content without touching code
+
+`/admin` is a [Decap CMS](https://decapcms.org) editor served from this repo.
+Saving there commits to `main` exactly as a developer's commit would, Vercel
+rebuilds, and the change is live in about two minutes. There is no database and
+no second copy of the content — the repository stays the single source of
+truth, which is what keeps the site portable.
+
+What it exposes, and where each thing lands:
+
+| In the editor | File |
+| --- | --- |
+| Projects | `content/projects/<slug>.json`, one per project |
+| Testimonials | `content/testimonials.json` |
+| Business details (phone, email, address) | `content/business.json` |
+
+Service areas, the service groups and the SEO builders stay in code
+deliberately: they feed structured data whose *shape* matters more than its
+convenience, and a dropdown that can produce invalid JSON-LD is worse than a
+code edit.
+
+**Who can get in** is GitHub's collaborator list for this repo and nothing
+else. Decap signs in through a GitHub OAuth app and commits as the person
+signed in, and GitHub only issues a token to an account with push access — so
+granting or revoking an editor is done in the repository's Settings → 
+Collaborators, with no separate user list to keep in sync.
+
+### Setting up the editor
+
+One-time, and the site runs fine until it is done — only `/admin` is affected.
+
+1. Create a GitHub OAuth app at <https://github.com/settings/developers>:
+   - **Homepage URL** `https://www.nashconstructionnh.com`
+   - **Authorization callback URL** `https://www.nashconstructionnh.com/api/callback`
+2. Add `GITHUB_OAUTH_CLIENT_ID` and `GITHUB_OAUTH_CLIENT_SECRET` to the Vercel
+   project's environment variables.
+3. Add the editor as a collaborator on this repository with **Write** access.
+
+`app/api/auth` and `app/api/callback` implement the OAuth exchange so the client
+secret never reaches a browser. Both answer with a plain readable sentence if
+the variables are missing, rather than a stack trace.
+
+### Photographs uploaded through the editor
+
+`npm run photos` strips EXIF — GPS included, because a job-site photo taken on
+a phone carries that client's coordinates. A photo uploaded through `/admin`
+goes straight to the repository through the GitHub API and never touches that
+pipeline, so `.github/workflows/normalize-photos.yml` re-processes anything
+landing in `public/projects/`: rotation fixed, resized to 2000px, all metadata
+stripped, blur placeholder regenerated, committed back. It is idempotent —
+already-clean photos are detected and left alone, so it does not churn the repo
+or fight its own commit.
+
+The guarantee therefore holds however the photo arrived. Verified against a
+3000px test image carrying EXIF make/model and GPS tags: afterwards the file
+had no EXIF, ICC or XMP block and no camera strings anywhere in its bytes.
+
 ## Getting started
 
 ```bash
@@ -87,6 +154,11 @@ full submit → validate → success flow is exercisable locally.
 | `npm run start` | Serve the production build |
 | `npm run lint` | ESLint (flat config, `eslint-config-next`) |
 | `npm run typecheck` | `tsc --noEmit` |
+| `npm run content` | Rebuild `content/projects.generated.json` from `content/projects/` |
+
+`content` runs automatically before `dev`, `build` and `typecheck` (npm `pre*`
+hooks), so a CMS commit that only touches `content/` is picked up by the next
+deploy with nothing to remember.
 
 ## Layout
 
@@ -149,9 +221,22 @@ readable regardless of what the photo happens to be doing at that exact pixel.
 A gradient can only be tuned against the spots it was tested at; a photo has
 bright spots wherever it has them.
 
-## City photo strip
+## City photo strip — currently unused
 
-Home also carries a small scrolling strip of Nashua photographs
+> **Not on the site as of Oct 2026.** PR #1 swapped the city strip for
+> `BusinessesMarquee` (client storefronts), and `CityMarquee` is no longer
+> imported anywhere. The component, the six photographs in `public/city/` and
+> the import pipeline below are all still here and still work, but nothing
+> renders them.
+>
+> One consequence worth stating plainly, because it is the reason the
+> attribution rules below were written: **no CC BY-SA photograph is being
+> displayed**, so no attribution is currently owed. If `CityMarquee` is ever
+> put back, the visible "Photo credits" block has to come back with it — that
+> is a licence condition, not a courtesy. The alternative is to delete the
+> component and `public/city/` outright.
+
+The strip was a small scrolling row of Nashua photographs
 (`components/CityMarquee.tsx`) — Steve asked for the single hero photo to be
 joined by a few more, so `app/page.tsx` renders six alongside it. Sourced from
 Wikimedia Commons at the standard this project holds photography to: real,
@@ -457,15 +542,21 @@ Next.js, no build config needed. Add the environment variables above under
 Settings → Environment Variables. Every push to `main` deploys; every branch
 gets a preview.
 
-Review URL: https://nash-alpha.vercel.app — deployment protection is off, so it
-is shareable.
+Production is **www.nashconstructionnh.com**; the apex 308-redirects to `www`.
+`nash-alpha.vercel.app` was the pre-launch review URL.
 
 **Indexing is gated on the domain, not on a flag.** While the project's
-production domain is still a `*.vercel.app` host, every page emits
-`noindex, nofollow`; attach nashconstructionnh.com and the same build emits
+production domain is a `*.vercel.app` host, every page emits
+`noindex, nofollow`; with nashconstructionnh.com attached the same build emits
 `index, follow`. `isCanonicalDeployment` in `lib/site.ts` derives this from
-Vercel's `VERCEL_PROJECT_PRODUCTION_URL`, so it flips itself when the domain is
-connected — there is nothing to remember and nothing to unset.
+Vercel's `VERCEL_PROJECT_PRODUCTION_URL`, so it flipped itself when the domain
+was connected — there was nothing to remember and nothing to unset.
+
+This still applies to every preview deployment, and is worth knowing before
+reading a Lighthouse run against one: a preview is on a `*.vercel.app` host, so
+it is correctly `noindex` and Lighthouse's `is-crawlable` audit scores 0, which
+drags the SEO category to about 69 on a build that scores 100 in production.
+That is the gate working, not a regression.
 
 A canonical tag alone would not have been enough: Google treats it as a hint and
 is free to index the vercel.app copy anyway, which is precisely the duplicate
@@ -476,7 +567,7 @@ elsewhere can still be indexed.
 
 Verified across all three states: production URL unset → `index, follow`;
 `nash-alpha.vercel.app` → `noindex, nofollow`; `www.nashconstructionnh.com` →
-`index, follow`.
+`index, follow`. Re-confirmed against the live domain in Oct 2026.
 
 **Railway** — create a service from the repo. No start-command override is
 needed: `npm run start` binds `$PORT` when the platform injects one and falls

@@ -1,0 +1,13 @@
+{
+  "order": 20,
+  "slug": "manufacturing-facility",
+  "title": "Manufacturing Facility",
+  "sector": "Industrial",
+  "summary": "Open production floor under high-bay lighting — sealed concrete, marked traffic aisles, exposed overhead distribution and fit-out for assembly benching.",
+  "scope": [
+    "Industrial fit-out",
+    "Electrical",
+    "Concrete"
+  ],
+  "hasPhoto": true
+}

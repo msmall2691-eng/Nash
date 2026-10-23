@@ -3,8 +3,8 @@
 The lowdown on the new site: what it is, where it lives, what it costs, and how
 fast it can change. No technical background needed.
 
-Built by [MLinx Studio](https://www.mlinx.studio) · Review link:
-**https://nash-alpha.vercel.app**
+Built by [MLinx Studio](https://www.mlinx.studio) · Live at
+**https://www.nashconstructionnh.com**
 
 ---
 
@@ -103,11 +103,12 @@ saved, Vercel rebuilds and swaps it in — about two minutes, no uploads. If a
 build ever fails the old version stays up, so a bad change can't take the site
 down.
 
-**Right now it's at `nash-alpha.vercel.app` and hidden from Google** — every
-page tells search engines not to index it. Anyone with the link can open it;
-it's hidden from search, not password-protected. When Nash approves it, the real
-domain gets pointed here and that hide-from-Google instruction lifts **by
-itself**. No switch anyone has to remember.
+**The site is live at www.nashconstructionnh.com and visible to Google.**
+During the review period it sat at a temporary address with a
+"don't index this" instruction on every page; pointing the real domain at it
+lifted that instruction automatically, exactly as designed, with no switch
+anyone had to remember. Typing the address without the `www` sends you to the
+same place.
 
 **Can this go on Wix? Honestly, no.** Wix is a closed platform — you build with
 their editor and their building blocks, and there's no way to upload a site like
@@ -125,6 +126,50 @@ for.** The domain and the website are two separate things:
   at a Wix address as a fallback.
 - **Google Workspace email is not affected.** Email and website are different
   settings on the same domain, and only the website ones change.
+
+---
+
+## Editing the site yourself
+
+There's an editor at **www.nashconstructionnh.com/admin**. Sign in with a
+GitHub account and you get a normal web form — no code, no HTML.
+
+What you can change there:
+
+- **Projects.** Add one, remove one, reorder them, upload a photo, write the
+  description, set the town, year and square footage.
+- **Testimonials.** Add or remove client quotes.
+- **Contact details.** Phone, email and the office address.
+
+Change the phone number once and it updates in the header, the footer, the
+contact page, the form's confirmation and the business data Google reads — all
+at the same time. You press Publish, and about two minutes later it's live.
+
+Three things worth knowing:
+
+**It's the real thing, not a staging copy.** Publishing writes the change into
+the same master copy of the site a developer would edit. There's no second
+version to keep in sync and nothing to export later.
+
+**Every change is reversible.** The site keeps a full history. Any edit can be
+undone, and you can see exactly what changed, when, and who did it. A bad edit
+is an inconvenience, not a disaster — and if a change ever broke the build, the
+previous version simply stays up.
+
+**Photos are cleaned automatically.** A photo taken on a phone has the GPS
+coordinates of wherever it was taken buried inside the file — on a job-site
+photo, that's a client's address. Anything uploaded through the editor gets
+that stripped out, straightened and resized before it goes near the website.
+You don't have to do anything or remember anything.
+
+**Who can get in** is just a list of people on GitHub. Adding or removing an
+editor is one setting; there's no separate account system, and nobody who isn't
+on that list can publish anything.
+
+Not in the editor, on purpose: the service areas, the five service groups, and
+the behind-the-scenes data Google reads. Those are wired into how the site
+ranks in search, and a form that let them be filled in wrongly would do more
+harm than the convenience is worth. They're a quick change on request.
 
 ---
 

@@ -1,0 +1,234 @@
+# Decap CMS — the editor behind /admin.
+#
+# Every field here maps to a file in `content/`. Saving in the editor commits to
+# this repository exactly as a developer's commit would, Vercel rebuilds, and
+# the change is live in about two minutes. There is no database and no separate
+# copy of the content: the repository stays the single source of truth, which is
+# what keeps the site portable to another developer or another host.
+#
+# Scope note: this intentionally exposes the content that actually changes —
+# projects, testimonials, and the business's contact details. Service areas,
+# the service groups and the SEO machinery stay in code, because they feed
+# structured data whose shape matters more than its convenience.
+
+backend:
+  name: github
+  repo: msmall2691-eng/Nash
+  branch: main
+  # Points at the OAuth handler in app/api/auth. GitHub itself decides who gets
+  # in: the token is only accepted if the account has push access to the repo
+  # above, so adding or removing an editor is done in GitHub's collaborator
+  # settings and nowhere else.
+  base_url: https://www.nashconstructionnh.com
+  auth_endpoint: api/auth
+  commit_messages:
+    create: 'Add {{collection}} "{{slug}}" (via /admin)'
+    update: 'Update {{collection}} "{{slug}}" (via /admin)'
+    delete: 'Remove {{collection}} "{{slug}}" (via /admin)'
+    uploadMedia: 'Upload {{path}} (via /admin)'
+    deleteMedia: 'Delete {{path}} (via /admin)'
+
+# Uploads land beside the existing project photography. A GitHub Action
+# (.github/workflows/normalize-photos.yml) re-processes anything added here —
+# stripping EXIF and GPS, fixing rotation and resizing — because a photo taken
+# on a phone at a client's job site carries that client's coordinates, and the
+# editor cannot run the sharp pipeline that `npm run photos` uses.
+media_folder: public/projects
+public_folder: /projects
+
+locale: en
+# Nothing is published without a human pressing Publish.
+publish_mode: simple
+
+collections:
+  - name: projects
+    label: Projects
+    label_singular: Project
+    folder: content/projects
+    extension: json
+    format: json
+    create: true
+    delete: true
+    # The filename is the slug, and the slug is what points a project at its
+    # photograph. Renaming here would silently break that link, so the field is
+    # set once at creation from the title and is not editable afterwards.
+    slug: '{{fields.slug}}'
+    identifier_field: title
+    summary: '{{title}} — {{sector}}'
+    sortable_fields: ['order', 'title', 'year']
+    view_filters:
+      - label: Missing a photo
+        field: hasPhoto
+        pattern: false
+    fields:
+      - label: 'Position on the page'
+        name: order
+        widget: number
+        value_type: int
+        default: 999
+        hint: >-
+          Lower numbers come first. Leave the gaps (10, 20, 30…) so a new
+          project can be slotted between two existing ones without renumbering
+          everything.
+
+      - label: 'Project or client name'
+        name: title
+        widget: string
+        hint: Shown as the heading on the project card.
+
+      - label: 'Web address name (slug)'
+        name: slug
+        widget: string
+        pattern:
+          - '^[a-z0-9]+(-[a-z0-9]+)*$'
+          - 'Lower-case letters, numbers and hyphens only — for example: maza-mediterranean-grill'
+        hint: >-
+          Must match the photo filename in public/projects (slug.jpg). Set this
+          once when the project is created and do not change it afterwards.
+
+      - label: Sector
+        name: sector
+        widget: select
+        options:
+          - Retail
+          - Restaurant
+          - Office & Professional
+          - Industrial
+          - Residential
+          - Nonprofit & Institutional
+          - Municipal & Public
+        hint: >-
+          This decides which market page and filter the project appears under.
+          Retail, Restaurant, Office, Nonprofit and Municipal all show as
+          Commercial.
+
+      - label: Description
+        name: summary
+        widget: text
+        required: false
+        hint: >-
+          Two or three lines on what the work actually involved. Leave it blank
+          rather than guessing — a blank reads as finished, a wrong detail about
+          a real client's building does not.
+
+      - label: Town
+        name: town
+        widget: string
+        required: false
+
+      - label: Year completed
+        name: year
+        widget: number
+        value_type: int
+        required: false
+        min: 1976
+        max: 2100
+
+      - label: Square feet
+        name: squareFeet
+        widget: number
+        value_type: int
+        required: false
+
+      - label: Scope of work
+        name: scope
+        widget: list
+        required: false
+        hint: One item per line, e.g. Concrete, Masonry, Site work.
+
+      - label: 'Has a real photograph'
+        name: hasPhoto
+        widget: boolean
+        required: false
+        default: false
+        hint: >-
+          Turn this on only once a real photo of this project is in
+          public/projects. Leaving it off shows a tidy "photography coming soon"
+          panel and keeps the project out of the Google Images sitemap — which
+          is deliberate: submitting placeholder images to Google wastes crawl
+          budget.
+
+  - name: testimonials
+    label: Testimonials
+    files:
+      - name: testimonials
+        label: Client testimonials
+        file: content/testimonials.json
+        description: >-
+          Quoted verbatim from real clients. Do not edit someone's words for
+          length or tone — add or remove whole quotes instead.
+        fields:
+          - label: Testimonials
+            name: testimonials
+            widget: list
+            # The file is a bare JSON array, so the list is the whole document
+            # rather than a field inside an object.
+            allow_add: true
+            fields:
+              - label: Quote
+                name: quote
+                widget: text
+              - label: Attributed to
+                name: attribution
+                widget: string
+                hint: 'How the client is credited on the site, e.g. "Greg B."'
+
+  - name: business
+    label: Business details
+    files:
+      - name: business
+        label: Contact details
+        file: content/business.json
+        description: >-
+          Changing a value here updates it everywhere at once — the header, the
+          footer, the contact page, the form's confirmation and the business
+          data Google reads.
+        fields:
+          - label: 'Phone number (for links)'
+            name: phone
+            widget: string
+            pattern:
+              - '^\+1-\d{3}-\d{3}-\d{4}$'
+              - 'Must look like +1-603-943-7593'
+            hint: >-
+              The machine-readable form used by tap-to-call links and by Google.
+              Keep the +1-603-943-7593 shape exactly.
+
+          - label: 'Phone number (as displayed)'
+            name: phoneDisplay
+            widget: string
+            hint: 'How the number is printed on the page, e.g. (603) 943-7593'
+
+          - label: Email address
+            name: email
+            widget: string
+            pattern:
+              - '^[^@\s]+@[^@\s]+\.[^@\s]+$'
+              - 'Must be a valid email address'
+            hint: Where consultation requests are sent and the address shown on the site.
+
+          - label: Address
+            name: address
+            widget: object
+            fields:
+              - { label: Street, name: street, widget: string }
+              - { label: Town or city, name: city, widget: string }
+              - {
+                  label: 'State abbreviation',
+                  name: region,
+                  widget: string,
+                  pattern: ['^[A-Z]{2}$', 'Two capital letters, e.g. NH'],
+                }
+              - { label: 'State full name', name: regionName, widget: string }
+              - {
+                  label: 'ZIP code',
+                  name: postalCode,
+                  widget: string,
+                  pattern: ['^\d{5}$', 'Five digits'],
+                }
+              - {
+                  label: Country,
+                  name: country,
+                  widget: string,
+                  pattern: ['^[A-Z]{2}$', 'Two capital letters, e.g. US'],
+                }
