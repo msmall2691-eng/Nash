@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--
+      Belt and braces with the Disallow in app/robots.ts: this page is served
+      from /public, so it never passes through the app's metadata layer and
+      would otherwise carry no robots directive at all.
+    -->
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Nash Construction — Edit the website</title>
+    <link rel="icon" href="/icon.svg" />
+    <style>
+      /* Shown only while Decap's bundle is still downloading. */
+      .boot {
+        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        max-width: 32rem;
+        margin: 20vh auto;
+        padding: 0 1.5rem;
+        color: #27272a;
+        line-height: 1.6;
+      }
+      .boot h1 {
+        font-size: 1.125rem;
+        margin: 0 0 0.5rem;
+      }
+      .boot p {
+        margin: 0;
+        color: #52525b;
+        font-size: 0.9375rem;
+      }
+      @media (prefers-color-scheme: dark) {
+        body {
+          background: #18181b;
+        }
+        .boot {
+          color: #fafafa;
+        }
+        .boot p {
+          color: #a1a1aa;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="boot" id="boot">
+      <h1>Loading the editor…</h1>
+      <p>
+        If this message stays on screen, the editor could not reach GitHub. Check
+        your connection and reload. Nothing on the live website is affected.
+      </p>
+    </div>
+
+    <!--
+      Pinned to an exact version with a Subresource Integrity hash, not a
+      floating tag. This page holds a GitHub token with write access to the
+      repository for as long as it is open, so a tampered or swapped CDN bundle
+      could read that token. With `integrity` the browser refuses to run the
+      file unless it hashes to exactly the reviewed build, and `crossorigin`
+      is what makes the check possible on a cross-origin request.
+
+      Upgrading means recomputing the hash:
+        curl -sL https://unpkg.com/decap-cms@<version>/dist/decap-cms.js \
+          | openssl dgst -sha384 -binary | openssl base64 -A
+    -->
+    <script
+      src="https://unpkg.com/decap-cms@3.16.3/dist/decap-cms.js"
+      integrity="sha384-A/Gdn928CNLufmnGWGs9RM4Q9o8bSNLeJERqBFrBjwzL7FRpoLT3MPF8Tl0+Wd2p"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      // Decap replaces the body once it mounts; clearing the notice here means
+      // a failed script load leaves the explanation visible instead of a blank
+      // white page.
+      window.addEventListener("load", function () {
+        if (window.CMS) {
+          var boot = document.getElementById("boot");
+          if (boot) boot.remove();
+        }
+      });
+    </script>
+  </body>
+</html>

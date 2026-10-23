@@ -1,0 +1,13 @@
+{
+  "phone": "+1-603-943-7593",
+  "phoneDisplay": "(603) 943-7593",
+  "email": "steve@nashconstructionnh.com",
+  "address": {
+    "street": "40 Temple Street",
+    "city": "Nashua",
+    "region": "NH",
+    "regionName": "New Hampshire",
+    "postalCode": "03060",
+    "country": "US"
+  }
+}

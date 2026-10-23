@@ -1,0 +1,13 @@
+{
+  "order": 90,
+  "slug": "maza-mediterranean-grill",
+  "title": "Maza Mediterranean Grill",
+  "sector": "Restaurant",
+  "summary": "Restaurant fit-up: commercial kitchen line with stainless hood and exhaust, tiled cook wall, glass-front service counter and the branded soffit above the pass.",
+  "scope": [
+    "Restaurant fit-up",
+    "Commercial kitchen",
+    "Service counter"
+  ],
+  "hasPhoto": true
+}
