@@ -1,4 +1,4 @@
-import { site } from "@/lib/site";
+import { site, siteUrl } from "@/lib/site";
 
 /**
  * Current conditions in Nashua.
@@ -78,6 +78,71 @@ export async function getNashuaConditions(): Promise<Conditions | null> {
       // Below freezing stops concrete and most exterior finishes regardless of sky.
       disruptive: Boolean(wmo?.disruptive) || current.temperature_2m <= 32,
     };
+  } catch {
+    return null;
+  }
+}
+
+export type WeatherAlert = {
+  /** NWS's own short name for the alert, e.g. "Winter Storm Watch". */
+  event: string;
+  severity: "Extreme" | "Severe" | "Moderate" | "Minor" | "Unknown";
+};
+
+/** NWS severity scale, worst first — ranked so multiple active alerts pick the one that matters most. */
+const SEVERITY_RANK: Record<WeatherAlert["severity"], number> = {
+  Extreme: 4,
+  Severe: 3,
+  Moderate: 2,
+  Minor: 1,
+  Unknown: 0,
+};
+
+/**
+ * Any National Weather Service alert active right now for Nashua — a Winter
+ * Storm Watch, a Wind Advisory, whatever NWS has actually issued for this
+ * exact point. Source is api.weather.gov: no key, free, and it's the
+ * government's own alerting system, so there's nothing here to keep in sync
+ * by hand the way a hand-written "bad weather" list would need to be.
+ *
+ * NWS's usage policy asks every caller to self-identify in the User-Agent —
+ * not a technicality, this is how they reach someone if a request pattern
+ * needs attention — so this one names the real site and a real inbox.
+ *
+ * Revalidates every 10 minutes rather than the 30 the temperature fetch
+ * uses: an active alert is the one part of this badge where "right now"
+ * should mean closer to it. Same failure contract either way — anything
+ * that goes wrong returns null and the badge just shows plain conditions.
+ */
+export async function getActiveWeatherAlert(): Promise<WeatherAlert | null> {
+  const url = `https://api.weather.gov/alerts/active?point=${site.geo.latitude},${site.geo.longitude}`;
+
+  try {
+    const response = await fetch(url, {
+      headers: {
+        "User-Agent": `(${siteUrl}, ${site.email})`,
+        Accept: "application/geo+json",
+      },
+      next: { revalidate: 600 },
+      signal: AbortSignal.timeout(4000),
+    });
+    if (!response.ok) return null;
+
+    const data: unknown = await response.json();
+    const features = (data as { features?: Array<{ properties?: { event?: string; severity?: string } }> })
+      .features;
+    if (!Array.isArray(features) || features.length === 0) return null;
+
+    let worst: WeatherAlert | null = null;
+    for (const feature of features) {
+      const event = feature.properties?.event;
+      if (!event) continue;
+      const severity = (feature.properties?.severity as WeatherAlert["severity"]) ?? "Unknown";
+      if (!worst || SEVERITY_RANK[severity] > SEVERITY_RANK[worst.severity]) {
+        worst = { event, severity };
+      }
+    }
+    return worst;
   } catch {
     return null;
   }
