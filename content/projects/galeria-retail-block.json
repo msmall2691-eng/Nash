@@ -1,0 +1,13 @@
+{
+  "order": 40,
+  "slug": "galeria-retail-block",
+  "title": "Galeria Retail Block",
+  "sector": "Retail",
+  "summary": "Multi-tenant retail block with full-height storefront glazing and a continuous signage band, housing Staples and Maharaja Royal Indian Cuisine.",
+  "scope": [
+    "Retail fit-up",
+    "Storefront glazing",
+    "Signage"
+  ],
+  "hasPhoto": true
+}
